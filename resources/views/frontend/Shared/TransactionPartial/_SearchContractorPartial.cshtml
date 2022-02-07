@@ -1,0 +1,25 @@
+@model Kaucja.Models.SearchContractorModel
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="Search" asp-action="GetContractor" asp-controller="Transaction" method="post">
+            <fieldset>
+                <legend>Wyszukaj wykonawcę</legend>
+                <div class="row align-items-center justify-content-center">
+                    <div class="form-group col-md-3">
+                        <label for="PersonalCode" class="control-label"></label>
+                        <input name="PersonalCode" class="form-control" placeholder="Kod klienta" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <div class="row">
+            <div class="col-md-12 mb-md-2">
+                <div id="progressBar" class="progress d-none">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span id="progressText"></span></div>
+                </div>
+            </div>
+            <div id="contractor" class="col-md-12 mb-md-2"></div>
+        </div>
+    </div>
+</div>

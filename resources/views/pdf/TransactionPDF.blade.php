@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+    <meta charset = "UTF-8">
+    <style>
+        .date {
+            margin-top: 5mm;
+            width: 30%;
+            margin-left: auto;
+            text-align: center;
+            font-weight: 200;
+        }
+
+        table {
+            width: 100%;
+            height: auto;
+        }
+            th, td {
+                width: 50%;
+            }
+
+            tr {
+                margin-bottom: 2em;
+            }
+
+        .line {
+            height: 2px;
+            background: black;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .text-align-left {
+            text-align: left;
+        }
+
+        #content {
+            position: absolute;
+            top: 20mm;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="line"> </div>
+        <div class="date">
+            <div> Data wystawienia: {invoiceDate} </div>
+        </div>
+        <h2> Potwierdzenie dokonania wpłaty </h2>
+        <table>
+            <tr>
+                <th>
+                    Przez:
+                </th>
+                <td>
+                    <div> {Name} {Surname} </div>
+                    <div> {PostCode} {City} </div>
+                    <div> {Street} </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="">
+                    Szczegóły:
+                </th>
+                <td colspan="2">
+                    <b> {title} </b> <br />
+                    <b> Kwota: </b> {amount} {currency} <br />
+                    <h4> Odbiorca </h4>
+                    <b> {platformCompany} </b> <br />
+                    {platformCity} <br />
+                    {platformAddress}
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

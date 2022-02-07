@@ -1,0 +1,84 @@
+@model Kaucja.Models.RecipientPayment
+
+<div class="card border-0">
+    <div class="card-body">
+        <h4 class="card-title">Konto bankowe:</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label font-weight-bold">Numer konta:</label>
+            </div>
+            <div class="col-md-8">
+                @Html.DisplayFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "control-label" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-danger text-center"><strong>Uwaga!</strong> Sprawdź czy numer konta się zgadza!</div>
+            </div>
+        </div>
+        <h4 class="card-title">Odbiorca:</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label font-weight-bold">Nazwa:</label>
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "control-label" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label font-weight-bold">NIP:</label>
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.Nip, new { htmlAttributes = new { @class = "control-label" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label font-weight-bold">Adres pocztowy:</label>
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.PostCode, new { htmlAttributes = new { @class = "control-label" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label font-weight-bold">Ulica:</label>
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.Street, new { htmlAttributes = new { @class = "control-label" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label font-weight-bold">Miejscowość:</label>
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.City, new { htmlAttributes = new { @class = "control-label" } })
+            </div>
+        </div>
+        @if (Model.Email != null)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">E-mail:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+        }
+        @if (Model.PhoneNumber != null)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">Numer telefonu:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<input id="IdRecipient" type="hidden" value="@Model.Id" />

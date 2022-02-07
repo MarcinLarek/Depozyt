@@ -1,0 +1,74 @@
+@model Kaucja.Models.CompanyData
+
+<div class="card border-0">
+    <div class="card-body">
+        <img id="more" class="float-right" src="~/Images/more.svg" />
+        <h4 class="card-title">Dane wykonawcy:</h4>
+        <div id="moreBox">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">Nazwa:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">NIP:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.Nip, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">Regon:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.Regon, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">KRS:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.Krs, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">Kod pocztowy:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.PostCode, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">Ulica:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.Street, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label font-weight-bold">Miejscowość:</label>
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(model => model.City, new { htmlAttributes = new { @class = "control-label" } })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        $("#more").click(function () {
+            $("#moreBox").slideToggle("slow");
+        });
+    });
+</script>

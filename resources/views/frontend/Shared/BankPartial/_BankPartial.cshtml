@@ -1,0 +1,31 @@
+@model IEnumerable<Kaucja.Models.BankModel>
+
+@{
+    Layout = null;
+}
+
+<table class="table table-bordered table-hover table-responsive table-striped d-md-table">
+    <thead>
+        <tr class="text-center">
+            <th>
+                Lp
+            </th>
+            <th>
+                Nazwa
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Lp)
+            </td>
+            <td class="text-left">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

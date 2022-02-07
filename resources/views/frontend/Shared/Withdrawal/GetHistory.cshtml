@@ -1,0 +1,42 @@
+@model IEnumerable<Kaucja.Models.Withdrawal>
+
+<table class="table table-bordered table-hover table-responsive table-striped d-md-table">
+    <thead>
+        <tr class="text-center">
+            <th>
+                Nazwa
+            </th>
+            <th>
+                Kwota
+            </th>
+            <th>
+                Data
+            </th>
+            <th>
+                Pobierz dokument
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-left">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.ConfirmDate)
+                </td>
+                <td class="text-center">
+                    <img src="~/Images/document.svg" style="cursor: pointer;" onclick="generatePdf(@item.Id)" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div id="generatingPDF" class="d-none text-center p-2">
+    Generowanie PDF...
+</div>
