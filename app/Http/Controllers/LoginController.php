@@ -92,15 +92,25 @@ class LoginController extends Controller
               'username' => 'required',
               'password' => 'required',
           ]);
+          $user =  User::where('username',$request['username'])->first();
 
-        $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-         if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
-         {
-             return redirect()->route('home');
-         }else{
-           $failstatus = 1;
-           return view("/frontend/sign-in/index", compact('failstatus'));
-         }
+          if ($user['email_verified_at'] == null)
+          {
+            return redirect()->route('home');
+          }
+          else
+          {
+            $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+             if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
+             {
+                 return redirect()->route('home');
+             }else{
+               $failstatus = 1;
+               return view("/frontend/sign-in/index", compact('failstatus'));
+             }
+          }
+
+
       } catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Login", "signIn", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;

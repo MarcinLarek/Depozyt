@@ -2,6 +2,7 @@
 return [
   //Index
   'error' => 'Our website encountered a problem, so you have been redirected to the home page. An exception has been reported to the administrator. We apologize for the inconvenience.',
+  'confirmsuccess' => 'Account activated successfully. You can login now.',
   'index-title' => 'Join many thousands of customers all over the country',
   'banner1' => 'Things to remember when buying machines',
   'banner2' => 'Purchase of a production hall from scratch!',

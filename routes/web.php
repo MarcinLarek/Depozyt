@@ -8,6 +8,7 @@ Route::domain('localhost')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/register', [\App\Http\Controllers\RegisterController::class, 'index'])->name('register');
         Route::post('/register/store', [\App\Http\Controllers\RegisterController::class, 'store'])->name('register.store');
+        Route::get('/register/{token}', [\App\Http\Controllers\RegisterController::class, 'confirmation'])->name('register.confirmation');
 
         Route::get('/sign-in', [\App\Http\Controllers\LoginController::class, 'index'])->name('sign-in');
         Route::post('/sign-in', [\App\Http\Controllers\LoginController::class, 'signIn'])->name('client.sign-in');
@@ -112,11 +113,11 @@ Route::domain('admin.localhost')->group(function () {
         });
 
         Route::prefix('/admins')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'adminslist'])->name('admin.admins');
-            Route::get('/{id}/edit', [\App\Http\Controllers\Admin\AdminController::class, 'edit'])->name('admin.admins.edit');
-            Route::patch('/{id}/update', [\App\Http\Controllers\Admin\AdminController::class, 'update'])->name('admin.admins.update');
-            Route::get('/{id}/delete', [\App\Http\Controllers\Admin\AdminController::class, 'delete'])->name('admin.admins.delete');
-            Route::post('/{id}/deleteadmin', [\App\Http\Controllers\Admin\AdminController::class, 'deleteadmin'])->name('admin.admins.deleteadmin');
+            Route::get('/', [\App\Http\Controllers\Admin\AdminsController::class, 'adminslist'])->name('admin.admins');
+            Route::get('/{id}/edit', [\App\Http\Controllers\Admin\AdminsController::class, 'edit'])->name('admin.admins.edit');
+            Route::patch('/{id}/update', [\App\Http\Controllers\Admin\AdminsController::class, 'update'])->name('admin.admins.update');
+            Route::get('/{id}/delete', [\App\Http\Controllers\Admin\AdminsController::class, 'delete'])->name('admin.admins.delete');
+            Route::post('/{id}/deleteadmin', [\App\Http\Controllers\Admin\AdminsController::class, 'deleteadmin'])->name('admin.admins.deleteadmin');
         });
 
         Route::prefix('/errors')->group(function () {
@@ -170,9 +171,9 @@ Route::domain('admin.localhost')->group(function () {
             Route::post('/{id}/delectmessege', [\App\Http\Controllers\Admin\ContactController::class, 'deletemessege'])->name('admin.contact.deletemessege');
         });
 
-        Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
-        Route::get('/csvexport', [\App\Http\Controllers\Admin\AdminController::class, 'csvexport'])->name('admin.csvexport');
-        Route::post('/csvimport', [\App\Http\Controllers\Admin\AdminController::class, 'csvimport'])->name('admin.csvimport');
+        Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin');
+        Route::get('/csvexport', [\App\Http\Controllers\Admin\HomeController::class, 'csvexport'])->name('admin.csvexport');
+        Route::post('/csvimport', [\App\Http\Controllers\Admin\HomeController::class, 'csvimport'])->name('admin.csvimport');
 
         Route::prefix('/platform-bank-account')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\PlatformBankAccountController::class, 'index'])->name('admin.platform-bank-account');

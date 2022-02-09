@@ -6,8 +6,11 @@
 <div class="alert alert-danger">
   <h1>{{ __('home.error') }}</h1>
 </div>
+@elseif($error == 2)
+<div class="alert alert-succes">
+  <h1>{{ __('home.confirmsuccess') }}</h1>
+</div>
 @endif
-
     <div class="row">
         <h2 class="mx-auto main-color mt-2 font-weight-bold" style="color:#081e75">{{ __('home.index-title') }}</h2>
     </div>

@@ -2,6 +2,11 @@
 @section('content')
     <h1 class="mt-md-4">{{ __('register.IND-title') }}</h1>
     <hr/>
+    @if($registersucces == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('register.IND-registersucces') }}</h1>
+    </div>
+    @endif
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card  border-0">

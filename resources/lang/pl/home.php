@@ -2,6 +2,7 @@
 return [
   //Index
   'error' => 'Strona napotkała problem, więc zostałeś przekierowany na strone stronę główną. Wyjątek został zgłoszony administratorowi. Przeprzaszamy za utrudnienia.',
+  'confirmsuccess' => 'Konto aktywowane pomyślnie. Możesz się teraz zalogować.',
   'index-title' => 'Dołącz do wielu tysięcy klientów w całym kraju',
   'banner1' => 'O czym pamiętać przy zakupie maszyn',
   'banner2' => 'Zakup hali produkcyjnej od podstaw!',
