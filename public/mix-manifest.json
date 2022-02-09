@@ -1,0 +1,18 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/register.min.js": "/js/register.min.js",
+    "/js/login.min.js": "/js/login.min.js",
+    "/js/payment.min.js": "/js/payment.min.js",
+    "/js/representative.min.js": "/js/representative.min.js",
+    "/js/client-data.min.js": "/js/client-data.min.js",
+    "/js/company-data.min.js": "/js/company-data.min.js",
+    "/js/client-bank-account/create.min.js": "/js/client-bank-account/create.min.js",
+    "/js/client-bank-account/edit.min.js": "/js/client-bank-account/edit.min.js",
+    "/js/withdrawal.min.js": "/js/withdrawal.min.js",
+    "/js/recipient/create.min.js": "/js/recipient/create.min.js",
+    "/js/recipient/edit.min.js": "/js/recipient/edit.min.js",
+    "/js/recipient.min.js": "/js/recipient.min.js",
+    "/js/transaction/list.min.js": "/js/transaction/list.min.js",
+    "/js/transaction/create.min.js": "/js/transaction/create.min.js"
+}

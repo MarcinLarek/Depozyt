@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>płatniczo platforma powiernicza - depozyt.com</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/site.min.css?0.0.2" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body>
+    <header>
+        <div class="container ml-md-5 mb-2 mt-2">
+            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/logo-napis.png" style="width: 30%" /></a>
+            <div class="float-md-right">
+                <div class="mt-4 row">
+                    @{
+                        @using Microsoft.AspNetCore.Http
+                        @using Newtonsoft.Json
+                        byte clientType = 0;
+                        bool isActive = false;
+
+                        if (Context.Session.GetString("ClientType") != null)
+                        {
+                            string str = Context.Session.GetString("ClientType");
+                            LoginModel obj = JsonConvert.DeserializeObject<LoginModel>(str);
+                            clientType = obj.ClientType;
+                            isActive = obj.Active;
+                        }
+                        if (clientType == 0)
+                        {
+                            <div class="col-md-3 text-right">
+                                <i class="fa fa-user-circle fa-4x" style = "color: #1b1464"></i>
+                            </div>
+                            <div class="col-md-9 row">
+                                <h3 class="main-color">
+                                    <a asp-controller="Login" asp-action="Main">
+                                        Zaloguj się
+                                    </a>
+                                </h3>
+                                <span>
+                                    Nie masz konta? <a asp-area="" asp-controller="Register" asp-action="Main">Zarejestruj się</a>
+                                </span>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <partial name="_MenuNavPartialView" />
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="footer text-white">
+        <div class="container">
+            &copy; 2019 - @DateTime.Now.Year
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
