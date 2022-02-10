@@ -220,7 +220,7 @@ class TransactionController extends Controller
         }
     }
 
-    public function templist()
+    public function tempList()
     {
       try {
         $currentuser = Auth::user();
@@ -331,7 +331,7 @@ class TransactionController extends Controller
 */
 
 // Tutaj loadView() nie chce znaleźć ściżki do pliku, nieważne jak bym ją podał. Nie wiem już co robić żeby wygenerować tego pdfa
-    public function generatepdf2($id)
+    public function generatePdf2($id)
     {
     $transaction =Transaction::where('id',$id)->first();
     $usercontractor = User::where('id',$transaction['contractor_id'])->first();

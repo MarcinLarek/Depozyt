@@ -12,10 +12,10 @@ Route::domain('localhost')->group(function () {
 
         Route::get('/sign-in', [\App\Http\Controllers\LoginController::class, 'index'])->name('sign-in');
         Route::post('/sign-in', [\App\Http\Controllers\LoginController::class, 'signIn'])->name('client.sign-in');
-        Route::get('/ForgotPassword', [\App\Http\Controllers\LoginController::class, 'ForgotPassword'])->name('ForgotPassword');
-        Route::post('/ForgotPassword', [\App\Http\Controllers\LoginController::class, 'ForgotPasswordReset'])->name('client.ForgotPasswordReset');
-        Route::get('/SetNewPassword', [\App\Http\Controllers\LoginController::class, 'SetNewPassword'])->name('SetNewPassword');
-        Route::post('/SetNewPassword', [\App\Http\Controllers\LoginController::class, 'SetNewPassword'])->name('client.SetNewPassword');
+        Route::get('/ForgotPassword', [\App\Http\Controllers\LoginController::class, 'forgotPassword'])->name('ForgotPassword');
+        Route::post('/ForgotPassword', [\App\Http\Controllers\LoginController::class, 'forgotPasswordReset'])->name('client.ForgotPasswordReset');
+        Route::get('/SetNewPassword', [\App\Http\Controllers\LoginController::class, 'setNewPassword'])->name('SetNewPassword');
+        Route::post('/SetNewPassword', [\App\Http\Controllers\LoginController::class, 'setNewPassword'])->name('client.SetNewPassword');
     });
 
     Route::middleware('auth:client')->group(function () {
@@ -79,10 +79,10 @@ Route::domain('localhost')->group(function () {
             Route::post('/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transactions.store');
             Route::get('/{id}/edit', [\App\Http\Controllers\TransactionController::class, 'edit'])->name('transactions.edit');
             Route::post('/{id}/update', [\App\Http\Controllers\TransactionController::class, 'update'])->name('transactions.update');
-            Route::get('/templist', [\App\Http\Controllers\TransactionController::class, 'templist'])->name('transaction.templist');
+            Route::get('/templist', [\App\Http\Controllers\TransactionController::class, 'tempList'])->name('transaction.templist');
             Route::get('/confirm', [\App\Http\Controllers\TransactionController::class, 'confirm'])->name('transactions.confirm');
             Route::get('/{id}/preview', [\App\Http\Controllers\TransactionController::class, 'preview'])->name('transactions.preview');
-            Route::get('/{id}/generatepdf2', [\App\Http\Controllers\TransactionController::class, 'generatepdf2'])->name('transactions.generatepdf2');
+            Route::get('/{id}/generatepdf2', [\App\Http\Controllers\TransactionController::class, 'generatePdf2'])->name('transactions.generatepdf2');
         });
 
 
@@ -91,12 +91,12 @@ Route::domain('localhost')->group(function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('what-is-depozyt', [HomeController::class, 'whatIsDepozyt'])->name('what-is-depozyt');
-    Route::get('how-it-works', [HomeController::class, 'HowItWorks'])->name('how-it-works');
+    Route::get('how-it-works', [HomeController::class, 'howItWorks'])->name('how-it-works');
     Route::get('regulations', [HomeController::class, 'regulations'])->name('regulations');
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');
     Route::post('sendcontact', [HomeController::class, 'sendcontact'])->name('sendcontact');
-    Route::get('/SetNewPassword/{token}', [\App\Http\Controllers\LoginController::class, 'SetNewPassword'])->name('SetNewPassword');
-    Route::post('SetNewPasswordUpdate', [\App\Http\Controllers\LoginController::class, 'SetNewPasswordUpdate'])->name('SetNewPasswordUpdate');
+    Route::get('/SetNewPassword/{token}', [\App\Http\Controllers\LoginController::class, 'setNewPassword'])->name('SetNewPassword');
+    Route::post('SetNewPasswordUpdate', [\App\Http\Controllers\LoginController::class, 'setNewPasswordUpdate'])->name('SetNewPasswordUpdate');
 
     Route::get('lang/change/{lan}', [\App\Http\Controllers\LangController::class, 'change'])->name('changeLang');
 });

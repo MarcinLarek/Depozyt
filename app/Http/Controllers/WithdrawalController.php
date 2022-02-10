@@ -39,8 +39,4 @@ class WithdrawalController extends Controller
         }
     }
 
-    public function GeneratePdf()
-    {
-
-    }
 }

@@ -16,16 +16,16 @@ class LoginController extends Controller
 {
     private $usersService;
 
-    public function ForgotPassword()
+    public function forgotPassword()
     {
       $wrongemail = 0;
           return View("/frontend/sign-in/ForgotPassword", compact('wrongemail'));
     }
-    public function SetNewPassword($token)
+    public function setNewPassword($token)
     {
       return View("/frontend/sign-in/SetNewPassword", compact('token'));
     }
-    public function SetNewPasswordUpdate(Request $request)
+    public function setNewPasswordUpdate(Request $request)
     {
       $request->validate([
           'password' => ['required','max:100','confirmed'],
@@ -49,7 +49,7 @@ class LoginController extends Controller
       return redirect('/sign-in');
     }
 
-    public function ForgotPasswordReset(Request $request)
+    public function forgotPasswordReset(Request $request)
     {
       try {
         $varmail = $request->input('email');

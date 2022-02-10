@@ -21,11 +21,6 @@ class HomeController extends Controller
         return View("/frontend/home/regulations");
     }
 
-    public function Help()
-    {
-        return View("Help");
-    }
-
     public function contact()
     {
       $issend = 0;
@@ -59,7 +54,7 @@ class HomeController extends Controller
         return View("/frontend/home/what-is-depozyt");
     }
 
-    public function HowItWorks()
+    public function howItWorks()
     {
         return View("/frontend/home/how-it-works");
     }

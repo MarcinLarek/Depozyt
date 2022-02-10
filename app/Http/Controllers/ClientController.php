@@ -24,12 +24,6 @@ class ClientController extends Controller
 
     }
 
-
-    public function ResetPassword()
-    {
-        return View("ResetPassword");
-    }
-
     public function edit(User $user)
     {
       try {

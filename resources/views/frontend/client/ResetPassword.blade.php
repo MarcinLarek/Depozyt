@@ -8,7 +8,7 @@
         <div class="card border-0">
             <div class="card-body">
                 <h4 class="card-title">{{ __('client.IND-subtitle') }}</h4>
-                <form id="Reset" asp-action="ResetPassword" asp-controller="Client" method="post">
+                <form id="Reset" asp-action="resetPassword" asp-controller="Client" method="post">
                     <input name="Email" type="hidden" />
                     <input name="Token" type="hidden" />
                     <fieldset>

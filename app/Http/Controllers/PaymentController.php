@@ -131,7 +131,7 @@ class PaymentController extends Controller
               }
     }
 
-    public function GetAmount()
+    public function getAmount()
     {
         $wallet = Auth::user()->wallet;
         return view('/frontend/payment/wallet-amount', compact('wallet'));
