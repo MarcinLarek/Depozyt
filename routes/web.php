@@ -172,8 +172,8 @@ Route::domain('admin.localhost')->group(function () {
         });
 
         Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin');
-        Route::get('/csvexport', [\App\Http\Controllers\Admin\HomeController::class, 'csvexport'])->name('admin.csvexport');
-        Route::post('/csvimport', [\App\Http\Controllers\Admin\HomeController::class, 'csvimport'])->name('admin.csvimport');
+        Route::get('/csvexport', [\App\Http\Controllers\Admin\CsvController::class, 'csvexport'])->name('admin.csvexport');
+        Route::post('/csvimport', [\App\Http\Controllers\Admin\CsvController::class, 'csvimport'])->name('admin.csvimport');
 
         Route::prefix('/platform-bank-account')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\PlatformBankAccountController::class, 'index'])->name('admin.platform-bank-account');

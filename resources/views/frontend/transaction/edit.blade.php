@@ -17,15 +17,15 @@
                 <div class="row">
 
                     <div class="form-group col-md-6">
-                        <label for="Name"
+                        <label for="name"
                                class="control-label">Nazwa tranzakcji</label>
-                        <input name="Name" class="form-control"
+                        <input name="name" class="form-control"
                                value="{{$transaction['name']}}"/>
                     </div>
                     <div class="form-group col-md-6">
                         <label
-                            for="TransactionType">Typ tranzakcji</label>
-                        <select id="TransactionType" name="TransactionType"
+                            for="transaction_type">Typ tranzakcji</label>
+                        <select id="transaction_type" name="transaction_type"
                                 class="custom-select">
                             <option value="1">Usługi kontraktowe</option>
                             <option value="2">Towary ogólne</option>
@@ -35,22 +35,22 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="FromDate" class="control-label">Od:</label>
-                        <input name="FromDate" class="form-control" value="{{$transaction['from_date']}}"
+                        <label for="from_date" class="control-label">Od:</label>
+                        <input name="from_date" class="form-control" value="{{$transaction['from_date']}}"
                                 type="date" readonly/>
                         <span asp-validation-for="FromDate" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="ToDate" class="control-label">Do:</label>
-                        <input name="ToDate" class="form-control" value="{{$transaction['to_date']}}"
+                        <label for="to_date" class="control-label">Do:</label>
+                        <input name="to_date" class="form-control" value="{{$transaction['to_date']}}"
                               type="date"/>
                         <span asp-validation-for="ToDate" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="CommissionPayer">Płacący: </label>
-                        <select name="CommissionPayer" class="custom-select">
+                        <label for="commission_payer">Płacący: </label>
+                        <select name="commission_payer" class="custom-select">
                             <option value="principal">Zleceniodawca</option>
                             <option value="contractor">Wykonawca</option>
                             <option value="half">Pół na poł</option>
@@ -59,38 +59,38 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="BankName" class="control-label">Nazwa Banku</label>
-                        <select name="BankName" class="custom-select">
+                        <label for="bank_name" class="control-label">Nazwa Banku</label>
+                        <select name="bank_name" class="custom-select">
                           @foreach($banks as $bank)
                               <option>{{ $bank->bank_name }}</option>
                           @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="CurrencyName" class="control-label">Waluta </label>
-                        <select name="CurrencyName" class="custom-select">
+                        <label for="currency_name" class="control-label">Waluta </label>
+                        <select name="currency_name" class="custom-select">
                           @foreach($currencies as $currency)
                               <option>{{ $currency->symbol }}</option>
                           @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="Amount" class="control-label">Kwota</label>
-                        <input name="Amount" class="form-control" value="{{$transaction['amount']}}"/>
-                        <span asp-validation-for="Amount" class="text-danger"></span>
+                        <label for="amount" class="control-label">Kwota</label>
+                        <input name="amount" class="form-control" value="{{$transaction['amount']}}"/>
+                        <span asp-validation-for="amount" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="payment" class="control-label">Zapłacono</label>
-                        <input name="Payment" class="form-control" value="{{$transaction['payment']}}"/>
+                        <input name="payment" class="form-control" value="{{$transaction['payment']}}"/>
                         <span asp-validation-for="payment" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="Description" class="control-label">Opis</label>
-                        <textarea asp-for="Description" class="form-control" name="description" placeholder="Opis"
+                        <label for="description" class="control-label">Opis</label>
+                        <textarea asp-for="description" class="form-control" name="description" placeholder="Opis"
                                   cols="80" value="{{$transaction['description']}}" rows="3">{{$transaction['description']}}</textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <span asp-validation-for="description" class="text-danger"></span>
                     </div>
                 </div>
             </fieldset>

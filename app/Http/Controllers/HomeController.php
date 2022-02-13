@@ -42,7 +42,8 @@ class HomeController extends Controller
         Mail::to('kontakt@domena.pl')->send(new NewContactMessage());
         $issend = 1;
         return View("/frontend/home/contact", compact('issend'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Home", "sendcontact", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));

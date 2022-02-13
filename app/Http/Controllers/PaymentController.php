@@ -32,7 +32,8 @@ class PaymentController extends Controller
         $this->platformBankAccountsService->getActive();
         $currencies = DB::table('currencies')->get();
         return view("/frontend/payment/index", compact('currencies'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -124,7 +125,8 @@ class PaymentController extends Controller
               return view('/frontend/recipients/_empty-wallet');
           }
         }
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "paymentpost", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -147,7 +149,8 @@ class PaymentController extends Controller
                 $fileName = $this->generatePdf($walletHistory);
             }
             return response()->download(Storage::disk('payments')->path($fileName));
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "downloadDocument()", $exception->getMessage(), $request->ip(), Auth::id());
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -188,7 +191,8 @@ class PaymentController extends Controller
         ]);
 
         return $fileName;
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "generatePdf", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));

@@ -40,7 +40,8 @@ class RegisterController extends Controller
             Mail::to($request['email'])->send(new RegisterConfirmation($uservar));
             return view("/frontend/register/index", compact('registersucces'));
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             var_dump($ex->getMessage());
             die;
             saveException(sqlDateTime(), "Register", "Register", $ex->getMessage(), $request->ip());
@@ -59,7 +60,8 @@ class RegisterController extends Controller
         $user->update($data);
         $error = 0;
           return view("/frontend/home/index", compact('error'));
-      } catch (\Exception $e) {
+      }
+      catch (\Exception $e) {
         saveException(sqlDateTime(), "Register", "confirmation", $ex->getMessage(), $request->ip(), Auth::id());
         $error = 2;
         return view("/frontend/home/index", compact('error'));
@@ -75,7 +77,8 @@ class RegisterController extends Controller
             if (User::where('email', $email)->count()) {
                 $isExist = true;
             }
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             saveException(date('Y-m-d H:m:s'), "Register", "CheckEmail", $ex->getMessage());
         }
 

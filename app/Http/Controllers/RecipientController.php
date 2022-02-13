@@ -16,7 +16,8 @@ class RecipientController extends Controller
         $recipients = Auth::user()->recipients()->get();
         return View("/frontend/recipients/index")
             ->with('recipients', $recipients);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "idit", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -34,7 +35,8 @@ class RecipientController extends Controller
         $recipient = Auth::user()->recipients()->find($id);
         return view("/frontend/recipients/edit")
             ->with('recipient', $recipient);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -49,7 +51,8 @@ class RecipientController extends Controller
             $recipients = Auth::user()->recipients()->get();
             return View("/frontend/recipients/index")
                 ->with('recipients', $recipients);
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), "Recipient", "update", $exception->getMessage(), $request->ip(), Auth::id());
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -72,7 +75,8 @@ class RecipientController extends Controller
         } else {
             return view('/frontend/recipients/_empty-wallet');
         }
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "payment", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -87,7 +91,8 @@ class RecipientController extends Controller
           return view("/frontend/recipients/get-history", [
               'walletHistory' => $walletHistory
           ]);
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "getHistory", $exception->getMessage(), $request->ip(), Auth::id());
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -102,7 +107,8 @@ class RecipientController extends Controller
             $data['country_id'] = $user->country->getId();
             $user->recipients()->create($data);
             return redirect()->route('recipients');
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             saveException(sqlDateTime(), "Recipient", "Create()", $ex->getMessage(), $request->ip(), Auth::id());
             $error = 1;
             return view("/frontend/home/index", compact('error'));

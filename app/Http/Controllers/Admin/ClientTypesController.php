@@ -15,7 +15,8 @@ class ClientTypesController extends Controller
         $clientTypes = ClientType::all();
         return view('/frontend/admin/client-types/index')
             ->with('clientTypes', $clientTypes);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-ClientTypes", "index", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -30,7 +31,8 @@ class ClientTypesController extends Controller
         try {
             ClientType::create($request->all());
             return redirect()->route('admin.client-types');
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-ClientTypes', 'store', $exception->getMessage(), $request->ip(), Auth::id());
             return view('/frontend/admin/admin/index');
         }
@@ -42,7 +44,8 @@ class ClientTypesController extends Controller
         $clientType = ClientType::find($id);
         return view('/frontend/admin/client-types/edit')
             ->with('clientType', $clientType);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-ClientTypes", "edit", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -54,7 +57,8 @@ class ClientTypesController extends Controller
             $clientType->update($request->all());
             $clientType = ClientType::find($id);
             return redirect()->route('admin.client-types');
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-ClientTypes', 'store', $exception->getMessage(), $request->ip(), Auth::id());
             return view('/frontend/admin/admin/index');
         }

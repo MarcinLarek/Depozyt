@@ -20,7 +20,8 @@ class TransactionsController extends Controller
         $transactions = Transaction::all();
         return view('/frontend/admin/transactions/index')
             ->with('transactions', $transactions);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -38,7 +39,8 @@ class TransactionsController extends Controller
             ->with('currencies', $currencies)
             ->with('banks', $banks)
             ->with('users', $users);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -49,34 +51,34 @@ class TransactionsController extends Controller
       $request->validate([
           'customer_id' => ['required'],
           'contractor_id' => ['required'],
-          'Name' => ['required'],
-          'TransactionType' => ['required'],
-          'FromDate' => ['required'],
-          'ToDate' => ['required'],
-          'CommissionPayer' => ['required'],
-          'BankName' => ['required'],
-          'CurrencyName' => ['required'],
-          'Payment' => ['required'],
-          'Amount' => ['required']
+          'name' => ['required'],
+          'transaction_type' => ['required'],
+          'from_date' => ['required'],
+          'to_date' => ['required'],
+          'commission_payer' => ['required'],
+          'bank_name' => ['required'],
+          'currency_name' => ['required'],
+          'payment' => ['required'],
+          'amount' => ['required']
       ]);
         try {
           $success = 1;
           $transaction = Transaction::find($id);
-          $currency =  Currency::where('symbol',$request['CurrencyName'])->first();
+          $currency =  Currency::where('symbol',$request['currency_name'])->first();
           $customer =  User::where('username',$request['customer_id'])->first();
           $contractor =  User::where('username',$request['contractor_id'])->first();
 
           $data = array(
             'customer_id' => $customer['id'],
             'contractor_id' => $contractor['id'],
-            'bank_name' => $request['BankName'],
+            'bank_name' => $request['bank_name'],
             'currency_id' => $currency['id'],
-            'name' => $request['Name'],
-            'commission_payer' => $request['CommissionPayer'],
-            'from_date' => $request['FromDate'],
-            'to_date' => $request['ToDate'],
-            'amount' => $request['Amount'],
-            'payment' => $request['Payment']
+            'name' => $request['name'],
+            'commission_payer' => $request['commission_payer'],
+            'from_date' => $request['from_date'],
+            'to_date' => $request['to_date'],
+            'amount' => $request['amount'],
+            'payment' => $request['payment']
           );
           $transaction->update($data);
           $transactions = Transaction::all();

@@ -16,7 +16,8 @@ class CountriesController extends Controller
         $countries = Country::all();
         return view('/frontend/admin/countries/index')
             ->with('countries', $countries);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Countries", "index", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -32,7 +33,8 @@ class CountriesController extends Controller
         try {
             Country::create($request->all());
             return redirect()->route('admin.countries');
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CountriesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());
             return view('/frontend/admin/admin/index');
         }
@@ -44,7 +46,8 @@ class CountriesController extends Controller
         $country = Country::find($id);
         return view('/frontend/admin/countries/edit')
             ->with('country', $country);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Countries", "edit", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -56,11 +59,12 @@ class CountriesController extends Controller
             $country = Country::find($id);
             $country->update($request->all());
             return redirect()->route('admin.countries')->with('success', $success);
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CountriesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());
             return view('/frontend/admin/admin/index');
         }
-        
+
 
     }
 }

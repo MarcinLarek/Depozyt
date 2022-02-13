@@ -17,7 +17,8 @@ class ErrorsController extends Controller
         $errors = $errors->reverse();
         return view('/frontend/admin/errors/index')
             ->with('errors', $errors);
-          } catch (\Exception $ex) {
+          }
+      catch (\Exception $ex) {
             saveException(sqlDateTime(), "Admin-Errors", "index", $ex->getMessage(), $request->ip(), Auth::id());
 	    return view('/frontend/admin/admin/index');
         }

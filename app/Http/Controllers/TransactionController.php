@@ -26,7 +26,8 @@ class TransactionController extends Controller
         $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
         return view("/frontend/transaction/index")
           ->with('transactions', $transactions);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -43,7 +44,8 @@ class TransactionController extends Controller
         }
         return View($viewPath)
           ->with('currencies', $currencies);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "create", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -54,15 +56,15 @@ class TransactionController extends Controller
     {
       $request->validate([
           'personal-code2' => ['required'],
-          'Name' => ['required'],
-          'TransactionType' => ['required'],
-          'FromDate' => ['required'],
-          'ToDate' => ['required'],
-          'CommissionPayer' => ['required'],
-          'BankName' => ['required'],
-          'CurrencyName' => ['required'],
-          'Amount' => ['required'],
-          'Description' => ['required']
+          'name' => ['required'],
+          'transaction_type' => ['required'],
+          'from_date' => ['required'],
+          'to_date' => ['required'],
+          'commission_payer' => ['required'],
+          'bank_name' => ['required'],
+          'currency_name' => ['required'],
+          'amount' => ['required'],
+          'description' => ['required']
       ]);
         try {
           $user =  User::where('personal_code',$request['personal-code2'])->first();
@@ -79,24 +81,25 @@ class TransactionController extends Controller
           $data = array(
             'customer_id' => $user['id'],
             'contractor_id' => $usercontractor['id'],
-            'bank_name' => $request['BankName'],
+            'bank_name' => $request['bank_name'],
             'currency_id' => $currency['id'],
-            'name' => $request['Name'],
+            'name' => $request['name'],
             'transaction_code' => $request['personal-code2'],
-            'commission_payer' => $request['CommissionPayer'],
-            'from_date' => $request['FromDate'],
-            'to_date' => $request['ToDate'],
-            'amount' => $request['Amount'],
+            'commission_payer' => $request['commission_payer'],
+            'from_date' => $request['from_date'],
+            'to_date' => $request['to_date'],
+            'amount' => $request['amount'],
             'date_of_order' => $mytime,
             'payment' => 0.00,
             'status' => 'Ready',
             'token' => $request['_token'],
-            'transaction_type' => $request['TransactionType'],
-            'description' => $request['Description']
+            'transaction_type' => $request['transaction_type'],
+            'description' => $request['description']
           );
           Transaction::create($data);
           return view("/frontend/transaction/index");
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             saveException(sqlDateTime(), "Transaction", "store", $ex->getMessage(), $request->ip());
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -109,7 +112,8 @@ class TransactionController extends Controller
         $personalCode = $request->post('personal_code');
         $client = User::where('personal_code', $personalCode)->first();
         return view('/frontend/transaction/_client-data')->with('client', $client);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -135,7 +139,8 @@ class TransactionController extends Controller
             ->with('usercustomer', $usercustomer)
             ->with('usercontractordata', $usercontractordata)
             ->with('usercustomerdata', $usercustomerdata);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -148,19 +153,19 @@ class TransactionController extends Controller
             $success = 1;
             $transaction = Transaction::find($id);
             $request->validate([
-                'Name' => ['required'],
-                'TransactionType' => ['required'],
-                'FromDate' => ['required'],
-                'ToDate' => ['required'],
-                'CommissionPayer' => ['required'],
-                'BankName' => ['required'],
-                'CurrencyName' => ['required'],
-                'Payment' => ['required'],
-                'Amount' => ['required'],
+                'name' => ['required'],
+                'transaction_type' => ['required'],
+                'from_date' => ['required'],
+                'to_date' => ['required'],
+                'commission_payer' => ['required'],
+                'bank_name' => ['required'],
+                'currency_name' => ['required'],
+                'payment' => ['required'],
+                'amount' => ['required'],
                 'description' => ['required']
             ]);
 
-            $currency =  Currency::where('symbol',$request['CurrencyName'])->first();
+            $currency =  Currency::where('symbol',$request['currency_name'])->first();
             $user = Auth::user();
             if ($user['id'] == $transaction['customer_id'] ) {
               $data = array(
@@ -168,15 +173,15 @@ class TransactionController extends Controller
                 'contractor_id' => $transaction['contractor_id'],
                 'customer_accept' => 1,
                 'contractor_accept' => 0,
-                'bank_name' => $request['BankName'],
+                'bank_name' => $request['bank_name'],
                 'currency_id' => $currency['id'],
-                'name' => $request['Name'],
-                'commission_payer' => $request['CommissionPayer'],
-                'from_date' => $request['FromDate'],
-                'to_date' => $request['ToDate'],
-                'amount' => $request['Amount'],
-                'payment' => $request['Payment'],
-                'transaction_type' => $request['TransactionType'],
+                'name' => $request['name'],
+                'commission_payer' => $request['commission_payer'],
+                'from_date' => $request['from_date'],
+                'to_date' => $request['to_da'],
+                'amount' => $request['amount'],
+                'payment' => $request['payment'],
+                'transaction_type' => $request['transaction_type'],
                 'description' => $request['description'],
                 'status' => 'ApprovalRequired',
                 'transaction_code' => $transaction['transaction_code'],
@@ -190,15 +195,15 @@ class TransactionController extends Controller
                 'contractor_id' => $transaction['contractor_id'],
                 'customer_accept' => 0,
                 'contractor_accept' => 1,
-                'bank_name' => $request['BankName'],
+                'bank_name' => $request['bank_name'],
                 'currency_id' => $currency['id'],
-                'name' => $request['Name'],
-                'commission_payer' => $request['CommissionPayer'],
-                'from_date' => $request['FromDate'],
-                'to_date' => $request['ToDate'],
-                'amount' => $request['Amount'],
-                'payment' => $request['Payment'],
-                'transaction_type' => $request['TransactionType'],
+                'name' => $request['name'],
+                'commission_payer' => $request['commission_payer'],
+                'from_date' => $request['from_date'],
+                'to_date' => $request['to_date'],
+                'amount' => $request['amount'],
+                'payment' => $request['payment'],
+                'transaction_type' => $request['transaction_type'],
                 'description' => $request['description'],
                 'status' => 'ApprovalRequired',
                 'transaction_code' => $transaction['transaction_code'],
@@ -228,7 +233,8 @@ class TransactionController extends Controller
         return view("/frontend/transaction/templist")
           ->with('transactions', $transactions)
           ->with('currentuser', $currentuser);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "templist", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -299,7 +305,8 @@ class TransactionController extends Controller
         $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
         return view("/frontend/transaction/index")
           ->with('transactions', $transactions);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "confirm", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -313,7 +320,8 @@ class TransactionController extends Controller
         $transaction =  TransactionToAccept::where('id',$id)->first();
         return view("/frontend/transaction/preview")
         ->with('transaction', $transaction);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -333,34 +341,42 @@ class TransactionController extends Controller
 // Tutaj loadView() nie chce znaleźć ściżki do pliku, nieważne jak bym ją podał. Nie wiem już co robić żeby wygenerować tego pdfa
     public function generatePdf2($id)
     {
-    $transaction =Transaction::where('id',$id)->first();
-    $usercontractor = User::where('id',$transaction['contractor_id'])->first();
-    $usercontractordata = CompanyData::where('user_id',$usercontractor['id'])->first();
-    $usercustomer = User::where('id',$transaction['customer_id'])->first();
-    $usercustomerdata = ClientData::where('user_id',$usercustomer['id'])->first();
-    $carbon = Carbon::now();
-    $mytime = $carbon->format('Y-m-d H:i:s');
-    $currency = Currency::where('id',$transaction['currency_id'])->first();
-    $platformdata = PlatformData::where('id',1)->first();
+    try {
+      $transaction =Transaction::where('id',$id)->first();
+      $usercontractor = User::where('id',$transaction['contractor_id'])->first();
+      $usercontractordata = CompanyData::where('user_id',$usercontractor['id'])->first();
+      $usercustomer = User::where('id',$transaction['customer_id'])->first();
+      $usercustomerdata = ClientData::where('user_id',$usercustomer['id'])->first();
+      $carbon = Carbon::now();
+      $mytime = $carbon->format('Y-m-d H:i:s');
+      $currency = Currency::where('id',$transaction['currency_id'])->first();
+      $platformdata = PlatformData::where('id',1)->first();
 
-    $mpdf = new Mpdf();
-    $css = file_get_contents(resource_path(). "\\views\\pdf\\TransactionPDF.blade.php");
-    $mpdf->WriteHTML($css, 1);
-    $billHtml = View::make('pdf/TransactionPDF')
-        ->with('transaction', $transaction)
-        ->with('usercontractor', $usercontractor)
-        ->with('usercontractordata', $usercontractordata)
-        ->with('usercustomer', $usercustomer)
-        ->with('usercustomerdata', $usercustomerdata)
-        ->with('mytime', $mytime)
-        ->with('currency', $currency)
-        ->with('platformdata', $platformdata);
+      $mpdf = new Mpdf();
+      $css = file_get_contents(resource_path(). "\\views\\pdf\\TransactionPDF.blade.php");
+      $mpdf->WriteHTML($css, 1);
+      $billHtml = View::make('pdf/TransactionPDF')
+          ->with('transaction', $transaction)
+          ->with('usercontractor', $usercontractor)
+          ->with('usercontractordata', $usercontractordata)
+          ->with('usercustomer', $usercustomer)
+          ->with('usercustomerdata', $usercustomerdata)
+          ->with('mytime', $mytime)
+          ->with('currency', $currency)
+          ->with('platformdata', $platformdata);
 
-    $mpdf->WriteHTML($billHtml, 2);
-    $path = storage_path('\TransactionPDF.pdf');
-    $mpdf->Output($path, 'F');
+      $mpdf->WriteHTML($billHtml, 2);
+      $path = storage_path('\TransactionPDF.pdf');
+      $mpdf->Output($path, 'F');
 
-    $pdfPath = storage_path('\TransactionPDF.pdf');
-    return response()->download($pdfPath);
+      $pdfPath = storage_path('\TransactionPDF.pdf');
+      return response()->download($pdfPath);
+    }
+    catch (\Exception $e) {
+      saveException(sqlDateTime(), "Transaction", "generatePdf2", $ex->getMessage(), $request->ip(), Auth::id());
+      $error = 1;
+      return view("/frontend/home/index", compact('error'));
+    }
+
     }
 }

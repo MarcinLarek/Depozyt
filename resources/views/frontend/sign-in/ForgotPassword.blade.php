@@ -21,7 +21,7 @@
                     </fieldset>
                     <div class="row">
                         <div class="form-group col-md-12 text-center mt-md-4">
-                            <input type="submit" value="{{ __('sigin.FOR-sabe') }}" class="btn btn-primary" />
+                            <input type="submit" value="{{ __('sigin.FOR-save') }}" class="btn btn-primary" />
                         </div>
                     </div>
                     @if($wrongemail === 1)

@@ -28,7 +28,8 @@ class ClientDataController extends Controller
         }
         return View("/frontend/client-data/index")
             ->with('clientData', $clientData);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientData", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -42,7 +43,8 @@ class ClientDataController extends Controller
         try {
             $this->usersService->updateClientData(Auth::user(), $data);
             return redirect()->back();
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientData", "edit", $ex->getMessage(), $request->ip(), Auth::id());
             $error = 1;
             return view("/frontend/home/index", compact('error'));

@@ -18,7 +18,8 @@ class WithdrawalController extends Controller
       try {
         $currencies = DB::table('currencies')->get();
           return View("/frontend/withdrawal/index", compact('currencies'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Withdrawal", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -32,7 +33,8 @@ class WithdrawalController extends Controller
             return view("/frontend/withdrawal/get-history", [
                 'walletHistory' => $walletHistory
             ]);
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), "Withdrawal", "getHistory", $exception->getMessage(), $request->ip(), Auth::id());
             $error = 1;
             return view("/frontend/home/index", compact('error'));

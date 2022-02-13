@@ -27,7 +27,8 @@ class ClientBankAccountController extends Controller
         $bankAccounts = Auth::user()->bankAccounts;
         return View("/frontend/client-bank-account/index")
             ->with('bankAccounts', $bankAccounts);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -40,7 +41,8 @@ class ClientBankAccountController extends Controller
         $currencies = $this->currenciesService->getActive();
         return view("/frontend/client-bank-account/create")
             ->with('currencies', $currencies);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "create", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -56,7 +58,8 @@ class ClientBankAccountController extends Controller
                 $data['country_id'] = $user->country->getId();
                 $user->bankAccounts()->create($data);
                 return redirect()->route('bank-accounts')->withSuccess('Konto bankowe zostało dodane');
-            } catch (\Exception $ex) {
+            }
+        catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientBankAccount", "store", $ex->getMessage(), $request->ip(), Auth::id());
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -69,7 +72,8 @@ class ClientBankAccountController extends Controller
           $bankAccount =  ClientBankAccount::where('id',$id)->first();
           return view("/frontend/client-bank-account/edit")
               ->with('bankAccount', $bankAccount);
-        } catch (\Exception $ex) {
+        }
+       catch (\Exception $ex) {
           saveException(sqlDateTime(), "ClientBankAccount", "edit", $ex->getMessage(), $request->ip(), Auth::id());
           $error = 1;
           return view("/frontend/home/index", compact('error'));
@@ -101,7 +105,8 @@ class ClientBankAccountController extends Controller
         $bankAccounts = Auth::user()->bankAccounts;
         return View("/frontend/client-bank-account/index")
             ->with('bankAccounts', $bankAccounts);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "update", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));

@@ -18,7 +18,8 @@ class PlatformDataController extends Controller
 
         return view('/frontend/admin/platform-data/index')
             ->with('platformData', $platformData);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-PlatformData", "index", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -34,7 +35,8 @@ class PlatformDataController extends Controller
         }
 
         return redirect()->route('admin.platform-data');
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-PlatformData", "update", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }

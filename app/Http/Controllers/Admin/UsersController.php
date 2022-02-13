@@ -14,7 +14,8 @@ class UsersController extends Controller
       try {
         $users = User::all();
         return view('/frontend/admin/users/index', compact('users'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "index", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -26,7 +27,8 @@ class UsersController extends Controller
         $user = User::find($id);
         return view('/frontend/admin/users/edit')
             ->with('user', $user);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "edit", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -63,7 +65,8 @@ class UsersController extends Controller
         $user->update($data);
         $users = User::all();
         return view('/frontend/admin/users/index', compact('users'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "update", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -75,7 +78,8 @@ class UsersController extends Controller
         $user = User::find($id);
         return view('/frontend/admin/users/delete')
             ->with('user', $user);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "delete", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -87,7 +91,8 @@ class UsersController extends Controller
         $user->delete();
         $users = User::all();
         return view('/frontend/admin/users/index', compact('users'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "deleteuser", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }

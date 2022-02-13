@@ -37,7 +37,8 @@ class LoginController extends Controller
           );
         $uservar->update($data);
         return redirect('/sign-in');
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Login", "SetNewPasswordUpdate", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -65,7 +66,8 @@ class LoginController extends Controller
           Mail::to($varmail)->send(new ResetPasswordMail($uservar));
           return redirect()->route('home');
         }
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Login", "ForgotPasswordReset", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -111,7 +113,8 @@ class LoginController extends Controller
           }
 
 
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Login", "signIn", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));

@@ -16,7 +16,8 @@ class AdminsController extends Controller
       try {
         $admins = Admin::all();
         return view('/frontend/admin/admins/index', compact('admins'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -65,7 +66,8 @@ class AdminsController extends Controller
         $admin->update($data);
         $admins = Admin::all();
         return view('/frontend/admin/admins/index', compact('admins'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "update", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -77,7 +79,8 @@ class AdminsController extends Controller
         $admin = Admin::find($id);
         return view('/frontend/admin/admins/delete')
             ->with('admin', $admin);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "delete", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -89,7 +92,8 @@ class AdminsController extends Controller
         $admin->delete();
         $admins = Admin::all();
         return view('/frontend/admin/admins/index', compact('admin'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "deleteadmin", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }

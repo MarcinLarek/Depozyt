@@ -65,13 +65,13 @@
                                           <div class="form-group col-md-6">
                                               <label for="Name"
                                                      class="control-label">{{ __('transaction.TABLE-name') }}</label>
-                                              <input name="Name" class="form-control"
+                                              <input name="name" class="form-control"
                                                      placeholder="{{ __('transaction.TABLE-name') }}"/>
                                           </div>
                                           <div class="form-group col-md-6">
                                               <label
                                                   for="TransactionType">{{ __('transaction.TABLE-tpye') }}</label>
-                                              <select id="TransactionType" name="TransactionType"
+                                              <select id="transaction_type" name="transaction_type"
                                                       class="custom-select">
                                                   <option value="1">{{ __('transaction.TABLE-services') }}</option>
                                                   <option value="2">{{ __('transaction.TABLE-general-goods') }}</option>
@@ -81,22 +81,22 @@
                                       </div>
                                       <div class="row">
                                           <div class="form-group col-md-6">
-                                              <label for="FromDate" class="control-label">{{ __('transaction.TABLE-from') }}:</label>
-                                              <input name="FromDate" class="form-control" placeholder="{{ __('transaction.TABLE-from') }}"
+                                              <label for="from_date" class="control-label">{{ __('transaction.TABLE-from') }}:</label>
+                                              <input name="from_date" class="form-control" placeholder="{{ __('transaction.TABLE-from') }}"
                                                       type="date"/>
                                               <span asp-validation-for="FromDate" class="text-danger"></span>
                                           </div>
                                           <div class="form-group col-md-6">
-                                              <label for="ToDate" class="control-label">{{ __('transaction.TABLE-to') }}:</label>
-                                              <input name="ToDate" class="form-control" placeholder="{{ __('transaction.TABLE-to') }}"
+                                              <label for="to_date" class="control-label">{{ __('transaction.TABLE-to') }}:</label>
+                                              <input name="to_date" class="form-control" placeholder="{{ __('transaction.TABLE-to') }}"
                                                     type="date"/>
                                               <span asp-validation-for="ToDate" class="text-danger"></span>
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="form-group col-md-12">
-                                              <label for="CommissionPayer">{{ __('transaction.TABLE-payment-type') }}: </label>
-                                              <select name="CommissionPayer" class="custom-select">
+                                              <label for="commission_payer">{{ __('transaction.TABLE-payment-type') }}: </label>
+                                              <select name="commission_payer" class="custom-select">
                                                   <option value="principal">{{ __('transaction.TABLE-customer') }}</option>
                                                   <option value="contractor">{{ __('transaction.TABLE-contractor') }}</option>
                                                   <option value="half">{{ __('transaction.TABLE-half') }}</option>
@@ -105,33 +105,33 @@
                                       </div>
                                       <div class="row">
                                           <div class="form-group col-md-4">
-                                              <label for="BankName" class="control-label">{{ __('transaction.TABLE-bank-name') }}</label>
-                                              <select name="BankName" class="custom-select" placeholder="{{ __('transaction.TABLE-bank-name') }}">
+                                              <label for="bank_name" class="control-label">{{ __('transaction.TABLE-bank-name') }}</label>
+                                              <select name="bank_name" class="custom-select" placeholder="{{ __('transaction.TABLE-bank-name') }}">
                                                 @foreach(Auth::user()->bankAccounts as $bank)
                                                     <option>{{ $bank->bank_name }}</option>
                                                 @endforeach
                                               </select>
                                           </div>
                                           <div class="form-group col-md-4">
-                                              <label for="CurrencyName" class="control-label">{{ __('transaction.TABLE-currency') }} </label>
-                                              <select name="CurrencyName" class="custom-select">
+                                              <label for="currency_name" class="control-label">{{ __('transaction.TABLE-currency') }} </label>
+                                              <select name="currency_name" class="custom-select">
                                                 @foreach($currencies as $currency)
                                                     <option>{{ $currency->symbol }}</option>
                                                 @endforeach
                                               </select>
                                           </div>
                                           <div class="form-group col-md-4">
-                                              <label for="Amount" class="control-label">{{ __('transaction.TABLE-ammount') }}</label>
-                                              <input name="Amount" class="form-control" placeholder="{{ __('transaction.TABLE-ammount') }}"/>
+                                              <label for="amount" class="control-label">{{ __('transaction.TABLE-ammount') }}</label>
+                                              <input name="amount" class="form-control" placeholder="{{ __('transaction.TABLE-ammount') }}"/>
                                               <span asp-validation-for="Amount" class="text-danger"></span>
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="form-group col-md-12">
-                                              <label for="Description" class="control-label">{{ __('transaction.TABLE-description') }}</label>
-                                              <textarea asp-for="Description" class="form-control" name="Description" placeholder="{{ __('transaction.TABLE-description') }}"
+                                              <label for="description" class="control-label">{{ __('transaction.TABLE-description') }}</label>
+                                              <textarea asp-for="description" class="form-control" name="description" placeholder="{{ __('transaction.TABLE-description') }}"
                                                         cols="80" rows="3"></textarea>
-                                              <span asp-validation-for="Description" class="text-danger"></span>
+                                              <span asp-validation-for="description" class="text-danger"></span>
                                           </div>
                                       </div>
                                   </fieldset>

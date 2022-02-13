@@ -16,7 +16,8 @@ class ClientController extends Controller
         $user = Auth::user();
         return View("/frontend/client/index")
         ->with('userData', $user);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Client", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -29,7 +30,8 @@ class ClientController extends Controller
       try {
         $this->authorize('update', $user);
         return view('/frontend/client/index', compact('user'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Client", "edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -54,7 +56,8 @@ class ClientController extends Controller
         auth()->user()->update($data);
         Auth::logout();
         return redirect('/sign-in');
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Client", "update", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));

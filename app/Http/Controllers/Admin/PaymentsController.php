@@ -20,7 +20,8 @@ class PaymentsController extends Controller
         $history = WalletHistory::all();
         return view('/frontend/admin/payments/index')
             ->with('history', $history);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "index", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -33,7 +34,8 @@ class PaymentsController extends Controller
         $history = WalletHistory::all();
         return view('/frontend/admin/payments/withdrawal')
             ->with('history', $history);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "withdrawal", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -51,7 +53,8 @@ class PaymentsController extends Controller
             ->with('currencies', $currencies)
             ->with('banks', $banks)
             ->with('users', $users);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "edit", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -82,7 +85,8 @@ class PaymentsController extends Controller
           $history = WalletHistory::all();
           return view('/frontend/admin/payments/index')
               ->with('history', $history);
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Payments', 'update', $exception->getMessage(), $request->ip(), Auth::id());
             return view('/frontend/admin/admin/index');
         }

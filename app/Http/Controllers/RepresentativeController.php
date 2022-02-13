@@ -18,7 +18,8 @@ class RepresentativeController extends Controller
         }
         return View("/frontend/representative/index")
             ->with('representative', $representativeData);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Representative", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -67,7 +68,8 @@ class RepresentativeController extends Controller
           return View("/frontend/representative/index")
                 ->with('representative', $representativeData);
         }
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Representative", "edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));

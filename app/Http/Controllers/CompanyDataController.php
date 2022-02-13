@@ -20,7 +20,8 @@ class CompanyDataController extends Controller
         }
         return View("/frontend/company-data/index")
             ->with('companyData', $companyData);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "CompanyData", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -36,7 +37,8 @@ class CompanyDataController extends Controller
             } else {
                 $companyData->create($request->all());
             }
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             saveException(sqlDateTime(), "CompanyData", "edit", $ex->getMessage(), $request->ip(), Auth::id());
             $error = 1;
             return view("/frontend/home/index", compact('error'));

@@ -17,7 +17,8 @@ class ContactController extends Controller
         $contacts = Contact::all();
         return view('/frontend/admin/contact/index')
             ->with('contacts', $contacts);
-          } catch (\Exception $ex) {
+          }
+          catch (\Exception $ex) {
             saveException(sqlDateTime(), "Admin-Contact", "index", $ex->getMessage(), $request->ip(), Auth::id());
 	    return view('/frontend/admin/admin/index');
         }
@@ -29,7 +30,8 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         return view('/frontend/admin/contact/show')
             ->with('contact', $contact);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "show", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -41,7 +43,8 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         return view('/frontend/admin/contact/reply')
             ->with('contact', $contact);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "reply", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -57,7 +60,8 @@ class ContactController extends Controller
           $contacts = Contact::all();
           return view('/frontend/admin/contact/index')
               ->with('contacts', $contacts);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "sendreply", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -68,7 +72,8 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         return view('/frontend/admin/contact/delete')
             ->with('contact', $contact);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "delete", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -80,7 +85,8 @@ class ContactController extends Controller
         $contact->delete();
         $contacts = Contact::all();
         return view('/frontend/admin/contact/index', compact('contacts'));
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "deletemessege", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }

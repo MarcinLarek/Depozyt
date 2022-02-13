@@ -15,7 +15,8 @@ class PlatformBankAccountController extends Controller
         $bankAccounts = PlatformBankAccount::all();
         return view('/frontend/admin/platform-bank-account/index')
             ->with('bankAccounts', $bankAccounts);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-PlatformBankAccount", "index", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -27,7 +28,8 @@ class PlatformBankAccountController extends Controller
         try {
             PlatformBankAccount::create($request->all());
             return redirect()->route('admin.platform-bank-account');
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), "Admin\PlatformBankAccount", "store()", $exception->getMessage(), $request->ip(), Auth::id());
             return view('/frontend/admin/admin/index');
         }
@@ -39,7 +41,8 @@ class PlatformBankAccountController extends Controller
         $bankAccount = PlatformBankAccount::find($id);
         return view('/frontend/admin/platform-bank-account/edit')
             ->with('bankAccount', $bankAccount);
-      } catch (\Exception $ex) {
+      }
+      catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-PlatformBankAccount", "edit", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
@@ -51,7 +54,8 @@ class PlatformBankAccountController extends Controller
             $bankAccount = PlatformBankAccount::find($id);
             $bankAccount->update($request->all());
             return redirect()->back();
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
             saveException(sqlDateTime(), "Admin-PlatformBankAccount", "update()", $exception->getMessage(), $request->ip(), Auth::id());
             return view('/frontend/admin/admin/index');
         }
