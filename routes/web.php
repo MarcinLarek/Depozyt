@@ -131,6 +131,12 @@ Route::domain('admin.localhost')->group(function () {
             Route::put('/{id}/update', [\App\Http\Controllers\Admin\CountriesController::class, 'update'])->name('admin.countries.update');
         });
 
+        Route::prefix('/bankaccounts')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\BankAccountsController::class, 'index'])->name('admin.bankaccounts');
+            Route::get('/{id}/edit', [\App\Http\Controllers\Admin\BankAccountsController::class, 'edit'])->name('admin.bankaccounts.edit');
+            Route::put('/{id}/update', [\App\Http\Controllers\Admin\BankAccountsController::class, 'update'])->name('admin.bankaccounts.update');
+        });
+
         Route::prefix('/transactions')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\TransactionsController::class, 'index'])->name('admin.transactions');
             Route::post('/store', [\App\Http\Controllers\Admin\TransactionsController::class, 'store'])->name('admin.transactions.store');

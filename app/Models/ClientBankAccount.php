@@ -9,7 +9,7 @@ class ClientBankAccount extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id', 'name', 'bank_name', 'currency_id', 'country_id', 'account_number', 'swift'
+        'user_id', 'name', 'bank_name', 'currency_id', 'country_id', 'account_number', 'swift', 'active'
     ];
 
     public function getName()

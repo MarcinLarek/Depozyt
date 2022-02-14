@@ -35,15 +35,15 @@
          @if (Auth::user()->isCompany())
 
          @elseif ($clientData->surname == null)
-           Nie uzupełniono danych o swoim koncie. Aby to zrobić wejdź w <b>Ustawienia Konta -> Moje Dane</b> <br>
+           {{ __('navbar.no_account_data_1') }}<b>{{ __('navbar.no_account_data_2') }}</b> <br>
          @endif
 
          @if($temp < 1)
-         Nie dodano jeszcze żadnego konta bankowego. Aby to zrobić wejdź w <b>Środki -> Konta Bankowe</b><br>
+         {{ __('navbar.no_bankaccounts_1') }} <b>{{ __('navbar.no_bankaccounts_2') }}</b><br>
          @endif
 
          @if ($companyData->name == null && Auth::user()->isCompany())
-           Nie uzupełniono danych o firmie.</b> <br>
+           {{ __('navbar.no_company_data') }}</b> <br>
          @endif
     </div>
 </nav>

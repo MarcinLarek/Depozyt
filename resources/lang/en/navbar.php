@@ -24,6 +24,12 @@ return [
   'mydata' => 'My data',
   'myaccount' => 'My account',
   'logout' => 'Logout',
+  //nodata
+  'no_account_data_1' => 'Account data has not been completed. To do this, go to ',
+  'no_account_data_2' => 'Account Settings -> My Data',
+  'no_bankaccounts_1' => 'No bank account has been added yet. To do this, go to ',
+  'no_bankaccounts_2' => 'Resources -> Bank Accounts',
+  'no_company_data' => 'Company data has not been completed.',
   '' => '',
 
 ];

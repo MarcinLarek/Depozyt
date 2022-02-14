@@ -1,6 +1,6 @@
 <?php
 return [
-  'IND-registersucc' => 'Account created successfully. To log in, activate your account by clicking the activation link sent to your email.'
+  'IND-registersucces' => 'Account created successfully. To log in, activate your account by clicking the activation link sent to your email.',
   'IND-title' => 'Registration',
   'IND-subtitle' => 'Register',
   'IND-username' => 'Username',

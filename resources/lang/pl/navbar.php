@@ -24,6 +24,12 @@ return [
   'mydata' => 'Moje dane',
   'myaccount' => 'Moje konto',
   'logout' => 'Wyloguj',
+  //nodata
+  'no_account_data_1' => 'Nie uzupełniono danych o swoim koncie. Aby to zrobić wejdź w ',
+  'no_account_data_2' => 'Ustawienia Konta -> Moje Dane',
+  'no_bankaccounts_1' => 'Nie dodano jeszcze żadnego konta bankowego. Aby to zrobić wejdź w ',
+  'no_bankaccounts_2' => 'Środki -> Konta Bankowe',
+  'no_company_data' => 'Nie uzupełniono danych o firmie.',
   '' => '',
 
 ];

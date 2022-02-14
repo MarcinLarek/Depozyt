@@ -45,10 +45,10 @@
         <div class="col-md-3 mt-4">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <i class="fas fa-university fa-4x"></i>
+                    <a href="{{ route('admin.bankaccounts') }}"><i class="fas fa-university fa-4x"></i></a>
                 </div>
                 <div class="card-title">
-                    <a href="">Konta bankowe ({{ \App\Models\ClientBankAccount::count() }})</a>
+                    <a href="{{ route('admin.bankaccounts') }}">Konta bankowe ({{ \App\Models\ClientBankAccount::count() }})</a>
                 </div>
             </div>
         </div>
