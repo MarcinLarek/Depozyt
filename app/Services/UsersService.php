@@ -28,7 +28,7 @@ class UsersService
         $data['personal_code'] = Crypt::encryptString($generator->generate());
         $data['password'] = Hash::make($data['password']);
         $user = $this->usersRepository->create($data);
-        $user->notify(new ConfirmEmailNotification($user));
+        //$user->notify(new ConfirmEmailNotification($user));
     }
 
     public function loginUser(array $data): User

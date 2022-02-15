@@ -9,7 +9,8 @@ return [
   'IND-email' => 'Email',
   'IND-client_type' => 'Typ konta',
   'IND-country' => 'Kraj',
-  'IND-accept_statute' => 'Rejestrując konto, akceptujesz w pełni regulamin.',
+  'IND-accept_statute1' => 'Rejestrując konto, akceptujesz w pełni ',
+  'IND-accept_statute2' => 'regulamin.',
   'IND-register' => 'Zarejestruj się',
   '' => '',
 

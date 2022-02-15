@@ -55,6 +55,7 @@
                 use App\Models\CompanyData;
                 use App\Models\User;
                 $i = 1; ?>
+                @if($transactions->isNotEmpty())
                 @foreach($transactions as $transaction)
                 <?php
                 $customer =  ClientData::where('user_id',$transaction['customer_id'])->first();
@@ -85,6 +86,11 @@
                     </tr>
                     <?php $i++ ?>
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="13">Brak danych do wyświetlenia</td>
+                </tr>
+                @endif
                 </tbody>
             </table>
         </div>

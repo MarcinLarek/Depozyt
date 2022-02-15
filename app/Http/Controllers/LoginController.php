@@ -47,7 +47,11 @@ class LoginController extends Controller
 
     public function logout(Request $request) {
       Auth::logout();
-      return redirect('/sign-in');
+      $failstatus = 0;
+      $errortype = 0;
+        return view("/frontend/sign-in/index")
+          ->with('errortype', $errortype)
+          ->with('failstatus', $failstatus);
     }
 
     public function forgotPasswordReset(Request $request)
@@ -82,7 +86,10 @@ class LoginController extends Controller
     public function index(\App\Models\User $failstatus)
     {
       $failstatus = 0;
-        return view("/frontend/sign-in/index", compact('failstatus'));
+      $errortype = 0;
+        return view("/frontend/sign-in/index")
+          ->with('errortype', $errortype)
+          ->with('failstatus', $failstatus);
     }
 
     public function signIn(LoginRequest $request,\App\Models\User $failstatus)
@@ -95,10 +102,20 @@ class LoginController extends Controller
               'password' => 'required',
           ]);
           $user =  User::where('username',$request['username'])->first();
-
-          if ($user['email_verified_at'] == null)
+          if ($user == null) {
+            $failstatus = 0;
+            $errortype = 1;
+              return view("/frontend/sign-in/index")
+                ->with('errortype', $errortype)
+                ->with('failstatus', $failstatus);
+          }
+          elseif ($user['email_verified_at'] == null)
           {
-            return redirect()->route('home');
+            $failstatus = 0;
+            $errortype = 2;
+              return view("/frontend/sign-in/index")
+                ->with('errortype', $errortype)
+                ->with('failstatus', $failstatus);
           }
           else
           {
@@ -107,8 +124,11 @@ class LoginController extends Controller
              {
                  return redirect()->route('home');
              }else{
-               $failstatus = 1;
-               return view("/frontend/sign-in/index", compact('failstatus'));
+               $failstatus = 0;
+               $errortype = 0;
+                 return view("/frontend/sign-in/index")
+                   ->with('errortype', $errortype)
+                   ->with('failstatus', $failstatus);
              }
           }
 

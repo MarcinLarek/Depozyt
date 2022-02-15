@@ -6,7 +6,6 @@ use App\Http\Requests\RegisterRequest;
 use App\Mail\ConfirmEmail;
 use App\Models\User;
 use App\Services\UsersService;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -46,8 +45,8 @@ class RegisterController extends Controller
             die;
             saveException(sqlDateTime(), "Register", "Register", $ex->getMessage(), $request->ip());
             $registersucces = 0;
+            return view("/frontend/register/index");
         }
-        return view("/frontend/register/index");
     }
 
     public function confirmation($token)
@@ -55,7 +54,7 @@ class RegisterController extends Controller
       try {
         $carbon = Carbon::now();
         $mytime = $carbon->format('Y-m-d H:i:s');
-        $user =  User::where('token',$token)->first();
+        $user =  User::where('personal_code',$token)->first();
         $data = array('email_verified_at' => $mytime , );
         $user->update($data);
         $error = 0;

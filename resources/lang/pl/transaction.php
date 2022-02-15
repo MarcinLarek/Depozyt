@@ -15,6 +15,7 @@ return [
   'IND-legend-payed-notaccepted' => ' - Transakcja jest opłacona oraz jej rezultat jest zaakceptowany. Możesz pobrać dokument podsumowujący usługę depozytową.',
   'IND-legend-downloadpdf' => ' - Pobierz dokument PDF z podsumowaniem usługi depozytowej.',
   'IND-pdf' => 'Generowanie PDF...',
+  'IND-nodata' => 'Nie dodano jeszcze żadnego konta bankowego / danych o koncie. Aby uzyskać dostęp do transkacji wypełnij te dane.',
 
   'IND-transaction-list' => 'Lista transakcji',
   //
@@ -47,6 +48,8 @@ return [
   'TABLE-bank-name' => 'Konto bankowe',
   'TABLE-payment-type' => 'Płacący',
   'TABLE-creation-date' => 'Data Utworzenia',
+  'TABLE-empty' => 'Nie brano jeszcze udziału w żadnych transakcjach',
+  'TABLE-emptytoaccpet' => 'Brak zmian do zaakceptowania',
   //
   // Create
   //

@@ -14,6 +14,7 @@
                 <th>Opcje</th>
             </tr>
             </thead>
+            @if($admins->isNotEmpty())
             <tbody>
             <?php $i = 1; ?>
             @foreach($admins as $admin)
@@ -30,6 +31,11 @@
                 </tr>
             @endforeach
             </tbody>
+            @else
+            <tr>
+              <td colspan="5">Brak daanych do wyświetlenia</td>
+            </tr>
+            @endif
         </table>
     </div>
 @endsection

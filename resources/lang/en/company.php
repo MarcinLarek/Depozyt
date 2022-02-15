@@ -11,7 +11,7 @@ return [
   'COM-telephone' => 'Phone',
   'COM-subtitle3' => 'Address',
   'COM-street' => 'Street',
-  'COM-postcode' => 'postcode',
+  'COM-postcode' => 'Postcode',
   'COM-city' => 'City',
   'COM-save' => 'Save',
   'COM-succes' => 'SUCCESS! Your data has been saved. Check your e-mail with the confirmation message of the escrow service.',

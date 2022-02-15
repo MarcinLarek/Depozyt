@@ -59,6 +59,7 @@
                 </thead>
                 <tbody>
                 <?php $i = 1; ?>
+                @if($countries->isNotEmpty())
                 @foreach($countries as $country)
                     <tr>
                         <td>{{ $i }}</td>
@@ -72,6 +73,11 @@
                     </tr>
                     <?php $i++ ?>
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="4">Brak danych do wyświetlenia</td>
+                </tr>
+                @endif
                 </tbody>
             </table>
         </div>

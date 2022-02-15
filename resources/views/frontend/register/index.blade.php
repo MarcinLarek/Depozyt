@@ -76,7 +76,10 @@
                                 <div class="form-group col-md-12">
                                     <div class="custom-control custom-checkbox">
                                         <input name="terms-and-conditions" id="terms-and-conditions" class="custom-control-input" type="checkbox" value="1">
-                                        <label for="terms-and-conditions" class="custom-control-label">{{ __('register.IND-accept_statute') }}</label><br/>
+                                        <label for="terms-and-conditions" class="custom-control-label">
+                                          {{ __('register.IND-accept_statute1') }}
+                                          <a href="{{ route('regulations') }}">{{ __('register.IND-accept_statute2') }}</a>
+                                        </label><br/>
                                         @error('terms-and-conditions')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

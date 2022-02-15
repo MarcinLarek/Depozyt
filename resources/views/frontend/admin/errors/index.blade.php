@@ -19,6 +19,7 @@
                 </thead>
                 <tbody>
                 <?php $i = 1; ?>
+                @if($errors->isNotEmpty())
                 @foreach($errors as $error)
                     <tr>
                         <td>{{ $i }}</td>
@@ -31,6 +32,11 @@
                     </tr>
                     <?php $i++ ?>
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="9">Brak danych do wyświetlenia</td>
+                </tr>
+                @endif
                 </tbody>
             </table>
         </div>

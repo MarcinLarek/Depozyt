@@ -49,6 +49,7 @@
                 </thead>
                 <tbody>
                 <?php $i = 1; ?>
+                @if($clientTypes->isNotEmpty())
                 @foreach($clientTypes as $clientType)
                     <tr>
                         <td>{{ $i }}</td>
@@ -61,6 +62,11 @@
                     </tr>
                     <?php $i++ ?>
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="3">Brak danych do wyświetlenia</td>
+                </tr>
+                @endif
                 </tbody>
             </table>
         </div>

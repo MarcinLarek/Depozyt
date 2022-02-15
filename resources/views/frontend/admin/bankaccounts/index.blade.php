@@ -41,6 +41,7 @@
                   use App\Models\User;
                   use App\Models\Country;
                   $i = 1; ?>
+                  @if($banks->isNotEmpty())
                   @foreach($banks as $bank)
                   <?php
                   $currency = Currency::where('id',$bank['currency_id'])->first();
@@ -66,6 +67,11 @@
                     </tr>
                     <?php $i++ ?>
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="10">Brak danych do wyświetlenia</td>
+                </tr>
+                @endif
                 </tbody>
             </table>
         </div>

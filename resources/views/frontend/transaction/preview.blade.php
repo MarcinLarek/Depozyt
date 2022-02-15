@@ -9,7 +9,7 @@
             <a href="{{ route('transaction') }}"><button class="btn btn-primary btn-sm" name="create">{{ __('transaction.IND-transaction-list') }}</button></a>
           </div>
           <div class="col-3">
-            <a href="{{ route('transaction.templist') }}"><button class="btn btn-primary btn-sm" name="create">{{ __('transaction.IND-view-changes') }}</button></a>
+            <a href="{{ route('transaction.transactionsToAccept') }}"><button class="btn btn-primary btn-sm" name="create">{{ __('transaction.IND-view-changes') }}</button></a>
           </div>
         </div>
     </div>

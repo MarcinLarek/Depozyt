@@ -1,7 +1,7 @@
 <?php
 return [
   'title' => 'Custodian Payment Platform',
-  'login' => 'Sigin',
+  'login' => 'Sign in',
   'dontaccount' => 'You don\'t have an account?',
   'registeryourself' => 'Register',
   'main' => 'Home',

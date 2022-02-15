@@ -54,8 +54,8 @@ class ClientTypesController extends Controller
     public function update($id, Request $request)
     {
         try {
-            $clientType->update($request->all());
             $clientType = ClientType::find($id);
+            $clientType->update($request->all());
             return redirect()->route('admin.client-types');
         }
         catch (\Exception $exception) {

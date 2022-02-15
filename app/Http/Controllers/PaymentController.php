@@ -30,8 +30,11 @@ class PaymentController extends Controller
     {
       try {
         $this->platformBankAccountsService->getActive();
+        $data = PlatformData::where('id',1)->first();
         $currencies = DB::table('currencies')->get();
-        return view("/frontend/payment/index", compact('currencies'));
+        return view("/frontend/payment/index")
+        ->with('currencies', $currencies)
+        ->with('data', $data);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "index", $ex->getMessage(), $request->ip(), Auth::id());

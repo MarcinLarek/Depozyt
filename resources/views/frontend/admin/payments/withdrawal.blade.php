@@ -40,6 +40,7 @@
                   use App\Models\CompanyData;
                   use App\Models\User;
                   $i = 1; ?>
+                @if($history->isNotEmpty())
                 @foreach($history as $payment)
                 <?php
                 $user =  User::where('id',$payment['user_id'])->first();
@@ -70,6 +71,11 @@
                     <?php $i++ ?>
                     @endif
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="7">Brak danych do wyświetlenia</td>
+                </tr>
+                @endif
                 </tbody>
             </table>
         </div>

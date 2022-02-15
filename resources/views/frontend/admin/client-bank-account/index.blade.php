@@ -64,7 +64,8 @@
                 </thead>
                 <tbody>
                 <?php $i = 1; ?>
-                @foreach($bankAccounts as $bankAccount)
+                @if($banks->isNotEmpty())
+                @foreach($banks as $bankAccount)
                     <tr>
                         <td>{{ $i }}</td>
                         <td>{{ $bankAccount->bank_name }}</td>
@@ -85,6 +86,11 @@
                     </tr>
                     <?php $i++ ?>
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="10">Brak danych do wyświetlenia</td>
+                </tr>
+                @endif
                 </tbody>
             </table>
         </div>

@@ -49,7 +49,7 @@
                               <div class="col">
                                 <div class="row">
                                   <h2 class="w-100" >{{ __('payment.IND-transfer-details') }}:</h2>
-                                  <div class="col-2">
+                                  <div class="col-3">
                                       <p> <b>{{ __('payment.IND-transfer-title') }}:</b> </p>
                                       <p> <b>{{ __('payment.IND-account-number') }}:</b> </p>
                                   </div>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="row">
                                   <h2 class="w-100" >{{ __('payment.IND-receiver') }}:</h2>
-                                  <div class="col-2">
+                                  <div class="col-3 ">
                                       <p> <b>{{ __('payment.IND-name') }}:</b> </p>
                                       <p> <b>{{ __('payment.IND-nip') }}:</b> </p>
                                       <p> <b>{{ __('payment.IND-regon') }}:</b> </p>
@@ -70,12 +70,12 @@
                                       <p> <b>{{ __('payment.IND-city') }}:</b> </p>
                                   </div>
                                   <div class="col">
-                                      <p>Depozyt</p>
-                                      <p>1234567890</p>
-                                      <p>1234567890</p>
-                                      <p>1234567890</p>
-                                      <p>XXX</p>
-                                      <p>XXX</p>
+                                      <p>{{$data['company']}}</p>
+                                      <p>{{$data['nip']}}</p>
+                                      <p>{{$data['regon']}}</p>
+                                      <p>{{$data['krs']}}</p>
+                                      <p>{{$data['street']}}</p>
+                                      <p>{{$data['city']}}</p>
                                   </div>
                                 </div>
                               </div>

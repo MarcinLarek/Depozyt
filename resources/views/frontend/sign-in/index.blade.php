@@ -3,6 +3,17 @@
 @section('content')
     <h1 class="mt-md-4">{{ __('sigin.IND-title') }}</h1>
     <hr/>
+
+      @if($errortype==1)
+      <div class="alert alert-warning">
+        <h2>{{ __('sigin.IND-errortype1') }}</h2>
+      </div>
+      @elseif($errortype==2)
+      <div class="alert alert-warning">
+        <h2>{{ __('sigin.IND-errortype2') }}</h2>
+      </div>
+      @endif
+
     <div clasms="row">
         <div class="col-md-8 offset-md-2">
             <div class="card border-0">

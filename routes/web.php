@@ -79,7 +79,7 @@ Route::domain('localhost')->group(function () {
             Route::post('/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transactions.store');
             Route::get('/{id}/edit', [\App\Http\Controllers\TransactionController::class, 'edit'])->name('transactions.edit');
             Route::post('/{id}/update', [\App\Http\Controllers\TransactionController::class, 'update'])->name('transactions.update');
-            Route::get('/templist', [\App\Http\Controllers\TransactionController::class, 'tempList'])->name('transaction.templist');
+            Route::get('/transactionsToAccept', [\App\Http\Controllers\TransactionController::class, 'transactionsToAccept'])->name('transaction.transactionsToAccept');
             Route::get('/confirm', [\App\Http\Controllers\TransactionController::class, 'confirm'])->name('transactions.confirm');
             Route::get('/{id}/preview', [\App\Http\Controllers\TransactionController::class, 'preview'])->name('transactions.preview');
             Route::get('/{id}/generatepdf2', [\App\Http\Controllers\TransactionController::class, 'generatePdf2'])->name('transactions.generatepdf2');

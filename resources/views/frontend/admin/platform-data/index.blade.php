@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="nip" class="control-label">NIP</label>
-                    <input name="nip" id="nip" class="form-control" placeholder="Ulica" value="{{ old('nip', $platformData->nip) }}"/>
+                    <input name="nip" id="nip" class="form-control" placeholder="NIP" value="{{ old('nip', $platformData->nip) }}"/>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="krs" class="control-label">KRS</label>

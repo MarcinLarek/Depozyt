@@ -79,8 +79,8 @@
                     @endforeach
                 @else
                     <tr class="text-center font-weight-bold">
-                        {{ __('recipient.IND-norecipient1') }} <a
-                            href="{{ route('recipients.create') }}">{{ __('recipient.IND-norecipient2') }}</a>{{ __('recipient.IND-norecipient3') }}
+                        <td colspan="8">{{ __('recipient.IND-norecipient1') }} <a
+                            href="{{ route('recipients.create') }}">{{ __('recipient.IND-norecipient2') }}</a>{{ __('recipient.IND-norecipient3') }}</td>
                     </tr>
                 @endif
                 </tbody>

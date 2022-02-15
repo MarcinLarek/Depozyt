@@ -16,14 +16,16 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         $domain = $request->route()->domain();
-        $adminDomain = strpos($domain, 'admin.');
-        $signInRouteName = 'sign-in';
-        if ($adminDomain == 0) {
+        if(str_contains($domain,'admin.')) {
             $signInRouteName = 'admin.sign-in';
         }
+        else {
+            $signInRouteName = 'client.sign-in';
+        }
 
+        return route($signInRouteName);
         if (!$request->expectsJson()) {
-            return route($signInRouteName);
+
         }
     }
 }

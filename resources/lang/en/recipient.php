@@ -53,7 +53,7 @@ return [
   'EDI-telephone' => 'Phone number',
   'EDI-subtitle3' => 'Address',
   'EDI-street' => 'street',
-  'EDI-postcode' => 'postcode',
+  'EDI-postcode' => 'Postcode',
   'EDI-city' => 'City',
   'EDI-is_recipient_active' => 'Recipient activity',
   'EDI-yes' => 'Yes',

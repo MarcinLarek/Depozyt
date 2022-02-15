@@ -96,6 +96,7 @@
         use App\Models\CompanyData;
         use App\Models\User;
         $i = 1; ?>
+      @if($transactions->isNotEmpty())
       @foreach($transactions as $transaction)
       <?php
       $customer =  ClientData::where('user_id',$transaction['customer_id'])->first();
@@ -183,6 +184,11 @@
           </tr>
           <?php $i++ ?>
       @endforeach
+      @else
+      <tr class="text-center">
+        <td colspan="13"> {{ __('transaction.TABLE-emptytoaccpet') }} </td>
+      </tr>
+      @endif
       </tbody>
   </table>
 @endsection

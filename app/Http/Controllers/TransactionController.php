@@ -25,7 +25,8 @@ class TransactionController extends Controller
         $user = Auth::user();
         $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
         return view("/frontend/transaction/index")
-          ->with('transactions', $transactions);
+          ->with('transactions', $transactions)
+          ->with('user', $user);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -97,7 +98,11 @@ class TransactionController extends Controller
             'description' => $request['description']
           );
           Transaction::create($data);
-          return view("/frontend/transaction/index");
+          $user = Auth::user();
+          $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
+          return view("/frontend/transaction/index")
+            ->with('transactions', $transactions)
+            ->with('user', $user);
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "Transaction", "store", $ex->getMessage(), $request->ip());
@@ -216,7 +221,8 @@ class TransactionController extends Controller
             $user = Auth::user();
             $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
             return view("/frontend/transaction/index")
-              ->with('transactions', $transactions);
+              ->with('transactions', $transactions)
+              ->with('user', $user);
         }
     catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
@@ -225,17 +231,17 @@ class TransactionController extends Controller
         }
     }
 
-    public function tempList()
+    public function transactionsToAccept()
     {
       try {
         $currentuser = Auth::user();
         $transactions =TransactionToAccept::where('contractor_id',$currentuser['id'])->orWhere('customer_id',$currentuser['id'])->get();
-        return view("/frontend/transaction/templist")
+        return view("/frontend/transaction/transactionsToAccept")
           ->with('transactions', $transactions)
           ->with('currentuser', $currentuser);
       }
       catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Transaction", "templist", $ex->getMessage(), $request->ip(), Auth::id());
+                  saveException(sqlDateTime(), "Transaction", "transactionsToAccept", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -304,7 +310,8 @@ class TransactionController extends Controller
         $user = Auth::user();
         $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
         return view("/frontend/transaction/index")
-          ->with('transactions', $transactions);
+          ->with('transactions', $transactions)
+          ->with('user', $user);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "confirm", $ex->getMessage(), $request->ip(), Auth::id());
