@@ -3,14 +3,19 @@
 @section('content')
     <h1 class="mt-md-4">{{ __('company.COM-title') }}</h1>
     <hr/>
+    @if($succesaalert == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
+    @endif
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card border-0">
                 <div class="card-body">
-                    <form id="edit" method="post">
+                    <form action="{{ route('company-data.edit') }}" method="post">
                         @csrf
                         <fieldset>
-                            <legend>{{ __('company.COM-subtitle') }}</legend>
+                            <legend>{{ __('company.COM-subtitle1') }}</legend>
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="name" class="control-label">{{ __('company.COM-name') }}</label>

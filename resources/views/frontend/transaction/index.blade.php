@@ -9,7 +9,12 @@
     use App\Models\CompanyData;
     use App\Models\User;
     $i = 1; ?>
-    @if(isset($user->clientData['name']))
+    @if($succesaalert == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
+    @endif
+    @if(isset($user->clientData['name']) || isset($user->companyData['name']))
     <div class="card border-0">
         <div class="card-body">
             <div class="row">

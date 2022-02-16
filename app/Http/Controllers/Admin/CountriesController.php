@@ -14,8 +14,10 @@ class CountriesController extends Controller
     {
       try {
         $countries = Country::all();
+        $succesaalert = 0;
         return view('/frontend/admin/countries/index')
-            ->with('countries', $countries);
+            ->with('countries', $countries)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Countries", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -32,7 +34,11 @@ class CountriesController extends Controller
 
         try {
             Country::create($request->all());
-            return redirect()->route('admin.countries');
+            $countries = Country::all();
+            $succesaalert = 1;
+            return view('/frontend/admin/countries/index')
+                ->with('countries', $countries)
+                ->with('succesaalert', $succesaalert);
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CountriesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());
@@ -58,7 +64,11 @@ class CountriesController extends Controller
         try {
             $country = Country::find($id);
             $country->update($request->all());
-            return redirect()->route('admin.countries')->with('success', $success);
+            $countries = Country::all();
+            $succesaalert = 1;
+            return view('/frontend/admin/countries/index')
+                ->with('countries', $countries)
+                ->with('succesaalert', $succesaalert);
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CountriesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());

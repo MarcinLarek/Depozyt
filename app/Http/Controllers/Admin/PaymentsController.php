@@ -17,9 +17,11 @@ class PaymentsController extends Controller
     public function index()
     {
       try {
+        $succesaalert = 0;
         $history = WalletHistory::all();
         return view('/frontend/admin/payments/index')
-            ->with('history', $history);
+            ->with('history', $history)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -31,9 +33,11 @@ class PaymentsController extends Controller
     public function withdrawal()
     {
       try {
+        $succesaalert = 1;
         $history = WalletHistory::all();
         return view('/frontend/admin/payments/withdrawal')
-            ->with('history', $history);
+            ->with('history', $history)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "withdrawal", $ex->getMessage(), $request->ip(), Auth::id());
@@ -82,9 +86,11 @@ class PaymentsController extends Controller
             'generated_document_id' => $request['DocumentID']
           );
           $payment->update($data);
+          $succesaalert = 1;
           $history = WalletHistory::all();
           return view('/frontend/admin/payments/index')
-              ->with('history', $history);
+              ->with('history', $history)
+              ->with('succesaalert', $succesaalert);
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Payments', 'update', $exception->getMessage(), $request->ip(), Auth::id());

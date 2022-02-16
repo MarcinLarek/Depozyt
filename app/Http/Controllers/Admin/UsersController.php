@@ -13,7 +13,10 @@ class UsersController extends Controller
     {
       try {
         $users = User::all();
-        return view('/frontend/admin/users/index', compact('users'));
+        $succesaalert = 0;
+        return view('/frontend/admin/users/index')
+            ->with('users', $users)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -64,7 +67,10 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->update($data);
         $users = User::all();
-        return view('/frontend/admin/users/index', compact('users'));
+        $succesaalert = 1;
+        return view('/frontend/admin/users/index')
+            ->with('users', $users)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "update", $ex->getMessage(), $request->ip(), Auth::id());
@@ -90,7 +96,10 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->delete();
         $users = User::all();
-        return view('/frontend/admin/users/index', compact('users'));
+        $succesaalert = 0;
+        return view('/frontend/admin/users/index')
+            ->with('users', $users)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "deleteuser", $ex->getMessage(), $request->ip(), Auth::id());

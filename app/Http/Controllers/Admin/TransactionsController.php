@@ -18,7 +18,9 @@ class TransactionsController extends Controller
     {
       try {
         $transactions = Transaction::all();
+        $succesaalert = 0;
         return view('/frontend/admin/transactions/index')
+            ->with('succesaalert', $succesaalert)
             ->with('transactions', $transactions);
       }
       catch (\Exception $ex) {
@@ -82,7 +84,9 @@ class TransactionsController extends Controller
           );
           $transaction->update($data);
           $transactions = Transaction::all();
+          $succesaalert = 1;
           return view('/frontend/admin/transactions/index')
+              ->with('succesaalert', $succesaalert)
               ->with('transactions', $transactions);
         } catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());

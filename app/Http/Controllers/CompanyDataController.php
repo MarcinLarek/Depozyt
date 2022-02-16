@@ -18,8 +18,10 @@ class CompanyDataController extends Controller
         if (empty($companyData)) {
             $companyData = CompanyData::make();
         }
+        $succesaalert = 0;
         return View("/frontend/company-data/index")
-            ->with('companyData', $companyData);
+            ->with('companyData', $companyData)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "CompanyData", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -37,6 +39,16 @@ class CompanyDataController extends Controller
             } else {
                 $companyData->create($request->all());
             }
+
+            $companyData = Auth::user()->companyData()->first();
+            if (empty($companyData)) {
+                $companyData = CompanyData::make();
+            }
+            $succesaalert = 1;
+            return View("/frontend/company-data/index")
+                ->with('companyData', $companyData)
+                ->with('succesaalert', $succesaalert);
+
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "CompanyData", "edit", $ex->getMessage(), $request->ip(), Auth::id());

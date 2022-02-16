@@ -1,21 +1,12 @@
 @extends('frontend.layout.master-dashboard')
 
 @section('content')
-    <h1>Kraje</h1>
+    <h1>Typy konta</h1>
     <hr/>
-    @if(isset($success) && $success == 1)
-        <div class="col-md-12 mt-md-2">
-            <div id="successAlert" class="alert alert-success d-none">
-                <strong>UDAŁO SIĘ!</strong> Dodano typ klienta.
-            </div>
-        </div>
-    @endif
-    @if(isset($success) && $success == 0)
-        <div class="col-md-12 mt-md-2">
-            <div id="invalidAlert" class="alert alert-danger d-none">
-                <strong>UPS... Coś poszło nie tak!</strong> Twoje dane nie zostały zapisane.
-            </div>
-        </div>
+    @if($succesaalert == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
     @endif
     <div class="col-md-12 mt-md-2">
         <div id="invalidAlert" class="alert alert-danger d-none">
@@ -29,9 +20,9 @@
             @csrf
             <div class="row">
                 <div class="form-group w-100">
-                    <label for="name">{{ __('account.client-type') }}</label>
+                    <label for="name">Typ klienta</label>
                     <input type="text" name="name" id="name" class="form-control"
-                           placeholder="{{ __('account.client-type') }}">
+                           placeholder="Typ klienta">
                 </div>
             </div>
             <div class="row py-3">

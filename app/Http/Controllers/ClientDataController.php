@@ -26,8 +26,10 @@ class ClientDataController extends Controller
         if (empty($clientData)) {
             $clientData = ClientData::make();
         }
+        $succesaalert = 0;
         return View("/frontend/client-data/index")
-            ->with('clientData', $clientData);
+            ->with('clientData', $clientData)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientData", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -42,7 +44,15 @@ class ClientDataController extends Controller
         $data = $request->validated();
         try {
             $this->usersService->updateClientData(Auth::user(), $data);
-            return redirect()->back();
+            $clientData = Auth::user()->clientData;
+            if (empty($clientData)) {
+                $clientData = ClientData::make();
+            }
+            $succesaalert = 1;
+            return View("/frontend/client-data/index")
+                ->with('clientData', $clientData)
+                ->with('succesaalert', $succesaalert);
+
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientData", "edit", $ex->getMessage(), $request->ip(), Auth::id());

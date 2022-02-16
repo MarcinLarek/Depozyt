@@ -18,7 +18,9 @@ class BankAccountsController extends Controller
   {
     try {
       $banks = ClientBankAccount::all();
+      $succesaalert = 0;
       return view('/frontend/admin/bankaccounts/index')
+          ->with('succesaalert', $succesaalert)
           ->with('banks', $banks);
     }
     catch (\Exception $ex) {
@@ -48,41 +50,42 @@ class BankAccountsController extends Controller
 
   public function update($id, Request $request)
   {
-    $bank = ClientBankAccount::find($id);
-    $request->validate([
-        'user_username' => ['required'],
-        'name' => ['required'],
-        'bank_name' => ['required'],
-        'currency_name' => ['required'],
-        'country_name' => ['required'],
-        'account_number' => ['required'],
-        'swift' => ['required'],
-        'active' => ['required'],
-    ]);
-    $user =  User::where('username',$request['user_username'])->first();
-    $currency =  Currency::where('symbol',$request['currency_name'])->first();
-    $country =  Country::where('country_name',$request['country_name'])->first();
-    $data = array(
-      'user_id' => $user['id'],
-      'name' => $request['name'],
-      'bank_name' => $request['bank_name'],
-      'currency_id' => $currency['id'],
-      'country_id' => $country['id'],
-      'account_number' => $request['account_number'],
-      'swift' => $request['swift'],
-      'active' => $request['active'],
-  );
-    $bank->update($data);
-    return redirect()->route('admin.bankaccounts');
-    /*
       try {
+        $bank = ClientBankAccount::find($id);
+        $request->validate([
+            'user_username' => ['required'],
+            'name' => ['required'],
+            'bank_name' => ['required'],
+            'currency_name' => ['required'],
+            'country_name' => ['required'],
+            'account_number' => ['required'],
+            'swift' => ['required'],
+            'active' => ['required'],
+        ]);
+        $user =  User::where('username',$request['user_username'])->first();
+        $currency =  Currency::where('symbol',$request['currency_name'])->first();
+        $country =  Country::where('country_name',$request['country_name'])->first();
+        $data = array(
+          'user_id' => $user['id'],
+          'name' => $request['name'],
+          'bank_name' => $request['bank_name'],
+          'currency_id' => $currency['id'],
+          'country_id' => $country['id'],
+          'account_number' => $request['account_number'],
+          'swift' => $request['swift'],
+          'active' => $request['active'],
+        );
+        $bank->update($data);
 
+        $banks = ClientBankAccount::all();
+        $succesaalert = 1;
+        return view('/frontend/admin/bankaccounts/index')
+            ->with('succesaalert', $succesaalert)
+            ->with('banks', $banks);
       }
       catch (\Exception $exception) {
           saveException(sqlDateTime(), 'Admin-BankAccounts', 'store', $exception->getMessage(), $request->ip(), Auth::id());
           return view('/frontend/admin/admin/index');
       }
-      */
-
   }
 }

@@ -19,14 +19,14 @@
 
         <div class="row">
             <div class="form-group col-md-8">
-                <label for="country-name">{{ __('account.country') }}</label>
+                <label for="country-name">Nazwa</label>
                 <input type="text" name="country_name" id="country-name" class="form-control"
-                       placeholder="{{ __('account.country') }}" value="{{ old('country_name', $country->getCountryName()) }}">
+                       placeholder="Nazwa" value="{{ old('country_name', $country->getCountryName()) }}">
             </div>
             <div class="form-group col-md-4">
-                <label for="country-code">{{ __('account.country-code') }}</label>
+                <label for="country-code">Kod kraju</label>
                 <input type="text" name="country_code" id="country-code" class="form-control"
-                       placeholder="{{ __('account.country-code') }}" value="{{ old('country_name', $country->getCountryCode()) }}">
+                       placeholder="Kod kraju" value="{{ old('country_name', $country->getCountryCode()) }}">
             </div>
         </div>
         <div class="row py-3">

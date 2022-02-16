@@ -14,7 +14,9 @@ class RecipientController extends Controller
     {
       try {
         $recipients = Auth::user()->recipients()->get();
+        $succesaalert = 0;
         return View("/frontend/recipients/index")
+            ->with('succesaalert', $succesaalert)
             ->with('recipients', $recipients);
       }
       catch (\Exception $ex) {
@@ -49,7 +51,9 @@ class RecipientController extends Controller
             $recipient = Auth::user()->recipients()->find($recipientId);
             $recipient->update($request->all());
             $recipients = Auth::user()->recipients()->get();
+            $succesaalert = 1;
             return View("/frontend/recipients/index")
+                ->with('succesaalert', $succesaalert)
                 ->with('recipients', $recipients);
         }
         catch (\Exception $exception) {
@@ -106,7 +110,11 @@ class RecipientController extends Controller
             $user = Auth::user();
             $data['country_id'] = $user->country->getId();
             $user->recipients()->create($data);
-            return redirect()->route('recipients');
+            $recipients = Auth::user()->recipients()->get();
+            $succesaalert = 1;
+            return View("/frontend/recipients/index")
+                ->with('succesaalert', $succesaalert)
+                ->with('recipients', $recipients);
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "Recipient", "Create()", $ex->getMessage(), $request->ip(), Auth::id());

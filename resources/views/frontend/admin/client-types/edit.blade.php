@@ -16,9 +16,9 @@
 
         <div class="row">
             <div class="form-group col-md-8 mx-auto">
-                <label for="name">{{ __('account.client-type') }}</label>
+                <label for="name">Typ Klienta</label>
                 <input type="text" name="name" id="name" class="form-control"
-                       placeholder="{{ __('account.client-type') }}" value="{{ old('name', $clientType->getName()) }}">
+                       placeholder="Typ Klienta" value="{{ old('name', $clientType->getName()) }}">
             </div>
         </div>
         <div class="row py-3">

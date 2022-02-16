@@ -13,30 +13,31 @@
                         <fieldset>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="username" class="control-label">{{ __('account.username') }}</label>
-                                    <input name="username" id="username" class="form-control" value="{{$user->username}}" placeholder="{{ __('account.username') }}"/>
+                                    <label for="username" class="control-label">Nazwa użytkownika</label>
+                                    <input name="username" id="username" class="form-control" value="{{$user->username}}" placeholder="Nazwa użytkownika"/>
                                     @error('username')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
+                            <h5>Jeśli nie chcesz zmieniać hasła, zostaw puste pola</h5>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="password" class="control-label">{{ __('account.password') }}</label>
+                                    <label for="password" class="control-label">Hasło</label>
                                         <a class="alert-link" data-toggle="modal" href="#myModal">
                                             <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="Wymogi dotyczące hasła."/>
                                         </a>
-                                    <input name="password" id="password" type="password" class="form-control" placeholder="{{ __('account.password') }}"/>
+                                    <input name="password" id="password" type="password" class="form-control" placeholder="Hasło"/>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="compare-password" class="control-label">{{ __('account.repeat-password') }}</label>
-                                    <input name="compare-password" id="compare-password" type="password" class="form-control" placeholder="{{ __('account.repeat-password') }}"/>
+                                    <label for="compare-password" class="control-label">Potwierdź hasło</label>
+                                    <input name="compare-password" id="compare-password" type="password" class="form-control" placeholder="Potwierdź hasło"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="email" class="control-label">{{ __('account.email') }}</label>
-                                    <input name="email" id="email" value="{{$user->email}}" class="form-control" placeholder="{{ __('account.repeat-password') }}"/>
+                                    <label for="email" class="control-label">Email</label>
+                                    <input name="email" id="email" value="{{$user->email}}" class="form-control" placeholder="Email"/>
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -44,7 +45,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="client_type" class="control-label">{{ __('account.client-type') }}</label>
+                                    <label for="client_type" class="control-label">Typ Konta</label>
                                     <select name="client_type_id" id="client_type" class="custom-select">
                                         @foreach(\App\Models\ClientType::all() as $clientType)
                                             <option value="{{ $clientType->getId() }}">{{ $clientType->getName() }}</option>
@@ -57,10 +58,10 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="country" class="control-label">{{ __('account.country') }}</label>
+                                    <label for="country" class="control-label">Państwo</label>
                                     <select name="country_id" id="country" class="custom-select">
                                         @foreach(\App\Models\Country::all() as $country)
-                                            <option value="{{ $country->getId() }}">{{ $country->getCountryName() }}</option>
+                                            <option value="{{ $country->getId() }}">Państwo</option>
                                         @endforeach
                                     </select>
                                     @error('country')

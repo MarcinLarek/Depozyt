@@ -3,6 +3,11 @@
 @section('content')
 <h1 class="mt-md-4">{{ __('company.REP-title') }}</h1>
 <hr />
+@if($succesaalert == 1)
+<div class="alert alert-success">
+  <h1>{{ __('alerts.data_save_success') }}</h1>
+</div>
+@endif
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card border-0">
@@ -53,7 +58,7 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>{{ __('company.COM-subtitle') }}</legend>
+                        <legend>{{ __('company.COM-subtitle2') }}</legend>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="email" class="control-label">{{ __('company.COM-email') }}</label>

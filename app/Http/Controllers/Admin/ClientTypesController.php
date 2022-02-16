@@ -13,8 +13,10 @@ class ClientTypesController extends Controller
     {
       try {
         $clientTypes = ClientType::all();
+        $succesaalert = 0;
         return view('/frontend/admin/client-types/index')
-            ->with('clientTypes', $clientTypes);
+            ->with('clientTypes', $clientTypes)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-ClientTypes", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -30,7 +32,11 @@ class ClientTypesController extends Controller
 
         try {
             ClientType::create($request->all());
-            return redirect()->route('admin.client-types');
+            $clientTypes = ClientType::all();
+            $succesaalert = 1;
+            return view('/frontend/admin/client-types/index')
+                ->with('clientTypes', $clientTypes)
+                ->with('succesaalert', $succesaalert);
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-ClientTypes', 'store', $exception->getMessage(), $request->ip(), Auth::id());
@@ -56,7 +62,11 @@ class ClientTypesController extends Controller
         try {
             $clientType = ClientType::find($id);
             $clientType->update($request->all());
-            return redirect()->route('admin.client-types');
+            $clientTypes = ClientType::all();
+            $succesaalert = 1;
+            return view('/frontend/admin/client-types/index')
+                ->with('clientTypes', $clientTypes)
+                ->with('succesaalert', $succesaalert);
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-ClientTypes', 'store', $exception->getMessage(), $request->ip(), Auth::id());

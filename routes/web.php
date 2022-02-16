@@ -37,7 +37,7 @@ Route::domain('localhost')->group(function () {
 
         Route::prefix('/company-data')->group(function () {
             Route::get('/', [\App\Http\Controllers\CompanyDataController::class, 'index'])->name('company-data');
-            Route::post('/edit', [\App\Http\Controllers\CompanyDataController::class, 'edit']);
+            Route::post('/edit', [\App\Http\Controllers\CompanyDataController::class, 'edit'])->name('company-data.edit');
         });
 
         Route::prefix('/recipients')->group(function () {

@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="login" class="control-label">Login</label>
-                                    <input name="login" id="login" class="form-control" value="{{$admin->login}}" placeholder="{{ __('account.login') }}"/>
+                                    <input name="login" id="login" class="form-control" value="{{$admin->login}}" placeholder="Login"/>
                                     @error('login')
                                         {{ $message }}
                                     @enderror
@@ -22,8 +22,8 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="name" class="control-label">Name</label>
-                                    <input name="name" id="name" class="form-control" value="{{$admin->name}}" placeholder="{{ __('account.name') }}"/>
+                                    <label for="name" class="control-label">Imie</label>
+                                    <input name="name" id="name" class="form-control" value="{{$admin->name}}" placeholder="Imie"/>
                                     @error('login')
                                         {{ $message }}
                                     @enderror
@@ -31,8 +31,8 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="surname" class="control-label">Surname</label>
-                                    <input name="surname" id="surname" class="form-control" value="{{$admin->surname}}" placeholder="{{ __('account.surname') }}"/>
+                                    <label for="surname" class="control-label">Nazwisko</label>
+                                    <input name="surname" id="surname" class="form-control" value="{{$admin->surname}}" placeholder="Nazwisko"/>
                                     @error('login')
                                         {{ $message }}
                                     @enderror
@@ -40,21 +40,21 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="password" class="control-label">{{ __('account.password') }}</label>
+                                    <label for="password" class="control-label">Hasło</label>
                                         <a class="alert-link" data-toggle="modal" href="#myModal">
                                             <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="Wymogi dotyczące hasła."/>
                                         </a>
-                                    <input name="password" id="password" type="password" class="form-control" placeholder="{{ __('account.password') }}"/>
+                                    <input name="password" id="password" type="password" class="form-control" placeholder="Hasło"/>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="compare-password" class="control-label">{{ __('account.repeat-password') }}</label>
-                                    <input name="compare-password" id="compare-password" type="password" class="form-control" placeholder="{{ __('account.repeat-password') }}"/>
+                                    <label for="compare-password" class="control-label">Potwierdź hasło</label>
+                                    <input name="compare-password" id="compare-password" type="password" class="form-control" placeholder="Potwierdź hasło"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="email" class="control-label">{{ __('account.email') }}</label>
-                                    <input name="email" id="email" value="{{$admin->email}}" class="form-control" placeholder="{{ __('account.repeat-password') }}"/>
+                                    <label for="email" class="control-label">Email</label>
+                                    <input name="email" id="email" value="{{$admin->email}}" class="form-control" placeholder="Email"/>
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

@@ -2,6 +2,11 @@
 @section('content')
     <h1 class="mt-md-4">{{ __('clientbankaccounts.IND-title') }}</h1>
     <hr/>
+    @if($succesaalert == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
+    @endif
     <div class="card border-0">
         <div class="card-body">
             <h4 class="card-title">{{ __('clientbankaccounts.IND-your-bank-accounts') }}</h4>

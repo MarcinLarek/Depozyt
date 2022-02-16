@@ -20,7 +20,6 @@
                             <div class="form-group col-md-6">
                                 <label for="currency-id" class="control-label">{{ __('clientbankaccounts.EDI-currency') }}</label>
                                 <select name="currency_id" id="currency-id" class="custom-select">
-                                    <option value="">{{ __('bank-account.select-currency') }}</option>
                                     @foreach(\App\Models\Currency::getActiveCurrency() as $currency)
                                         <option value="{{ $currency->id }}">{{ $currency->symbol }} - {{ $currency->name }}</option>
                                     @endforeach

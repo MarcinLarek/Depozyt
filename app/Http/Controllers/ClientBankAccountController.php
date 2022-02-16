@@ -25,7 +25,9 @@ class ClientBankAccountController extends Controller
     {
       try {
         $bankAccounts = Auth::user()->bankAccounts;
+        $succesaalert = 0;
         return View("/frontend/client-bank-account/index")
+            ->with('succesaalert', $succesaalert)
             ->with('bankAccounts', $bankAccounts);
       }
       catch (\Exception $ex) {
@@ -57,7 +59,11 @@ class ClientBankAccountController extends Controller
                 $user = Auth::user();
                 $data['country_id'] = $user->country->getId();
                 $user->bankAccounts()->create($data);
-                return redirect()->route('bank-accounts')->withSuccess('Konto bankowe zostało dodane');
+                $bankAccounts = Auth::user()->bankAccounts;
+                $succesaalert = 1;
+                return View("/frontend/client-bank-account/index")
+                    ->with('succesaalert', $succesaalert)
+                    ->with('bankAccounts', $bankAccounts);
             }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientBankAccount", "store", $ex->getMessage(), $request->ip(), Auth::id());
@@ -103,7 +109,9 @@ class ClientBankAccountController extends Controller
           'active' => $request['active']
         ]);
         $bankAccounts = Auth::user()->bankAccounts;
+        $succesaalert = 1;
         return View("/frontend/client-bank-account/index")
+            ->with('succesaalert', $succesaalert)
             ->with('bankAccounts', $bankAccounts);
       }
       catch (\Exception $ex) {

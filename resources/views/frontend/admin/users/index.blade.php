@@ -3,6 +3,11 @@
 @section('content')
     <h4>Użytkownicy</h4>
     <hr/>
+    @if($succesaalert == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
+    @endif
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -35,7 +40,7 @@
 
                     <td>{{ $user->clientType->name }}</td>
                     @if(isset($user->clientData['name']))
-                    {{ $user->clientData['street'] }} {{ $user->clientData['post_code'] }} {{ $user->clientData['city'] }}
+                    <td>{{ $user->clientData['street'] }} {{ $user->clientData['post_code'] }} {{ $user->clientData['city'] }}</td>
                     @else
                     <td>Nie wypełniono danych</td>
                     @endif

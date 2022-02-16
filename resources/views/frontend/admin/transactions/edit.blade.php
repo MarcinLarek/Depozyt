@@ -107,7 +107,7 @@
                     <div class="form-group col-md-12">
                         <label for="description" class="control-label">Opis</label>
                         <textarea asp-for="description" class="form-control" name="description" placeholder="Opis"
-                                  cols="80" rows="3"></textarea>
+                                  cols="80" rows="3">{{$transaction['description']}}</textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                 </div>

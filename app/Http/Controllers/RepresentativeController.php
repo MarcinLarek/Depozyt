@@ -16,8 +16,10 @@ class RepresentativeController extends Controller
         if (empty($representativeData)) {
             $representativeData = Representative::make();
         }
+        $succesaalert = 0;
         return View("/frontend/representative/index")
-            ->with('representative', $representativeData);
+            ->with('representative', $representativeData)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Representative", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -60,13 +62,17 @@ class RepresentativeController extends Controller
         if ($representativeData == null) {
           Representative::create($data);
           $representativeData = Auth::user()->representative()->first();
+          $succesaalert = 1;
           return View("/frontend/representative/index")
-                ->with('representative', $representativeData);
+              ->with('representative', $representativeData)
+              ->with('succesaalert', $succesaalert);
         }
         else {
           $representativeData->update($request->all());
+          $succesaalert = 1;
           return View("/frontend/representative/index")
-                ->with('representative', $representativeData);
+              ->with('representative', $representativeData)
+              ->with('succesaalert', $succesaalert);
         }
       }
       catch (\Exception $ex) {

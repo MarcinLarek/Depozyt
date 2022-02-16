@@ -3,6 +3,11 @@
 @section('content')
     <h4>Administratorzy</h4>
     <hr/>
+    @if($succesaalert == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
+    @endif
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>

@@ -3,6 +3,11 @@
 @section('content')
 <h1 class="mt-md-4">{{ __('clientdata.IND-title') }}</h1>
 <hr />
+@if($succesaalert == 1)
+<div class="alert alert-success">
+  <h1>{{ __('alerts.data_save_success') }}</h1>
+</div>
+@endif
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card border-0">

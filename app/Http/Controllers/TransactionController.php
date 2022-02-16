@@ -22,11 +22,13 @@ class TransactionController extends Controller
     public function index()
     {
       try {
-        $user = Auth::user();
-        $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
-        return view("/frontend/transaction/index")
-          ->with('transactions', $transactions)
-          ->with('user', $user);
+          $user = Auth::user();
+          $succesaalert = 0;
+          $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
+          return view("/frontend/transaction/index")
+            ->with('transactions', $transactions)
+            ->with('user', $user)
+            ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -67,6 +69,7 @@ class TransactionController extends Controller
           'amount' => ['required'],
           'description' => ['required']
       ]);
+
         try {
           $user =  User::where('personal_code',$request['personal-code2'])->first();
           if ($user == null) {
@@ -76,7 +79,7 @@ class TransactionController extends Controller
               ->with('currencies', $currencies);
           }
           $usercontractor = Auth::user();
-          $currency =  Currency::where('symbol',$request['CurrencyName'])->first();
+          $currency =  Currency::where('symbol',$request['currency_name'])->first();
           $carbon = Carbon::now();
           $mytime = $carbon->format('Y-m-d H:i:s');
           $data = array(
@@ -99,10 +102,12 @@ class TransactionController extends Controller
           );
           Transaction::create($data);
           $user = Auth::user();
+          $succesaalert = 1;
           $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
           return view("/frontend/transaction/index")
             ->with('transactions', $transactions)
-            ->with('user', $user);
+            ->with('user', $user)
+            ->with('succesaalert', $succesaalert);
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "Transaction", "store", $ex->getMessage(), $request->ip());
@@ -219,10 +224,12 @@ class TransactionController extends Controller
 
             TransactionToAccept::create($data);
             $user = Auth::user();
+            $succesaalert = 1;
             $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
             return view("/frontend/transaction/index")
               ->with('transactions', $transactions)
-              ->with('user', $user);
+              ->with('user', $user)
+              ->with('succesaalert', $succesaalert);
         }
     catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
@@ -308,10 +315,12 @@ class TransactionController extends Controller
           $changes->delete();
         }
         $user = Auth::user();
+        $succesaalert = 1;
         $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
         return view("/frontend/transaction/index")
           ->with('transactions', $transactions)
-          ->with('user', $user);
+          ->with('user', $user)
+          ->with('succesaalert', $succesaalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "confirm", $ex->getMessage(), $request->ip(), Auth::id());
