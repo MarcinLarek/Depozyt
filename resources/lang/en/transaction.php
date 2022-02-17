@@ -5,6 +5,7 @@ return [
   'IND-view-changes' => 'View pending changes',
   'IND-customer' => 'Customer',
   'IND-contractor' => 'Contractor',
+  'IND-any' => 'Dowolny',
   'IND-fromdate' => 'From date',
   'IND-todate' => 'To date',
   'IND-serach' => 'Serach',
@@ -16,7 +17,7 @@ return [
   'IND-legend-downloadpdf' => ' - Download a PDF document with a summary of the depository service.',
   'IND-pdf' => 'Generating PDF...',
   'IND-nodata' => 'No bank account / account details added yet. To access the transaction, complete these information.',
-
+  'IND-filtr' => 'Apply filters',
   'IND-transaction-list' => 'Transaction list',
   //
   // Table
@@ -68,8 +69,13 @@ return [
   'CRE-postcode' => 'Postcode',
   'CRE-street' => 'Street',
   'CRE-city' => 'City',
+  //
+  // Edit
+  //
+  'EDI-title' => 'Edit transaction',
+  'EDI-contractor' => 'Contractor',
+  'EDI-customer' => 'Customer',
+  'EDI-save' => 'Save',
   '' => '',
-
-
 
 ];

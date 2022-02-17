@@ -24,38 +24,39 @@
               </div>
               @endif
               <div class="col-3">
-
                 <a href="{{ route('transaction.transactionsToAccept') }}"><button class="btn btn-primary btn-sm" name="create">{{ __('transaction.IND-view-changes') }}</button></a>
               </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <form id="list-filter" method="post">
+
+                    <form action="{{ route('transactions.filter')}}" method="post">
+                      @csrf
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="client-type" class="control-label"></label>
                                 <select name="client_type" id="client-type" class="custom-select">
                                     <option value="CU" selected>{{ __('transaction.IND-customer') }}</option>
                                     <option value="CO">{{ __('transaction.IND-contractor') }}</option>
+                                    <option value="AN">{{ __('transaction.IND-any') }}</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="from-date" class="control-label"></label>
                                 <input name="from_date" id="from-date" class="form-control" placeholder="{{ __('transaction.IND-fromdate') }}"
-                                       readonly="readonly"
-                                       type="text"/>
+                                       type="date"/>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="to-date" class="control-label"></label>
                                 <input name="to_date" id="to-date" class="form-control" placeholder="{{ __('transaction.IND-todate') }}"
-                                       readonly="readonly"
-                                       type="text"/>
+                                       type="date"/>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="expression" class="control-label"></label>
-                                <input name="expression" id="expression" class="form-control" placeholder="{{ __('transaction.IND-serach') }}"/>
+                                <input name="serach" id="serach" class="form-control" placeholder="{{ __('transaction.IND-serach') }}"/>
                             </div>
                         </div>
+                          <input type="submit" value="{{ __('transaction.IND-filtr') }}" class="btn btn-primary"/>
                     </form>
                 </div>
             </div>

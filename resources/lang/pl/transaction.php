@@ -5,6 +5,7 @@ return [
   'IND-view-changes' => 'Przeglądaj oczekujące zmiany',
   'IND-customer' => 'Zleceniodawca',
   'IND-contractor' => 'Wykonawca',
+  'IND-any' => 'Dowolny',
   'IND-fromdate' => 'Od daty',
   'IND-todate' => 'Do daty',
   'IND-serach' => 'Wyszukaj',
@@ -16,7 +17,7 @@ return [
   'IND-legend-downloadpdf' => ' - Pobierz dokument PDF z podsumowaniem usługi depozytowej.',
   'IND-pdf' => 'Generowanie PDF...',
   'IND-nodata' => 'Nie dodano jeszcze żadnego konta bankowego / danych o koncie. Aby uzyskać dostęp do transkacji wypełnij te dane.',
-
+  'IND-filtr' => 'Zastosuj filtr',
   'IND-transaction-list' => 'Lista transakcji',
   //
   // Table
@@ -68,8 +69,13 @@ return [
   'CRE-postcode' => 'Kod pocztowy',
   'CRE-street' => 'Ulica',
   'CRE-city' => 'Miejscowość',
+  //
+  // Edit
+  //
+  'EDI-title' => 'Edytuj tranzakcje',
+  'EDI-contractor' => 'Zleceniodawca',
+  'EDI-customer' => 'Wykonawca',
+  'EDI-save' => 'Zapisz',
   '' => '',
-
-
 
 ];

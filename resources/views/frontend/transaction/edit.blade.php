@@ -1,47 +1,47 @@
 @extends('frontend.layout.master')
 
 @section('content')
-    <h1>Edytuj tranzakcje - <strong>{{ $transaction['name']}}</strong></h1>
+    <h1>{{ __('transaction.EDI-title') }}<strong>{{ $transaction['name']}}</strong></h1>
     <hr/>
     <form method="post" action="{{ route('transactions.update', ['id' => $transaction->id]) }}" class="w-50 mx-auto">
         @csrf
             <fieldset>
                 <div class="row">
                   <div class="form-group col-md-6">
-                      <h3>Zleceniodawca: <b> {{$usercontractor['username']}} {{$usercontractordata['name']}} </b> </h3>
+                      <h3>{{ __('transaction.EDI-contractor') }}: <b> {{$usercontractor['username']}} {{$usercontractordata['name']}} </b> </h3>
                   </div>
                   <div class="form-group col-md-6">
-                      <h2>Wykonawca: <b> {{$usercustomer['username']}} {{$usercustomerdata['name']}} {{$usercustomerdata['surname']}} </b></h2>
+                      <h2>{{ __('transaction.EDI-customer') }}: <b> {{$usercustomer['username']}} {{$usercustomerdata['name']}} {{$usercustomerdata['surname']}} </b></h2>
                   </div>
                 </div>
                 <div class="row">
 
                     <div class="form-group col-md-6">
                         <label for="name"
-                               class="control-label">Nazwa tranzakcji</label>
+                               class="control-label">{{ __('transaction.TABLE-name') }}</label>
                         <input name="name" class="form-control"
                                value="{{$transaction['name']}}"/>
                     </div>
                     <div class="form-group col-md-6">
                         <label
-                            for="transaction_type">Typ tranzakcji</label>
+                            for="transaction_type">{{ __('transaction.TABLE-tpye') }}</label>
                         <select id="transaction_type" name="transaction_type"
                                 class="custom-select">
-                            <option value="1">Usługi kontraktowe</option>
-                            <option value="2">Towary ogólne</option>
-                            <option value="3">Pośrednictwo</option>
+                            <option value="1">{{ __('transaction.TABLE-services') }}</option>
+                            <option value="2">{{ __('transaction.TABLE-general-goods') }}</option>
+                            <option value="3">{{ __('transaction.TABLE-brokerage') }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="from_date" class="control-label">Od:</label>
+                        <label for="from_date" class="control-label">{{ __('transaction.TABLE-from') }}:</label>
                         <input name="from_date" class="form-control" value="{{$transaction['from_date']}}"
                                 type="date" readonly/>
                         <span asp-validation-for="FromDate" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="to_date" class="control-label">Do:</label>
+                        <label for="to_date" class="control-label">{{ __('transaction.TABLE-to') }}:</label>
                         <input name="to_date" class="form-control" value="{{$transaction['to_date']}}"
                               type="date"/>
                         <span asp-validation-for="ToDate" class="text-danger"></span>
@@ -49,17 +49,17 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="commission_payer">Płacący: </label>
+                        <label for="commission_payer">{{ __('transaction.TABLE-payment-type') }}: </label>
                         <select name="commission_payer" class="custom-select">
-                            <option value="principal">Zleceniodawca</option>
-                            <option value="contractor">Wykonawca</option>
-                            <option value="half">Pół na poł</option>
+                            <option value="principal">{{ __('transaction.TABLE-customer') }}</option>
+                            <option value="contractor">{{ __('transaction.TABLE-contractor') }}</option>
+                            <option value="half">{{ __('transaction.TABLE-half') }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="bank_name" class="control-label">Nazwa Banku</label>
+                        <label for="bank_name" class="control-label">{{ __('transaction.TABLE-bank-name') }}</label>
                         <select name="bank_name" class="custom-select">
                           @foreach($banks as $bank)
                               <option>{{ $bank->bank_name }}</option>
@@ -67,7 +67,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="currency_name" class="control-label">Waluta </label>
+                        <label for="currency_name" class="control-label">{{ __('transaction.TABLE-currency') }} </label>
                         <select name="currency_name" class="custom-select">
                           @foreach($currencies as $currency)
                               <option>{{ $currency->symbol }}</option>
@@ -75,19 +75,19 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="amount" class="control-label">Kwota</label>
+                        <label for="amount" class="control-label">{{ __('transaction.TABLE-ammount') }}</label>
                         <input name="amount" class="form-control" value="{{$transaction['amount']}}"/>
                         <span asp-validation-for="amount" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="payment" class="control-label">Zapłacono</label>
+                        <label for="payment" class="control-label">{{ __('transaction.TABLE-payment') }}</label>
                         <input name="payment" class="form-control" value="{{$transaction['payment']}}"/>
                         <span asp-validation-for="payment" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="description" class="control-label">Opis</label>
+                        <label for="description" class="control-label">{{ __('transaction.TABLE-description') }}</label>
                         <textarea asp-for="description" class="form-control" name="description" placeholder="Opis"
                                   cols="80" value="{{$transaction['description']}}" rows="3">{{$transaction['description']}}</textarea>
                         <span asp-validation-for="description" class="text-danger"></span>
@@ -96,7 +96,7 @@
             </fieldset>
             <div class="row">
                 <div class="form-group col-md-12 text-center mt-md-4">
-                    <input type="submit" value="Zapisz" class="btn btn-primary"/>
+                    <input type="submit" value="{{ __('transaction.EDI-save') }}" class="btn btn-primary"/>
                 </div>
             </div>
             <div class="row">
@@ -108,20 +108,6 @@
                                 id="progressText"></span></div>
                     </div>
                 </div>
-                <div class="col-md-12 mt-md-2">
-                    <div id="successAlert" class="alert alert-success d-none">
-                        <strong>UDAŁO SIĘ!</strong> Twoje dane zostały zapisane.<br/><strong>Sprawdź
-                            skrzynkę pocztową z wiadomością potwierdzającą zawarcie usługi
-                            depozytowej.</strong>
-                    </div>
-                </div>
-                <div class="col-md-12 mt-md-2">
-                    <div id="invalidAlert" class="alert alert-danger d-none">
-                        <strong>UPS... Coś poszło nie tak!</strong> Twoje dane nie zostały
-                        zapisane.
-                    </div>
-                </div>
-            </div>
 
     </form>
 @endsection

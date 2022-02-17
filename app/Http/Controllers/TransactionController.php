@@ -37,6 +37,197 @@ class TransactionController extends Controller
               }
     }
 
+    public function filter(Request $request)
+    {
+      $user = Auth::user();
+      $succesaalert = 0;
+      if ($request['client_type'] == 'AN') {
+        if ($request['serach'] != null) {
+          if ($request['from_date'] == null && $request['to_date'] == null) {
+            $transactions =Transaction::where('contractor_id',$user['id'])
+                                        ->orWhere('customer_id',$user['id'])
+                                        ->where('name',$request['serach'])
+                                        ->get();
+          }
+          else {
+            if ($request['from_date'] == null && $request['to_date'] != null) {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->orWhere('customer_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->get();
+            }
+            elseif ($request['from_date'] != null && $request['to_date'] == null) {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->orWhere('customer_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+            else {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->orWhere('customer_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+          }
+        }
+        else {
+          if ($request['from_date'] == null && $request['to_date'] == null) {
+            $transactions =Transaction::where('contractor_id',$user['id'])
+                                        ->orWhere('customer_id',$user['id'])
+                                        ->get();
+          }
+          else {
+            if ($request['from_date'] == null && $request['to_date'] != null) {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->orWhere('customer_id',$user['id'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->get();
+            }
+            elseif ($request['from_date'] != null && $request['to_date'] == null) {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->orWhere('customer_id',$user['id'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+            else {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->orWhere('customer_id',$user['id'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+          }
+        }
+
+        return view("/frontend/transaction/index")
+          ->with('transactions', $transactions)
+          ->with('user', $user)
+          ->with('succesaalert', $succesaalert);
+      }
+      elseif ($request['client_type'] == 'CU') {
+        if ($request['serach'] != null) {
+          if ($request['from_date'] == null && $request['to_date'] == null) {
+            $transactions =Transaction::where('customer_id',$user['id'])
+                                        ->where('name',$request['serach'])
+                                        ->get();
+          }
+          else {
+            if ($request['from_date'] == null && $request['to_date'] != null) {
+              $transactions =Transaction::where('customer_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->get();
+            }
+            elseif ($request['from_date'] != null && $request['to_date'] == null) {
+              $transactions =Transaction::where('customer_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+            else {
+              $transactions =Transaction::where('customer_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+          }
+        }
+        else {
+          if ($request['from_date'] == null && $request['to_date'] == null) {
+            $transactions =Transaction::where('customer_id',$user['id'])
+                                        ->get();
+          }
+          else {
+            if ($request['from_date'] == null && $request['to_date'] != null) {
+              $transactions =Transaction::where('customer_id',$user['id'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->get();
+            }
+            elseif ($request['from_date'] != null && $request['to_date'] == null) {
+              $transactions =Transaction::where('customer_id',$user['id'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+            else {
+              $transactions =Transaction::where('customer_id',$user['id'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+          }
+        }
+
+        return view("/frontend/transaction/index")
+          ->with('transactions', $transactions)
+          ->with('user', $user)
+          ->with('succesaalert', $succesaalert);
+      }
+      elseif ($request['client_type'] == 'CO') {
+        if ($request['serach'] != null) {
+          if ($request['from_date'] == null && $request['to_date'] == null) {
+            $transactions =Transaction::where('contractor_id',$user['id'])
+                                        ->where('name',$request['serach'])
+                                        ->get();
+          }
+          else {
+            if ($request['from_date'] == null && $request['to_date'] != null) {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->get();
+            }
+            elseif ($request['from_date'] != null && $request['to_date'] == null) {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+            else {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->where('name',$request['serach'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+          }
+        }
+        else {
+          if ($request['from_date'] == null && $request['to_date'] == null) {
+            $transactions =Transaction::where('contractor_id',$user['id'])
+                                        ->get();
+          }
+          else {
+            if ($request['from_date'] == null && $request['to_date'] != null) {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->get();
+            }
+            elseif ($request['from_date'] != null && $request['to_date'] == null) {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+            else {
+              $transactions =Transaction::where('contractor_id',$user['id'])
+                                          ->whereDate('from_date' ,'<=', $request['to_date'])
+                                          ->whereDate('from_date' ,'>=', $request['from_date'])
+                                          ->get();
+            }
+          }
+        }
+
+        return view("/frontend/transaction/index")
+          ->with('transactions', $transactions)
+          ->with('user', $user)
+          ->with('succesaalert', $succesaalert);
+      }
+    }
+
     public function create()
     {
       try {

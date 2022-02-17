@@ -77,6 +77,7 @@ Route::domain('localhost')->group(function () {
             Route::post('/get-contractor', [\App\Http\Controllers\TransactionController::class, 'getContractor'])->name('transactions.get-contractor');
             Route::get('/get-list', [\App\Http\Controllers\TransactionController::class, 'getTransactions']);
             Route::post('/store', [\App\Http\Controllers\TransactionController::class, 'store'])->name('transactions.store');
+            Route::post('/filter', [\App\Http\Controllers\TransactionController::class, 'filter'])->name('transactions.filter');
             Route::get('/{id}/edit', [\App\Http\Controllers\TransactionController::class, 'edit'])->name('transactions.edit');
             Route::post('/{id}/update', [\App\Http\Controllers\TransactionController::class, 'update'])->name('transactions.update');
             Route::get('/transactionsToAccept', [\App\Http\Controllers\TransactionController::class, 'transactionsToAccept'])->name('transaction.transactionsToAccept');
