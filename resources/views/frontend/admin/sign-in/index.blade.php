@@ -14,7 +14,7 @@
                             <div class="row align-items-center justify-content-center">
                                 <div class="form-group col-md-6">
                                     <label for="username" class="control-label">{{ __('account.username') }}</label>
-                                    <input name="username" id="username" class="form-control" placeholder="{{ __('account.username') }}"/>
+                                    <input name="username" id="username" class="form-control" placeholder="{{ __('account.username') }}" value="{{ old('username') }}"/>
                                     @error('username')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -23,7 +23,7 @@
                             <div class="row align-items-center justify-content-center">
                                 <div class="form-group col-md-6">
                                     <label for="password" class="control-label">{{ __('account.password') }}</label>
-                                    <input name="password" id="password" class="form-control" type="password" placeholder="{{ __('account.password') }}"/>
+                                    <input name="password" id="password" class="form-control" type="password" placeholder="{{ __('account.password') }}" value="{{ old('password') }}"/>
                                     @error('password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

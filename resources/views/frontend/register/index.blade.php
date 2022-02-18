@@ -18,7 +18,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="username" class="control-label">{{ __('register.IND-username') }}</label>
-                                    <input name="username" id="username" class="form-control" placeholder="{{ __('register.IND-username') }}"/>
+                                    <input name="username" id="username" class="form-control" placeholder="{{ __('register.IND-username') }}" value="{{ old('username') }}"/>
                                     @error('username')
                                         {{ $message }}
                                     @enderror
@@ -30,17 +30,17 @@
                                         <a class="alert-link" data-toggle="modal" href="#myModal">
                                             <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="{{ __('sigin.SET-passwordhelp') }}"/>
                                         </a>
-                                    <input name="password" id="password" type="password" class="form-control" placeholder="{{ __('register.IND-password') }}"/>
+                                    <input name="password" id="password" type="password" class="form-control" placeholder="{{ __('register.IND-password') }}" value="{{ old('password') }}"/>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="compare-password" class="control-label">{{ __('register.IND-confirm_password') }}</label>
-                                    <input name="compare-password" id="compare-password" type="password" class="form-control" placeholder="{{ __('register.IND-confirm_password') }}"/>
+                                    <input name="compare-password" id="compare-password" type="password" class="form-control" placeholder="{{ __('register.IND-confirm_password') }}" value="{{ old('compare-password') }}"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="email" class="control-label">{{ __('register.IND-email') }}</label>
-                                    <input name="email" id="email" class="form-control" placeholder="{{ __('register.IND-email') }}"/>
+                                    <input name="email" id="email" class="form-control" placeholder="{{ __('register.IND-email') }}" value="{{ old('email') }}"/>
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

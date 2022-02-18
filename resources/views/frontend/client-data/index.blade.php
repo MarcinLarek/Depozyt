@@ -27,7 +27,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="name" class="control-label">{{ __('clientdata.IND-name') }}</label>
-                                <input name="name" id="name" class="form-control" placeholder="{{ __('clientdata.IND-name') }}" value="{{ old('surname', $clientData->name) }}"/>
+                                <input name="name" id="name" class="form-control" placeholder="{{ __('clientdata.IND-name') }}" value="{{ old('name', $clientData->name) }}"/>
                                 @error('name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

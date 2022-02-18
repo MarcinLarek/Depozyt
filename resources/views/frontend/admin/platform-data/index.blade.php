@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" id="company" name="email" class="form-control" placeholder="Email" value="{{ old('email', $platformData->email) }}"/>
+                <input type="text" id="email" name="email" class="form-control" placeholder="Email" value="{{ old('email', $platformData->email) }}"/>
             </div>
             <div class="row">
                 <div class="form-group col-md-4">

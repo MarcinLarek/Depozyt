@@ -29,7 +29,7 @@
             <div class="form-group col-md-8 mx-auto">
                 <label for="bank_name">{{ __('bank-account.bank-name') }}</label>
                 <input type="text" name="bank_name" id="bank_name" class="form-control"
-                       placeholder="{{ __('bank-account.bank-name') }}" value="{{ old('account_number', $bankAccount->bank_name) }}">
+                       placeholder="{{ __('bank-account.bank-name') }}" value="{{ old('bank_name', $bankAccount->bank_name) }}">
             </div>
             <div class="form-group col-md-8 mx-auto">
                 <label for="currency-id" class="control-label">{{ __('bank-account.currency') }}</label>

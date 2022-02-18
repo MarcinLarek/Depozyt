@@ -18,11 +18,11 @@
     <div class="card border-0">
         <div class="card-body">
             <div class="row">
-              @if(Auth::user()->isCompany())
+
               <div class="col-2">
                 <a href="{{ route('transaction.create') }}"><button class="btn btn-primary btn-sm" name="create">{{ __('transaction.IND-add-transaction') }}</button></a>
               </div>
-              @endif
+
               <div class="col-3">
                 <a href="{{ route('transaction.transactionsToAccept') }}"><button class="btn btn-primary btn-sm" name="create">{{ __('transaction.IND-view-changes') }}</button></a>
               </div>
@@ -43,17 +43,18 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="from-date" class="control-label"></label>
-                                <input name="from_date" id="from-date" class="form-control" placeholder="{{ __('transaction.IND-fromdate') }}"
-                                       type="date"/>
+                                <input name="from_date" id="from_date" class="form-control" placeholder="{{ __('transaction.IND-fromdate') }}"
+                                       type="date" value="{{ old('from_date') }}"/>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="to-date" class="control-label"></label>
-                                <input name="to_date" id="to-date" class="form-control" placeholder="{{ __('transaction.IND-todate') }}"
-                                       type="date"/>
+                                <input name="to_date" id="to_date" class="form-control" placeholder="{{ __('transaction.IND-todate') }}"
+                                       type="date" value="{{ old('to_date') }}"/>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="expression" class="control-label"></label>
-                                <input name="serach" id="serach" class="form-control" placeholder="{{ __('transaction.IND-serach') }}"/>
+                                <input name="serach" id="serach" class="form-control" placeholder="{{ __('transaction.IND-serach') }}"
+                                       value="{{ old('serach') }}"/>
                             </div>
                         </div>
                           <input type="submit" value="{{ __('transaction.IND-filtr') }}" class="btn btn-primary"/>

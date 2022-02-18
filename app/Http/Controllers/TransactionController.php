@@ -350,21 +350,22 @@ class TransactionController extends Controller
 
     public function update($id, Request $request)
     {
+
+      $request->validate([
+          'name' => ['required'],
+          'transaction_type' => ['required'],
+          'from_date' => ['required'],
+          'to_date' => ['required'],
+          'commission_payer' => ['required'],
+          'bank_name' => ['required'],
+          'currency_name' => ['required'],
+          'payment' => ['required'],
+          'amount' => ['required'],
+          'description' => ['required']
+      ]);
+
         try {
-            $success = 1;
             $transaction = Transaction::find($id);
-            $request->validate([
-                'name' => ['required'],
-                'transaction_type' => ['required'],
-                'from_date' => ['required'],
-                'to_date' => ['required'],
-                'commission_payer' => ['required'],
-                'bank_name' => ['required'],
-                'currency_name' => ['required'],
-                'payment' => ['required'],
-                'amount' => ['required'],
-                'description' => ['required']
-            ]);
 
             $currency =  Currency::where('symbol',$request['currency_name'])->first();
             $user = Auth::user();
@@ -379,7 +380,7 @@ class TransactionController extends Controller
                 'name' => $request['name'],
                 'commission_payer' => $request['commission_payer'],
                 'from_date' => $request['from_date'],
-                'to_date' => $request['to_da'],
+                'to_date' => $request['to_date'],
                 'amount' => $request['amount'],
                 'payment' => $request['payment'],
                 'transaction_type' => $request['transaction_type'],

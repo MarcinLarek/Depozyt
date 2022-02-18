@@ -7,6 +7,14 @@
     <div class="alert alert-success">
       <h1>{{ __('alerts.data_save_success') }}</h1>
     </div>
+    @elseif ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
     <div class="col-md-12 mt-md-2">
         <div id="invalidAlert" class="alert alert-danger d-none">
@@ -22,7 +30,7 @@
                 <div class="form-group w-100">
                     <label for="name">Typ klienta</label>
                     <input type="text" name="name" id="name" class="form-control"
-                           placeholder="Typ klienta">
+                           placeholder="Typ klienta" value="{{ old('name') }}">
                 </div>
             </div>
             <div class="row py-3">

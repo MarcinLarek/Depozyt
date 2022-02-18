@@ -25,12 +25,12 @@
                 <div class="form-group col-md-8">
                     <label for="name">Nazwa</label>
                     <input type="text" name="name" id="name" class="form-control"
-                           placeholder="Nazwa">
+                           placeholder="Nazwa" value="{{ old('name') }}">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="symbol">Symbol</label>
                     <input type="text" name="symbol" id="symbol" class="form-control"
-                           placeholder="Symbol">
+                           placeholder="Symbol" value="{{ old('symbol') }}">
                 </div>
             </div>
             <div class="row py-3">

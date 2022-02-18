@@ -33,7 +33,7 @@ class PaymentsController extends Controller
     public function withdrawal()
     {
       try {
-        $succesaalert = 1;
+        $succesaalert = 0;
         $history = WalletHistory::all();
         return view('/frontend/admin/payments/withdrawal')
             ->with('history', $history)
@@ -66,16 +66,15 @@ class PaymentsController extends Controller
 
     public function update($id, Request $request)
     {
+      $request->validate([
+          'user_id' => ['required'],
+          'BankName' => ['required'],
+          'CurrencyName' => ['required'],
+          'Amount' => ['required'],
+          'DocumentID' => ['required']
+      ]);
         try {
           $payment = WalletHistory::find($id);
-          $request->validate([
-              'user_id' => ['required'],
-              'BankName' => ['required'],
-              'CurrencyName' => ['required'],
-              'Amount' => ['required'],
-              'DocumentID' => ['required']
-          ]);
-
           $currency =  Currency::where('symbol',$request['CurrencyName'])->first();
           $user =  User::where('username',$request['user_id'])->first();
           $data = array(

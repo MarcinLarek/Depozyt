@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="username" class="control-label">Nazwa użytkownika</label>
-                                    <input name="username" id="username" class="form-control" value="{{$user->username}}" placeholder="Nazwa użytkownika"/>
+                                    <input name="username" id="username" class="form-control" value="{{ old('username', $user->username) }}" placeholder="Nazwa użytkownika"/>
                                     @error('username')
                                         {{ $message }}
                                     @enderror
@@ -37,7 +37,7 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="email" class="control-label">Email</label>
-                                    <input name="email" id="email" value="{{$user->email}}" class="form-control" placeholder="Email"/>
+                                    <input name="email" id="email" value="{{ old('email', $user->email) }}" class="form-control" placeholder="Email"/>
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

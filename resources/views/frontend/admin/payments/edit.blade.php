@@ -7,6 +7,15 @@
     <h1>Edytuj wypłate ID:<strong>{{ $payment->id }}</strong></h1>
     @endif
     <hr/>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="col-md-12 mt-md-2">
         <div id="invalidAlert" class="alert alert-danger d-none">
             @error('name')
@@ -53,13 +62,13 @@
           </div>
           <div class="form-group col-md-4">
               <label for="Amount" class="control-label">Kwota</label>
-              <input name="Amount" class="form-control" value="{{$payment['amount']}}"/>
+              <input name="Amount" id="Amount" class="form-control" value="{{ old('amount', $payment['amount']) }}"/>
               <span asp-validation-for="Amount" class="text-danger"></span>
           </div>
           <div class="form-group col-md-4">
               <label for="DocumentID" class="control-label">Id dokumentu</label>
-              <input name="DocumentID" class="form-control" value="{{$payment['generated_document_id']}}"/>
-              <span asp-validation-for="Amount" class="text-danger"></span>
+              <input name="DocumentID" id="DocumentID" class="form-control" value="{{ old('DocumentID', $payment['generated_document_id']) }}"/>
+              <span asp-validation-for="DocumentID" class="text-danger"></span>
           </div>
         </div>
         <div class="row py-3">

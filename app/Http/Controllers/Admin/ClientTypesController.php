@@ -59,6 +59,9 @@ class ClientTypesController extends Controller
 
     public function update($id, Request $request)
     {
+      $this->validate($request, [
+          'name' => ['required', 'unique:client_types'],
+      ]);
         try {
             $clientType = ClientType::find($id);
             $clientType->update($request->all());

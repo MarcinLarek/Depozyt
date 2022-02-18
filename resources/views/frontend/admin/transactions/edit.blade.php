@@ -3,6 +3,15 @@
 @section('content')
     <h1>Edytuj tranzakcje - <strong>{{ $transaction['name']}}</strong></h1>
     <hr/>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <form method="post" action="{{ route('admin.transactions.update', ['id' => $transaction->id]) }}" class="w-50 mx-auto">
         @csrf
         @method('PUT')
@@ -15,19 +24,15 @@
                       <label for="customer_id" class="control-label">Zleceniodawca </label>
                       <select name="customer_id" class="custom-select">
                         @foreach($users as $user)
-                          @if( $user['client_type_id'] === 1)
                             <option>{{$user['username']}}</option>
-                          @endif
                         @endforeach
                       </select>
                   </div>
                   <div class="form-group col-md-6">
                       <label for="contractor_id" class="control-label">Wykonawca </label>
                       <select name="contractor_id" class="custom-select">
-                        @foreach($currencies as $currency)
-                          @if( $user['client_type_id'] === 2)
+                        @foreach($users as $user)
                             <option>{{$user['username']}}</option>
-                          @endif
                         @endforeach
                       </select>
                   </div>
@@ -37,8 +42,8 @@
                     <div class="form-group col-md-6">
                         <label for="name"
                                class="control-label">Nazwa tranzakcji</label>
-                        <input name="name" class="form-control"
-                               value="{{$transaction['name']}}"/>
+                        <input name="name" id="name" class="form-control"
+                               value="{{ old('name', $transaction['name']) }}"/>
                     </div>
                     <div class="form-group col-md-6">
                         <label
@@ -94,12 +99,12 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="amount" class="control-label">Kwota</label>
-                        <input name="amount" class="form-control" value="{{$transaction['amount']}}"/>
+                        <input name="amount" id="amount" class="form-control" value="{{ old('amount', $transaction['amount']) }}"/>
                         <span asp-validation-for="amount" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="payment" class="control-label">Zapłacono</label>
-                        <input name="payment" class="form-control" value="{{$transaction['payment']}}"/>
+                        <input name="payment" id="payment" class="form-control" value="{{ old('payment', $transaction['payment']) }}"/>
                         <span asp-validation-for="payment" class="text-danger"></span>
                     </div>
                 </div>
@@ -107,7 +112,7 @@
                     <div class="form-group col-md-12">
                         <label for="description" class="control-label">Opis</label>
                         <textarea asp-for="description" class="form-control" name="description" placeholder="Opis"
-                                  cols="80" rows="3">{{$transaction['description']}}</textarea>
+                                  cols="80" rows="3">{{ old('description', $transaction['description']) }}</textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                 </div>

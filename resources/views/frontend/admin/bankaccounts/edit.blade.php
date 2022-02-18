@@ -3,6 +3,15 @@
 @section('content')
     <h1>Edytuj Bank - <strong>{{ $bank['name']}}</strong></h1>
     <hr/>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <form method="post" action="{{ route('admin.bankaccounts.update', ['id' => $bank->id]) }}" class="w-50 mx-auto">
         @csrf
         @method('PUT')
@@ -23,15 +32,15 @@
                     <div class="form-group col-md-6">
                         <label for="name"
                                class="control-label">Nazwa</label>
-                        <input name="name" class="form-control"
-                               value="{{$bank['name']}}"/>
+                        <input name="name" id="name" class="form-control"
+                               value="{{ old('name', $bank['name']) }}"/>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="bank_name"
                                class="control-label">Nazwa Banku</label>
-                        <input name="bank_name" class="form-control"
-                               value="{{$bank['bank_name']}}"/>
+                        <input name="bank_name" id="bank_name" class="form-control"
+                               value="{{ old('bank_name', $bank['bank_name']) }}"/>
                     </div>
                 </div>
                 <div class="row">
@@ -56,16 +65,16 @@
                   <div class="form-group col-md-6">
                       <label for="account_number"
                              class="control-label">Numer konta</label>
-                      <input name="account_number" class="form-control"
-                             value="{{$bank['account_number']}}"/>
+                      <input name="account_number" id="account_number" class="form-control"
+                             value="{{ old('account_number', $bank['account_number']) }}"/>
                   </div>
                 </div>
                 <div class="row">
                   <div class="form-group col-md-6">
                       <label for="swift"
                              class="control-label">Swift</label>
-                      <input name="swift" class="form-control"
-                             value="{{$bank['swift']}}"/>
+                      <input name="swift" id="swift" class="form-control"
+                             value="{{ old('swift', $bank['swift']) }}"/>
                   </div>
                 </div>
                 <div class="row">

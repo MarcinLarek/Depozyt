@@ -11,7 +11,7 @@
 
                   <div class="row align-items-center justify-content-center">
                           <label for="message" class="control-label"> <h2>Twoja Odpowiedź</h2> </label>
-                          <textarea name="message" id="message" class="form-control" placeholder="Twoja odpowiedź"></textarea>
+                          <textarea name="message" id="message" class="form-control" placeholder="Twoja odpowiedź">{{ old('message') }}</textarea>
 
                           <span asp-validation-for="Email" class="text-danger"></span>
                   </div>

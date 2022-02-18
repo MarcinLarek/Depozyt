@@ -56,13 +56,13 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <label for="Name" class="control-label">{{ __('withdrawal.IND-transfer-title') }}</label>
-                                            <input name="Name" class="form-control" placeholder="{{ __('withdrawal.IND-transfer-title') }}"/>
+                                            <label for="transfer_name" class="control-label">{{ __('withdrawal.IND-transfer-title') }}</label>
+                                            <input name="transfer_name" id="transfer_name" class="form-control" placeholder="{{ __('withdrawal.IND-transfer-title') }}" value="{{ old('transfer_name') }}"/>
                                             <span asp-validation-for="Name" class="text-danger"></span>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="Amount" class="control-label">{{ __('withdrawal.IND-amount') }}</label>
-                                            <input name="Amount" class="form-control" placeholder="{{ __('withdrawal.IND-amount') }}"/>
+                                            <label for="amount" class="control-label">{{ __('withdrawal.IND-amount') }}</label>
+                                            <input name="amount" id="amount" class="form-control" placeholder="{{ __('withdrawal.IND-amount') }}" value="{{ old('amount') }}"/>
                                             <span asp-validation-for="Amount" class="text-danger"></span>
                                         </div>
                                     </div>

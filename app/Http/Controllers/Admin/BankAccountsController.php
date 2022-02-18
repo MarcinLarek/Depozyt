@@ -11,6 +11,7 @@ use App\Models\ClientBankAccount;
 use App\Models\Currency;
 use App\Models\Country;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class BankAccountsController extends Controller
 {
@@ -50,18 +51,18 @@ class BankAccountsController extends Controller
 
   public function update($id, Request $request)
   {
+    $request->validate([
+        'user_username' => ['required'],
+        'name' => ['required'],
+        'bank_name' => ['required'],
+        'currency_name' => ['required'],
+        'country_name' => ['required'],
+        'account_number' => ['required'],
+        'swift' => ['required'],
+        'active' => ['required'],
+    ]);
       try {
         $bank = ClientBankAccount::find($id);
-        $request->validate([
-            'user_username' => ['required'],
-            'name' => ['required'],
-            'bank_name' => ['required'],
-            'currency_name' => ['required'],
-            'country_name' => ['required'],
-            'account_number' => ['required'],
-            'swift' => ['required'],
-            'active' => ['required'],
-        ]);
         $user =  User::where('username',$request['user_username'])->first();
         $currency =  Currency::where('symbol',$request['currency_name'])->first();
         $country =  Country::where('country_name',$request['country_name'])->first();

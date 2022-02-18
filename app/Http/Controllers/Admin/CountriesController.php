@@ -61,6 +61,10 @@ class CountriesController extends Controller
 
     public function update($id, Request $request)
     {
+      $this->validate($request, [
+          'country_name' => ['required', 'unique:countries'],
+          'country_code' => ['required', 'unique:countries'],
+      ]);
         try {
             $country = Country::find($id);
             $country->update($request->all());

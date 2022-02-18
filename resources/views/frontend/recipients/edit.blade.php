@@ -28,7 +28,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="account-number"
+                                    <label for="account_number"
                                            class="control-label">{{ __('recipient.EDI-account_number') }}</label>
                                     <a class="alert-link" data-toggle="modal" href="#myModal">
                                         <img class="ml-2" src="{{asset('/images/info.svg')}}"
@@ -41,9 +41,9 @@
                                             <input type="hidden" value="{{ Auth::user()->country->id }}"
                                                    name="country_id"/>
                                         </div>
-                                        <input name="account_number" id="account-number" class="form-control"
+                                        <input name="account_number" id="account_number" class="form-control"
                                                placeholder="  {{ __('recipient.EDI-account_number') }}"
-                                               value="{{ old('name', $recipient->getAccountNumber()) }}"/>
+                                               value="{{ old('account_number', $recipient->getAccountNumber()) }}"/>
                                     </div>
                                     <span asp-validation-for="AccountNumber" class="text-danger"></span>
                                 </div>

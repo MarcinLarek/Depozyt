@@ -26,6 +26,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="username" class="control-label">{{ __('sigin.IND-usernameoremail') }}</label>
                                     <input name="username" id="username" class="form-control"
+                                           value="{{ old('username') }}"
                                            placeholder="{{ __('sigin.IND-usernameoremail') }}"/>
                                     @error('username')
                                     <span class="text-danger">{{ $message }}</span>
@@ -36,6 +37,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="password" class="control-label">{{ __('sigin.IND-password') }}</label>
                                     <input name="password" id="password" class="form-control" type="password"
+                                           value="{{ old('password') }}"
                                            placeholder="{{ __('sigin.IND-password') }}"/>
                                     @error('password')
                                     <span class="text-danger">{{ $message }}</span>

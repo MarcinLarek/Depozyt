@@ -75,8 +75,7 @@ class User extends Authenticatable
         $canAddTransaction = false;
         if (
             $this->bankAccounts()->count() > 0
-            && $this->representative()->count() == 1
-            && $this->companyData()->count() == 1
+            && (($this->representative()->count() == 1 && $this->companyData()->count() == 1) || ($this->clientData()->count() == 1))
         ) {
             $canAddTransaction = true;
         }

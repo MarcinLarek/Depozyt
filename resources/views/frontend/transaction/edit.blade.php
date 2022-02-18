@@ -3,6 +3,15 @@
 @section('content')
     <h1>{{ __('transaction.EDI-title') }}<strong>{{ $transaction['name']}}</strong></h1>
     <hr/>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <form method="post" action="{{ route('transactions.update', ['id' => $transaction->id]) }}" class="w-50 mx-auto">
         @csrf
             <fieldset>
@@ -19,8 +28,9 @@
                     <div class="form-group col-md-6">
                         <label for="name"
                                class="control-label">{{ __('transaction.TABLE-name') }}</label>
-                        <input name="name" class="form-control"
-                               value="{{$transaction['name']}}"/>
+                        <input name="name" id="name" class="form-control"
+                               value="{{ old('name', $transaction['name']) }}"
+                               placeholder="{{ __('transaction.TABLE-name') }}"/>
                     </div>
                     <div class="form-group col-md-6">
                         <label
@@ -42,7 +52,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="to_date" class="control-label">{{ __('transaction.TABLE-to') }}:</label>
-                        <input name="to_date" class="form-control" value="{{$transaction['to_date']}}"
+                        <input name="to_date" class="form-control" value="{{ old('to_date', $transaction['to_date']) }}"
                               type="date"/>
                         <span asp-validation-for="ToDate" class="text-danger"></span>
                     </div>
@@ -76,20 +86,20 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="amount" class="control-label">{{ __('transaction.TABLE-ammount') }}</label>
-                        <input name="amount" class="form-control" value="{{$transaction['amount']}}"/>
+                        <input name="amount" class="form-control" value="{{ old('amount', $transaction['amount']) }}"/>
                         <span asp-validation-for="amount" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="payment" class="control-label">{{ __('transaction.TABLE-payment') }}</label>
-                        <input name="payment" class="form-control" value="{{$transaction['payment']}}"/>
+                        <input name="payment" id="payment" class="form-control" value="{{ old('payment', $transaction['payment']) }}"/>
                         <span asp-validation-for="payment" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="description" class="control-label">{{ __('transaction.TABLE-description') }}</label>
-                        <textarea asp-for="description" class="form-control" name="description" placeholder="Opis"
-                                  cols="80" value="{{$transaction['description']}}" rows="3">{{$transaction['description']}}</textarea>
+                        <textarea asp-for="description" class="form-control" name="description" id="description" placeholder="Opis"
+                                  cols="80" value="{{$transaction['description']}}" rows="3">{{ old('description', $transaction['description']) }}</textarea>
                         <span asp-validation-for="description" class="text-danger"></span>
                     </div>
                 </div>

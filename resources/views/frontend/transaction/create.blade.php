@@ -2,7 +2,15 @@
 @section('content')
     <h1 class="mt-md-4">{{ __('transaction.CRE-title') }}</h1>
     <hr/>
-
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="col-md-8 offset-md-2">
         <div class="card border-0">
             <div class="card-body">
@@ -18,8 +26,9 @@
                                         <div class="row align-items-center justify-content-center">
                                             <div class="form-group col-md-3">
                                                 <label for="personal-code" class="control-label"></label>
-                                                <input name="personal_code" id="personal-code" class="form-control"
-                                                       placeholder="Kod {{ __('transaction.CRE-code') }}"/>
+                                                <input name="personal_code" id="personal_code" class="form-control"
+                                                       placeholder="{{ __('transaction.CRE-code') }}"
+                                                       value="{{ old('personal_code') }}"/>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -63,16 +72,17 @@
 
 
                                           <div class="form-group col-md-6">
-                                              <label for="Name"
+                                              <label for="name"
                                                      class="control-label">{{ __('transaction.TABLE-name') }}</label>
-                                              <input name="name" class="form-control"
-                                                     placeholder="{{ __('transaction.TABLE-name') }}"/>
+                                              <input name="name" id="name" class="form-control"
+                                                     placeholder="{{ __('transaction.TABLE-name') }}"
+                                                     value="{{ old('name') }}"/>
                                           </div>
                                           <div class="form-group col-md-6">
                                               <label
                                                   for="TransactionType">{{ __('transaction.TABLE-tpye') }}</label>
                                               <select id="transaction_type" name="transaction_type"
-                                                      class="custom-select">
+                                                      class="custom-select" value="{{ old('transaction_type') }}">
                                                   <option value="1">{{ __('transaction.TABLE-services') }}</option>
                                                   <option value="2">{{ __('transaction.TABLE-general-goods') }}</option>
                                                   <option value="3">{{ __('transaction.TABLE-brokerage') }}</option>
@@ -81,22 +91,22 @@
                                       </div>
                                       <div class="row">
                                           <div class="form-group col-md-6">
-                                              <label for="from_date" class="control-label">{{ __('transaction.TABLE-from') }}:</label>
+                                              <label for="from_date" id="from_date" class="control-label" value="{{ old('from_date') }}">{{ __('transaction.TABLE-from') }}:</label>
                                               <input name="from_date" class="form-control" placeholder="{{ __('transaction.TABLE-from') }}"
                                                       type="date"/>
                                               <span asp-validation-for="FromDate" class="text-danger"></span>
                                           </div>
                                           <div class="form-group col-md-6">
                                               <label for="to_date" class="control-label">{{ __('transaction.TABLE-to') }}:</label>
-                                              <input name="to_date" class="form-control" placeholder="{{ __('transaction.TABLE-to') }}"
-                                                    type="date"/>
+                                              <input name="to_date" id="to_date" class="form-control" placeholder="{{ __('transaction.TABLE-to') }}"
+                                                    type="date" value="{{ old('to_date') }}"/>
                                               <span asp-validation-for="ToDate" class="text-danger"></span>
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="form-group col-md-12">
                                               <label for="commission_payer">{{ __('transaction.TABLE-payment-type') }}: </label>
-                                              <select name="commission_payer" class="custom-select">
+                                              <select name="commission_payer" id="commission_payer" class="custom-select" value="{{ old('commission_payer') }}">
                                                   <option value="principal">{{ __('transaction.TABLE-customer') }}</option>
                                                   <option value="contractor">{{ __('transaction.TABLE-contractor') }}</option>
                                                   <option value="half">{{ __('transaction.TABLE-half') }}</option>
@@ -106,7 +116,7 @@
                                       <div class="row">
                                           <div class="form-group col-md-4">
                                               <label for="bank_name" class="control-label">{{ __('transaction.TABLE-bank-name') }}</label>
-                                              <select name="bank_name" class="custom-select" placeholder="{{ __('transaction.TABLE-bank-name') }}">
+                                              <select name="bank_name" id="bank_name" class="custom-select" placeholder="{{ __('transaction.TABLE-bank-name') }}" value="{{ old('bank_name') }}">
                                                 @foreach(Auth::user()->bankAccounts as $bank)
                                                     <option>{{ $bank->bank_name }}</option>
                                                 @endforeach
@@ -114,7 +124,7 @@
                                           </div>
                                           <div class="form-group col-md-4">
                                               <label for="currency_name" class="control-label">{{ __('transaction.TABLE-currency') }} </label>
-                                              <select name="currency_name" class="custom-select">
+                                              <select name="currency_name" id="bank_name" class="custom-select" value="{{ old('currency') }}">
                                                 @foreach($currencies as $currency)
                                                     <option>{{ $currency->symbol }}</option>
                                                 @endforeach
@@ -122,15 +132,15 @@
                                           </div>
                                           <div class="form-group col-md-4">
                                               <label for="amount" class="control-label">{{ __('transaction.TABLE-ammount') }}</label>
-                                              <input name="amount" class="form-control" placeholder="{{ __('transaction.TABLE-ammount') }}"/>
+                                              <input name="amount" class="form-control" placeholder="{{ __('transaction.TABLE-ammount') }}" value="{{ old('ammount') }}"/>
                                               <span asp-validation-for="Amount" class="text-danger"></span>
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="form-group col-md-12">
                                               <label for="description" class="control-label">{{ __('transaction.TABLE-description') }}</label>
-                                              <textarea asp-for="description" class="form-control" name="description" placeholder="{{ __('transaction.TABLE-description') }}"
-                                                        cols="80" rows="3"></textarea>
+                                              <textarea asp-for="description" id="description" class="form-control" name="description" placeholder="{{ __('transaction.TABLE-description') }}"
+                                                        cols="80" rows="3">{{ old('description') }}</textarea>
                                               <span asp-validation-for="description" class="text-danger"></span>
                                           </div>
                                       </div>

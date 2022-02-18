@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="bank-name" class="control-label">{{ __('clientbankaccounts.EDI-name') }}</label>
-                                <input name="bank_name" id="bank-name" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-name') }}" value="{{ $bankAccount->bank_name }}" />
+                                <input name="bank_name" id="bank_name" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-name') }}" value="{{ old('bank_name', $bankAccount->bank_name) }}" />
                                 <span asp-validation-for="BankName" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
@@ -37,7 +37,7 @@
                                         <div id="countryValue" class="input-group-text">{{ Auth::user()->country->getCountryCode() }}</div>
                                         <input type="hidden" value="{{ Auth::user()->country->id }}" name="country_id" />
                                     </div>
-                                    <input name="account_number" id = "account-number" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-account_number') }}" value="{{ $bankAccount->account_number }}" />
+                                    <input name="account_number" id = "account_number" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-account_number') }}" value="{{ old('account_number', $bankAccount->account_number) }}" />
                                 </div>
                                 <span asp-validation-for="Number" class="text-danger"></span>
                             </div>
@@ -46,7 +46,7 @@
                                 <a class="alert-link" data-toggle="modal" href="#myModal">
                                     <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="{{ __('clientbankaccounts.EDI-requirements') }}"  alt="{{ __('clientbankaccounts.EDI-requirements') }}"/>
                                 </a>
-                                <input name="swift" id="swift" class="form-control" placeholder="Nr SWIFT" value="{{ $bankAccount->swift }}" />
+                                <input name="swift" id="swift" class="form-control" placeholder="Nr SWIFT" value="{{ old('swift', $bankAccount->swift) }}" />
                                 <span asp-validation-for="NumberSwift" class="text-danger"></span>
                             </div>
                         </div>
