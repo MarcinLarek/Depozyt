@@ -31,16 +31,16 @@ class RepresentativeController extends Controller
     public function edit(RepresentativeRequest $request)
     {
       $request->validate([
-          'surname' => ['required'],
-          'name' => ['required'],
-          'pesel' => ['required'],
+          'surname' => ['required','max:100'],
+          'name' => ['required','max:100'],
+          'pesel' => ['required','max:100'],
           'document_type' => ['required'],
-          'document_number' => ['required'],
-          'email' => ['required'],
-          'phone' => ['required'],
-          'street' => ['required'],
-          'post_code' => ['required'],
-          'city' => ['required']
+          'document_number' => ['required','max:100'],
+          'email' => ['required','max:100','email'],
+          'phone' => ['required','max:100'],
+          'street' => ['required','max:100'],
+          'post_code' => ['required','max:100'],
+          'city' => ['required','max:100']
       ]);
       try {
         $user = Auth::user();

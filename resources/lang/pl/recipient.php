@@ -7,7 +7,7 @@ return [
   'PAY-recipient-name' => 'Nazwa kontrahenta',
   'PAY--payment-name' => 'Tytuł przelewu',
   'PAY-currency' => 'Waluta',
-  'PAY-ammount' => 'Kwota',
+  'PAY-amount' => 'Kwota',
   'PAY-walleterror' => 'Nie posiadasz wystarczającej ilości pieniędzy w portfelu aby dokonać zapłaty',
   'PAY-succes' => 'UDAŁO SIĘ! Twoje dane zostały zapisane. Sprawdź skrzynkę pocztową z wiadomością potwierdzającą zawarcie usługi depozytowej.',
   'PAY-failure' => 'UPS... Coś poszło nie tak! Twoje dane nie zostały zapisane.',

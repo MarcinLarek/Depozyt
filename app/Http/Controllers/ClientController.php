@@ -44,7 +44,7 @@ class ClientController extends Controller
       try {
         $request->validate([
             'newpassword' => ['required','max:100'],
-            'email' => ['required','max:100'],
+            'email' => ['required','max:100','email','unique'],
 
         ]);
 

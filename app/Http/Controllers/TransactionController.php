@@ -249,16 +249,16 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-          'personal-code2' => ['required'],
-          'name' => ['required'],
-          'transaction_type' => ['required'],
-          'from_date' => ['required'],
-          'to_date' => ['required'],
+          'personal-code2' => ['required','max:100'],
+          'name' => ['required','max:100'],
+          'transaction_type' => ['required','max:100'],
+          'from_date' => ['required','max:100','date'],
+          'to_date' => ['required','max:100','date'],
           'commission_payer' => ['required'],
-          'bank_name' => ['required'],
+          'bank_name' => ['required','max:100'],
           'currency_name' => ['required'],
-          'amount' => ['required'],
-          'description' => ['required']
+          'amount' => ['required','max:100','numeric'],
+          'description' => ['required','max:200']
       ]);
 
         try {
@@ -352,16 +352,16 @@ class TransactionController extends Controller
     {
 
       $request->validate([
-          'name' => ['required'],
+          'name' => ['required','max:100'],
           'transaction_type' => ['required'],
-          'from_date' => ['required'],
-          'to_date' => ['required'],
+          'from_date' => ['required','max:100','date'],
+          'to_date' => ['required','max:100','date'],
           'commission_payer' => ['required'],
-          'bank_name' => ['required'],
+          'bank_name' => ['required','max:100'],
           'currency_name' => ['required'],
           'payment' => ['required'],
-          'amount' => ['required'],
-          'description' => ['required']
+          'amount' => ['required','max:100'],
+          'description' => ['required','max:200']
       ]);
 
         try {

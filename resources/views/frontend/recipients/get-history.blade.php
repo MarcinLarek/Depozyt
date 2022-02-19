@@ -5,8 +5,8 @@
       use App\Models\User;
       use App\Models\Payment;
       use App\Models\ClientData;
-            $user = Auth::user();
-            $payments = Payment::where('user_id',$user['id'])->get();
+      $user = Auth::user();
+      $payments = Payment::where('user_id',$user['id'])->get();
        ?>
     <tr class="text-center">
         <th>

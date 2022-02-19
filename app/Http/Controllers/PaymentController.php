@@ -49,10 +49,11 @@ class PaymentController extends Controller
       $request->validate([
           'recipment_id' => ['required'],
           'currency_id' => ['required'],
-          'payment_title' => ['required'],
-          'amount' => ['required'],
+          'payment_title' => ['required','max:100'],
+          'amount' => ['required','numeric'],
       ]);
-      try {
+
+
         $user = Auth::user();
         $recipient =  Recipient::where('id',$request['recipment_id'])->first();
         $wallet = Auth::user()->wallet->where('currency_id',$request['currency_id'])->first();
@@ -74,7 +75,6 @@ class PaymentController extends Controller
           'currency_id' => $request['currency_id'],
           'amount' => -$request['amount']
         );
-
         $walletupdate = $wallet['amount'] - $data['amount'];
 
         if ($walletupdate >= 0) {
@@ -128,6 +128,8 @@ class PaymentController extends Controller
               return view('/frontend/recipients/_empty-wallet');
           }
         }
+
+      try {
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "paymentpost", $ex->getMessage(), $request->ip(), Auth::id());
