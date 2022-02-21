@@ -5,7 +5,7 @@ return [
   'PAY-menu2' => 'Historia zapłat',
   'PAY-subtitle' => 'Zapłać odbiorcy',
   'PAY-recipient-name' => 'Nazwa kontrahenta',
-  'PAY--payment-name' => 'Tytuł przelewu',
+  'PAY-payment-name' => 'Tytuł przelewu',
   'PAY-currency' => 'Waluta',
   'PAY-amount' => 'Kwota',
   'PAY-walleterror' => 'Nie posiadasz wystarczającej ilości pieniędzy w portfelu aby dokonać zapłaty',

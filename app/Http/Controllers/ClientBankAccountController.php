@@ -89,16 +89,16 @@ class ClientBankAccountController extends Controller
 
     public function update(Request $request)
     {
+      $request->validate([
+          'bank_name' => ['required','max:100'],
+          'currency_id' => ['required'],
+          'country_id' => ['required'],
+          'account_number' => ['required','iban'],
+          'swift' => ['required','bic',],
+          'active' => ['required'],
+          'id' => ['required'],
+      ]);
       try {
-        $request->validate([
-            'bank_name' => ['required','max:100'],
-            'currency_id' => ['required'],
-            'country_id' => ['required'],
-            'account_number' => ['required','max:100'],
-            'swift' => ['required','max:100'],
-            'active' => ['required'],
-            'id' => ['required'],
-        ]);
 
         ClientBankAccount::where('id',$request['id'])->update([
           'bank_name' => $request['bank_name'],

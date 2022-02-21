@@ -27,6 +27,16 @@ class PlatformDataController extends Controller
 
     public function update(Request $request)
     {
+      $request->validate([
+          'company' => ['required','max:100'],
+          'email' => ['required','max:100','email'],
+          'nip' => ['required','NIP'],
+          'krs' => ['required','max:100'],
+          'regon' => ['required','REGON'],
+          'city' => ['required','max:100']
+      ]);
+
+      /*
       try {
         if (PlatformData::count() == 0) {
             PlatformData::create($request->all());
@@ -35,11 +45,12 @@ class PlatformDataController extends Controller
         }
 
         return redirect()->route('admin.platform-data');
+
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-PlatformData", "update", $ex->getMessage(), $request->ip(), Auth::id());
       	    return view('/frontend/admin/admin/index');
               }
-
+*/
     }
 }

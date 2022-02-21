@@ -7,7 +7,7 @@ return [
   'PAY-recipient-name' => 'Recipient name',
   'PAY-payment-name' => 'Transfer title',
   'PAY-currency' => 'Currency',
-  'PAY-amount' => 'ammount',
+  'PAY-amount' => 'Amount',
   'PAY-walleterror' => 'You don\'t have enough money in your wallet to pay',
   'PAY-succes' => 'SUCCESS! Your data has been saved. Check your e-mail with the confirmation message of the escrow service.',
   'PAY-failure' => 'OOPS... Something went wrong! Your data has not been saved.',

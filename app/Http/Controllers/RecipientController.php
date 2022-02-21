@@ -51,7 +51,7 @@ class RecipientController extends Controller
           'name' => ['required','max:100'],
           'nip' => ['required','NIP'],
           'country_id' => ['required'],
-          'account_number' => ['required','max:100'],
+          'account_number' => ['required','iban'],
           'email' => ['required','max:100', 'email'],
           'phone' => ['required','max:100'],
           'street' => ['required','max:100'],

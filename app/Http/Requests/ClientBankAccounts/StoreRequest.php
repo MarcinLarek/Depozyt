@@ -27,8 +27,8 @@ class StoreRequest extends FormRequest
             'name' => ['required'],
             'bank_name' => ['required'],
             'currency_id' => ['required'],
-            'account_number' => ['required'],
-            'swift' => ['required']
+            'account_number' => ['required','iban'],
+            'swift' => ['required','bic']
         ];
     }
 }
