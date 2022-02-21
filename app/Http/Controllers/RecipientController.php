@@ -49,13 +49,13 @@ class RecipientController extends Controller
     {
       $request->validate([
           'name' => ['required','max:100'],
-          'nip' => ['required','max:100'],
+          'nip' => ['required','NIP'],
           'country_id' => ['required'],
           'account_number' => ['required','max:100'],
           'email' => ['required','max:100', 'email'],
           'phone' => ['required','max:100'],
           'street' => ['required','max:100'],
-          'post_code' => ['required','max:100'],
+          'post_code' => ['required','post_code'],
           'city' => ['required','max:100'],
           'active' => ['required'],
       ]);

@@ -4,7 +4,7 @@ return [
   'COM-subtitle1' => 'Rejestrowe',
   'COM-name' => 'Nazwa',
   'COM-nip' => 'NIP',
-  'COM-regon' => 'Regom',
+  'COM-regon' => 'Regon',
   'COM-krs' => 'KRS',
   'COM-subtitle2' => 'Kontaktowe',
   'COM-email' => 'Email',

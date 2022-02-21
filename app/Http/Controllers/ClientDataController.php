@@ -41,8 +41,32 @@ class ClientDataController extends Controller
 
     public function edit(ClientDataRequest $request)
     {
-        $data = $request->validated();
+        $request->validate([
+            'name' => ['required','max:100'],
+            'surname' => ['required','max:100'],
+            'pesel' => ['required','PESEL'],
+            'document_type' => ['required'],
+            'document_number' => ['required','numeric'],
+            'email' => ['required','email','max:100'],
+            'phone' => ['required','numeric',],
+            'street' => ['required','max:100'],
+            'post_code' => ['required','max:100','post_code'],
+            'city' => ['required','max:100'],
+        ]);
+
         try {
+          $data = array(
+            'name' => $request['name'],
+            'surname' => $request['surname'],
+            'pesel' => $request['pesel'],
+            'document_type' => $request['document_type'],
+            'document_number' => $request['document_number'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'street' => $request['street'],
+            'post_code' => $request['post_code'],
+            'city' => $request['city']
+          );
             $this->usersService->updateClientData(Auth::user(), $data);
             $clientData = Auth::user()->clientData;
             if (empty($clientData)) {

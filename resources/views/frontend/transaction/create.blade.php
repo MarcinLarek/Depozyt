@@ -26,7 +26,7 @@
                                         <div class="row align-items-center justify-content-center">
                                             <div class="form-group col-md-3">
                                                 <label for="personal-code" class="control-label"></label>
-                                                <input name="personal_code" id="personal_code" class="form-control"
+                                                <input name="personal_code" id="personal-code" class="form-control"
                                                        placeholder="{{ __('transaction.CRE-code') }}"
                                                        value="{{ old('personal_code') }}"/>
                                             </div>
@@ -93,7 +93,7 @@
                                           <div class="form-group col-md-6">
                                               <label for="from_date" id="from_date" class="control-label" value="{{ old('from_date') }}">{{ __('transaction.TABLE-from') }}:</label>
                                               <input name="from_date" class="form-control" placeholder="{{ __('transaction.TABLE-from') }}"
-                                                      type="date"/>
+                                                      type="date" value="{{ old('from_date') }}"/>
                                               <span asp-validation-for="FromDate" class="text-danger"></span>
                                           </div>
                                           <div class="form-group col-md-6">

@@ -48,17 +48,29 @@
                 @if($transactions->isNotEmpty())
                 @foreach($transactions as $transaction)
                 <?php
-                $customer =  ClientData::where('user_id',$transaction['customer_id'])->first();
-                $contractor =  CompanyData::where('user_id',$transaction['contractor_id'])->first();
-                $currency = Currency::where('id',$transaction['currency_id'])->first();
-                $user =  User::where('id',$transaction['customer_id'])->first();
+                $user1 =  User::where('id',$transaction['customer_id'])->first();
                 $user2 =  User::where('id',$transaction['contractor_id'])->first();
+                if ($user1['client_type_id'] == 1) {
+                  $customer =  ClientData::where('user_id',$transaction['customer_id'])->first();
+                }
+                else {
+                  $customer =  CompanyData::where('user_id',$transaction['customer_id'])->first();
+                }
+
+                if ($user2['client_type_id'] == 1) {
+                  $contractor =  ClientData::where('user_id',$transaction['contractor_id'])->first();
+                }
+                else {
+                  $contractor =  CompanyData::where('user_id',$transaction['contractor_id'])->first();
+                }
+
+                $currency = Currency::where('id',$transaction['currency_id'])->first();
 
                  ?>
                     <tr>
                         <td>{{ $i }}</td>
-                        <td>{{$user['username']}}: {{ $customer['name'] }} {{ $customer['surname'] }}</td>
-                        <td>{{$user2['username']}}: {{ $contractor['name'] }}</td>
+                        <td>{{$user1['username']}}: {{ $customer['name'] }} {{ $customer['surname'] }}</td>
+                        <td>{{$user2['username']}}: {{ $contractor['name'] }} {{ $contractor['surname'] }}</td>
                         <td>{{ $transaction['bank_name'] }}</td>
                         <td>{{ $currency['symbol'] }} - {{ $currency['name'] }}</td>
                         <td>{{ $transaction['name'] }}</td>

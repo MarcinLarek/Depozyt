@@ -63,12 +63,16 @@
                             <div class="form-group col-md-6">
                                 <label for="email" class="control-label">{{ __('clientdata.IND-email') }}</label>
                                 <input name="email" id="email" class="form-control" placeholder="{{ __('clientdata.IND-email') }}" value="{{ old('email', $clientData->email) }}" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="phone-number" class="control-label">{{ __('clientdata.IND-telephone') }}</label>
-                                <input name="phone" id="phone-number" class="form-control" placeholder="{{ __('clientdata.IND-telephone') }}" value="{{ old('phone', $clientData->phone) }}"/>
-                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                <input name="phone" id="phone" class="form-control" placeholder="{{ __('clientdata.IND-telephone') }}" value="{{ old('phone', $clientData->phone) }}"/>
+                                @error('phone')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </fieldset>
@@ -78,14 +82,23 @@
                             <div class="form-group col-md-4">
                                 <label for="street" class="control-label">{{ __('clientdata.IND-street') }}</label>
                                 <input name="street" id="street" class="form-control" placeholder="{{ __('clientdata.IND-street') }}" value="{{ old('street', $clientData->street) }}"/>
+                                @error('street')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="post-code" class="control-label">{{ __('clientdata.IND-postcode') }}</label>
                                 <input name="post_code" id="post-code" class="form-control" placeholder="{{ __('clientdata.IND-postcode') }}" value="{{ old('postcode', $clientData->post_code) }}"/>
+                                @error('post_code')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="city" class="control-label">{{ __('clientdata.IND-city') }}</label>
                                 <input name="city" id="city" class="form-control" placeholder="{{ __('clientdata.IND-city') }}" value="{{ old('city', $clientData->city) }}"/>
+                                @error('city')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </fieldset>

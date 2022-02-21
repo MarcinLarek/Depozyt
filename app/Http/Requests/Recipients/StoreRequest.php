@@ -20,12 +20,12 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'nip' => ['required'],
+            'nip' => ['required', 'NIP'],
             'account_number' => 'required',
             'email' => ['required', 'email'],
             'phone' => ['required'],
             'street' => ['required'],
-            'post_code' => ['required'],
+            'post_code' => ['required','post_code'],
             'city' => ['required'],
         ];
     }

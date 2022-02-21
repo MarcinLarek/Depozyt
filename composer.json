@@ -17,7 +17,8 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "mpdf/mpdf": "^8.0"
+        "mpdf/mpdf": "^8.0",
+        "pacerit/laravel-polish-validation-rules": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

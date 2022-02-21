@@ -249,7 +249,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-          'personal-code2' => ['required','max:100'],
+          'personal-code2' => ['required'],
           'name' => ['required','max:100'],
           'transaction_type' => ['required','max:100'],
           'from_date' => ['required','max:100','date'],
@@ -257,7 +257,7 @@ class TransactionController extends Controller
           'commission_payer' => ['required'],
           'bank_name' => ['required','max:100'],
           'currency_name' => ['required'],
-          'amount' => ['required','max:100','numeric'],
+          'amount' => ['required','numeric'],
           'description' => ['required','max:200']
       ]);
 
@@ -312,7 +312,18 @@ class TransactionController extends Controller
       try {
         $personalCode = $request->post('personal_code');
         $client = User::where('personal_code', $personalCode)->first();
-        return view('/frontend/transaction/_client-data')->with('client', $client);
+        if ($client['client_type_id' == 1]) {
+          $data =ClientData::where('user_id',$client['id'])->get();
+          return view('/frontend/transaction/_client-data')
+          ->with('data', $data)
+          ->with('client', $client);
+        }
+        else {
+          $data =CompanyData::where('user_id',$client['id'])->first();
+          return view('/frontend/transaction/_company-data')
+          ->with('data', $data)
+          ->with('client', $client);
+        }
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
@@ -360,7 +371,7 @@ class TransactionController extends Controller
           'bank_name' => ['required','max:100'],
           'currency_name' => ['required'],
           'payment' => ['required'],
-          'amount' => ['required','max:100'],
+          'amount' => ['required','numeric'],
           'description' => ['required','max:200']
       ]);
 
