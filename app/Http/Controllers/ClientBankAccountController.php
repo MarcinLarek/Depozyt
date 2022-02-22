@@ -9,6 +9,9 @@ use App\Services\CurrenciesService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class ClientBankAccountController extends Controller
 {
@@ -32,6 +35,10 @@ class ClientBankAccountController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -46,6 +53,10 @@ class ClientBankAccountController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "create", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -67,6 +78,10 @@ class ClientBankAccountController extends Controller
             }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientBankAccount", "store", $ex->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }
@@ -81,6 +96,10 @@ class ClientBankAccountController extends Controller
         }
        catch (\Exception $ex) {
           saveException(sqlDateTime(), "ClientBankAccount", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+          $admins = DB::table('admins')->get();
+          foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new NewErrorMail());
+          }
           $error = 1;
           return view("/frontend/home/index", compact('error'));
         }
@@ -116,6 +135,10 @@ class ClientBankAccountController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "update", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }

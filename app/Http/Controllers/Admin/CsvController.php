@@ -7,6 +7,8 @@ use App\Models\Admin;
 use App\Models\WalletHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
 use Illuminate\Support\Facades\DB;
 
 class CsvController extends Controller
@@ -52,6 +54,10 @@ class CsvController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "csvexport", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
 
@@ -81,6 +87,10 @@ class CsvController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "csvToArray", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
               }
       }
 
@@ -99,6 +109,10 @@ class CsvController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }

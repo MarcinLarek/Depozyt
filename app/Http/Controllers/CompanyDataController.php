@@ -8,6 +8,9 @@ use App\Models\CompanyData;
 use App\Models\Representative;
 use Illuminate\Support\Facades\Auth;
 use function GuzzleHttp\Promise\all;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class CompanyDataController extends Controller
 {
@@ -25,6 +28,10 @@ class CompanyDataController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "CompanyData", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -52,6 +59,10 @@ class CompanyDataController extends Controller
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "CompanyData", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }

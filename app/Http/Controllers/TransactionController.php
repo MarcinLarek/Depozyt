@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Models\Currency;
 use App\Models\CompanyData;
 use App\Models\ClientData;
@@ -16,6 +15,9 @@ use Illuminate\Support\Carbon;
 use PDF;
 use Mpdf\Mpdf;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -32,6 +34,10 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -241,6 +247,10 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "create", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -302,6 +312,10 @@ class TransactionController extends Controller
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "Transaction", "store", $ex->getMessage(), $request->ip());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }
@@ -327,6 +341,10 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -354,6 +372,10 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -436,6 +458,10 @@ class TransactionController extends Controller
         }
     catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }
@@ -452,6 +478,10 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "transactionsToAccept", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -527,6 +557,10 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "confirm", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -542,6 +576,10 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -593,6 +631,10 @@ class TransactionController extends Controller
     }
     catch (\Exception $e) {
       saveException(sqlDateTime(), "Transaction", "generatePdf2", $ex->getMessage(), $request->ip(), Auth::id());
+      $admins = DB::table('admins')->get();
+      foreach ($admins as $admin) {
+        Mail::to($admin->email)->send(new NewErrorMail());
+      }
       $error = 1;
       return view("/frontend/home/index", compact('error'));
     }

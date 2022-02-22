@@ -28,6 +28,6 @@ class NewContactMessage extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.new-contact-message');
+        return $this->subject(__('Nowa wiadomość na platformie depozyt'))->markdown('emails.new-contact-message');
     }
 }

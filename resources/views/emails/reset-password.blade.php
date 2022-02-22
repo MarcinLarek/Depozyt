@@ -67,7 +67,7 @@
     <table>
         <tr>
             <td colspan="2" style="font-size: 200%; margin-top: 1em;">
-                Depozyt
+                {{ __('mail.RES-toptitle') }}
             </td>
         </tr>
         <tr style="height: 20px">
@@ -75,7 +75,7 @@
             <td></td>
         </tr>
         <tr>
-            <td colspan="2">Witaj, <strong>{{$uservar->username}}</strong></td>
+            <td colspan="2">{{ __('mail.RES-welcome') }}, <strong>{{$uservar->username}}</strong></td>
         </tr>
         <tr style="height: 20px">
             <td></td>
@@ -83,29 +83,29 @@
         </tr>
         <tr>
           <?php $userid = $uservar -> id ?>
-            <td colspan="2">Kliknij <a href="{{ route('SetNewPassword', $uservar->token, ['token' => $uservar->token])  }}">tutaj</a>, aby zresetować swoje hasło.</td>
+            <td colspan="2">{{ __('mail.RES-click') }} <a href="{{ route('SetNewPassword', $uservar->token, ['token' => $uservar->token])  }}">{{ __('mail.RES-here') }}</a>{{ __('mail.RES-rest') }}</td>
         </tr>
         <tr style="height: 20px">
             <td></td>
             <td></td>
         </tr>
         <tr style="color: #868e96;">
-            <td colspan="2">Pozdrawiamy,</td>
+            <td colspan="2">{{ __('mail.RES-end1') }}</td>
         </tr>
         <tr>
-            <td colspan="2">Zespół Depozyt!</td>
+            <td colspan="2">{{ __('mail.RES-end2') }}</td>
         </tr>
         <tr>
-            <td class="footer-font-size" colspan="2">{Company}</td>
+            <td class="footer-font-size" colspan="2">{{$data['company']}}</td>
         </tr>
         <tr>
-            <td class="footer-font-size" colspan="2"> {Street}, {City}</td>
+            <td class="footer-font-size" colspan="2"> {{$data['street']}}, {{$data['city']}}</td>
         </tr>
         <tr>
-            <td class="footer-font-size" colspan="2"> {Email}</td>
+            <td class="footer-font-size" colspan="2"> {{$data['email']}}</td>
         </tr>
         <tr>
-            <td class="footer-font-size" colspan="2"> NIP {NIP}, REGON {REGON}, KRS {KRS}</td>
+            <td class="footer-font-size" colspan="2"> NIP {{$data['nip']}}, REGON {{$data['regon']}}, KRS {{$data['krs']}}</td>
         </tr>
     </table>
 </body>

@@ -32,6 +32,6 @@ class AdminLoginMail extends Mailable
     public function build(Request $request)
     {
         $uservar =  Admin::where('login',$request['username'])->first();
-        return $this->markdown('emails.admin-login', compact('uservar'));
+        return $this->subject(__('Zaloguj się na konto administratora'))->markdown('emails.admin-login', compact('uservar'));
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\PlatformData;
 
 class ResetPasswordMail extends Mailable
 {
@@ -32,6 +33,9 @@ class ResetPasswordMail extends Mailable
     {
         $varmail = $request->email;
         $uservar =  User::where('email',$varmail)->first();
-        return $this->markdown('emails.reset-password', compact('uservar'));
+        $data = PlatformData::where('id',1)->first();
+        return $this->subject(__('mail.RES-title'))->markdown('emails.reset-password')
+                  ->with('uservar', $uservar)
+                  ->with('data', $data);
     }
 }

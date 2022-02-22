@@ -1,9 +1,9 @@
 @component('mail::message')
-<h2>Dziękujemy za rejestracje w aplikacji Depozyt.com</h2>
+<h2>{{ __('mail.REG-thanks') }}</h2>
 <p>
-Kliknij
-<a href="{{ route('register.confirmation', $uservar->personal_code, ['token' => $uservar->personal_code])  }}">tutaj</a>
-, aby potwierdzić rejestracje.
+{{ __('mail.REG-click') }}
+<a href="{{ route('register.confirmation', $uservar->personal_code, ['token' => $uservar->personal_code])  }}">{{ __('mail.REG-here') }}</a>
+{{ __('mail.REG-rest') }}
 </p>
 
 @endcomponent

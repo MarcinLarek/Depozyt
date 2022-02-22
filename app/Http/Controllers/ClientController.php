@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Type\Integer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -19,6 +22,10 @@ class ClientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Client", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -33,6 +40,10 @@ class ClientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Client", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -59,6 +70,10 @@ class ClientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Client", "update", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }

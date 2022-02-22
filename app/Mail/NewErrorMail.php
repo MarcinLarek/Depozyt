@@ -6,9 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Http\Request;
 
-class ResponseEmail extends Mailable
+class NewErrorMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,9 +26,8 @@ class ResponseEmail extends Mailable
      *
      * @return $this
      */
-    public function build(Request $request)
+    public function build()
     {
-        $reply = $request->message;
-        return $this->subject(__('mail.REP-title'))->markdown('emails.response-email', compact('reply'));
+        return $this->subject(__('Wystąpił nowy błąd na platformie'))->markdown('emails.new-error');
     }
 }

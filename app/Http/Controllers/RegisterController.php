@@ -8,10 +8,12 @@ use App\Models\User;
 use App\Services\UsersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use PharIo\Manifest\Email;
 use App\Mail\RegisterConfirmation;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -44,6 +46,10 @@ class RegisterController extends Controller
             var_dump($ex->getMessage());
             die;
             saveException(sqlDateTime(), "Register", "Register", $ex->getMessage(), $request->ip());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $registersucces = 0;
             return view("/frontend/register/index");
         }
@@ -62,6 +68,10 @@ class RegisterController extends Controller
       }
       catch (\Exception $e) {
         saveException(sqlDateTime(), "Register", "confirmation", $ex->getMessage(), $request->ip(), Auth::id());
+        $admins = DB::table('admins')->get();
+        foreach ($admins as $admin) {
+          Mail::to($admin->email)->send(new NewErrorMail());
+        }
         $error = 2;
         return view("/frontend/home/index", compact('error'));
       }
@@ -79,6 +89,10 @@ class RegisterController extends Controller
         }
         catch (\Exception $ex) {
             saveException(date('Y-m-d H:m:s'), "Register", "CheckEmail", $ex->getMessage());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
         }
 
         return $isExist;

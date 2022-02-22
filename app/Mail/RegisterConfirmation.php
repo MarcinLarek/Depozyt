@@ -32,6 +32,6 @@ class RegisterConfirmation extends Mailable
     {
       $varmail = $request->email;
       $uservar =  User::where('email',$varmail)->first();
-        return $this->markdown('emails.register-confirmation', compact('uservar'));
+        return $this->subject(__('mail.REG-title'))->markdown('emails.register-confirmation', compact('uservar'));
     }
 }

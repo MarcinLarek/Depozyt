@@ -6,6 +6,9 @@ use App\Http\Requests\Recipients\StoreRequest;
 use App\Models\Recipient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class RecipientController extends Controller
 {
@@ -21,6 +24,10 @@ class RecipientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "idit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -40,6 +47,10 @@ class RecipientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -70,6 +81,10 @@ class RecipientController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "Recipient", "update", $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }
@@ -94,6 +109,10 @@ class RecipientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "payment", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -110,6 +129,10 @@ class RecipientController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "getHistory", $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }
@@ -130,6 +153,10 @@ class RecipientController extends Controller
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "Recipient", "Create()", $ex->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }

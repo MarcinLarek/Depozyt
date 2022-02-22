@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\WalletHistory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\ClientBankAccount;
 use App\Models\Currency;
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class BankAccountsController extends Controller
 {
@@ -26,6 +28,10 @@ class BankAccountsController extends Controller
     }
     catch (\Exception $ex) {
                 saveException(sqlDateTime(), "Admin-BankAccounts", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                $admins = DB::table('admins')->get();
+                foreach ($admins as $admin) {
+                  Mail::to($admin->email)->send(new NewErrorMail());
+                }
           return view('/frontend/admin/admin/index');
             }
   }
@@ -45,6 +51,10 @@ class BankAccountsController extends Controller
     }
     catch (\Exception $ex) {
                 saveException(sqlDateTime(), "Admin-BankAccounts", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                $admins = DB::table('admins')->get();
+                foreach ($admins as $admin) {
+                  Mail::to($admin->email)->send(new NewErrorMail());
+                }
           return view('/frontend/admin/admin/index');
             }
   }
@@ -86,6 +96,10 @@ class BankAccountsController extends Controller
       }
       catch (\Exception $exception) {
           saveException(sqlDateTime(), 'Admin-BankAccounts', 'store', $exception->getMessage(), $request->ip(), Auth::id());
+          $admins = DB::table('admins')->get();
+          foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new NewErrorMail());
+          }
           return view('/frontend/admin/admin/index');
       }
   }

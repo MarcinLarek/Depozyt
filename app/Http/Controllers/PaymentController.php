@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
 use Illuminate\Support\Facades\DB;
+
 
 class PaymentController extends Controller
 {
@@ -38,6 +41,10 @@ class PaymentController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -53,7 +60,7 @@ class PaymentController extends Controller
           'amount' => ['required','numeric'],
       ]);
 
-
+      try {
         $user = Auth::user();
         $recipient =  Recipient::where('id',$request['recipment_id'])->first();
         $wallet = Auth::user()->wallet->where('currency_id',$request['currency_id'])->first();
@@ -128,11 +135,13 @@ class PaymentController extends Controller
               return view('/frontend/recipients/_empty-wallet');
           }
         }
-
-      try {
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "paymentpost", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -157,6 +166,10 @@ class PaymentController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "downloadDocument()", $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }
@@ -199,6 +212,10 @@ class PaymentController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "generatePdf", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }

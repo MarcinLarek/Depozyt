@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\NewContactMessage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -46,6 +48,10 @@ class HomeController extends Controller
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Home", "sendcontact", $ex->getMessage(), $request->ip(), Auth::id());
                   $error = 1;
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   return view("/frontend/home/index", compact('error'));
               }
     }

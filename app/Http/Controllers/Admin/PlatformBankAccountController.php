@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\PlatformBankAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class PlatformBankAccountController extends Controller
 {
@@ -18,6 +21,10 @@ class PlatformBankAccountController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-PlatformBankAccount", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
 
@@ -31,6 +38,10 @@ class PlatformBankAccountController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "Admin\PlatformBankAccount", "store()", $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             return view('/frontend/admin/admin/index');
         }
     }
@@ -44,6 +55,10 @@ class PlatformBankAccountController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-PlatformBankAccount", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -57,6 +72,10 @@ class PlatformBankAccountController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "Admin-PlatformBankAccount", "update()", $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             return view('/frontend/admin/admin/index');
         }
     }

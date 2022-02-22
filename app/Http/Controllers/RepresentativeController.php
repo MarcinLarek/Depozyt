@@ -6,6 +6,9 @@ use App\Http\Requests\RepresentativeRequest;
 use App\Models\Representative;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 class RepresentativeController extends Controller
 {
@@ -23,6 +26,10 @@ class RepresentativeController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Representative", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -77,6 +84,10 @@ class RepresentativeController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Representative", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }

@@ -7,6 +7,8 @@ use App\Models\Admin;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Currency;
@@ -25,6 +27,10 @@ class TransactionsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -44,6 +50,10 @@ class TransactionsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -90,6 +100,10 @@ class TransactionsController extends Controller
               ->with('transactions', $transactions);
         } catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             return view('/frontend/admin/admin/index');
         }
     }

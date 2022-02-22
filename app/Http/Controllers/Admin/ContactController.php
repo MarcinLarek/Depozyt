@@ -7,6 +7,8 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 use App\Mail\ResponseEmail;
 
 class ContactController extends Controller
@@ -20,6 +22,10 @@ class ContactController extends Controller
           }
           catch (\Exception $ex) {
             saveException(sqlDateTime(), "Admin-Contact", "index", $ex->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
 	    return view('/frontend/admin/admin/index');
         }
     }
@@ -33,6 +39,10 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "show", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
 
@@ -46,6 +56,10 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "reply", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -63,6 +77,10 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "sendreply", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -75,6 +93,10 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "delete", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -88,6 +110,10 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "deletemessege", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }

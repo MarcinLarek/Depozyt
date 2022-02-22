@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\WalletHistory;
@@ -25,6 +27,10 @@ class PaymentsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
 
@@ -41,6 +47,10 @@ class PaymentsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "withdrawal", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -60,6 +70,10 @@ class PaymentsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -93,6 +107,10 @@ class PaymentsController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Payments', 'update', $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             return view('/frontend/admin/admin/index');
         }
     }

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\PlatformException;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
+use Illuminate\Support\Facades\DB;
 
 
 class ErrorsController extends Controller
@@ -20,6 +23,10 @@ class ErrorsController extends Controller
           }
       catch (\Exception $ex) {
             saveException(sqlDateTime(), "Admin-Errors", "index", $ex->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
 	    return view('/frontend/admin/admin/index');
         }
     }

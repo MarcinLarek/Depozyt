@@ -1,6 +1,6 @@
 @component('mail::message')
-# You have new Message on depozyt.com
+Masz nową wiadomośc na platformie depozyt.com
 
-Click <a href="#"> here </a> to view messesages.
+Kliknij <a href="{{ route('admin.contact') }}"> tutaj </a> aby ją odczytać.
 
 @endcomponent

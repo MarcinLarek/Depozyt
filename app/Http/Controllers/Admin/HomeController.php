@@ -7,7 +7,7 @@ use App\Models\Admin;
 use App\Models\WalletHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewErrorMail;
 use Illuminate\Support\Facades\DB;
 
 class WithdrawalController extends Controller
@@ -21,6 +23,10 @@ class WithdrawalController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Withdrawal", "index", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    Mail::to($admin->email)->send(new NewErrorMail());
+                  }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
               }
@@ -36,6 +42,10 @@ class WithdrawalController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "Withdrawal", "getHistory", $exception->getMessage(), $request->ip(), Auth::id());
+            $admins = DB::table('admins')->get();
+            foreach ($admins as $admin) {
+              Mail::to($admin->email)->send(new NewErrorMail());
+            }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
         }
