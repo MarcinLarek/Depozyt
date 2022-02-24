@@ -12,6 +12,13 @@
         </ul>
     </div>
     @endif
+    @if(isset($succesaalert))
+      @if($succesaalert == 1)
+        <div class="alert alert-success">
+          <h1>{{ __('alerts.data_save_success') }}</h1>
+        </div>
+      @endif
+    @endif
     <ul class="nav nav-tabs bg-white">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#searchTab"> {{ __('recipient.PAY-menu1') }} </a>

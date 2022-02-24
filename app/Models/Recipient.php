@@ -10,7 +10,7 @@ class Recipient extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'name', 'email', 'account_number', 'nip', 'country_id', 'phone', 'post_code', 'street', 'city', 'active'
+        'user_id', 'name', 'email', 'account_number', 'bank_name', 'nip', 'country_id', 'phone', 'post_code', 'street', 'city', 'active'
     ];
 
     public function getAccountNumber()

@@ -62,6 +62,7 @@ class RecipientController extends Controller
           'name' => ['required','max:100'],
           'nip' => ['required','NIP'],
           'country_id' => ['required'],
+          'bank_name' => ['required','max:100'],
           'account_number' => ['required','iban'],
           'email' => ['required','max:100', 'email'],
           'phone' => ['required','max:100'],
@@ -89,8 +90,6 @@ class RecipientController extends Controller
             return view("/frontend/home/index", compact('error'));
         }
     }
-
-
 
     public function payment()
     {
@@ -140,7 +139,17 @@ class RecipientController extends Controller
 
     public function store(StoreRequest $request)
     {
-      $data = $request->validated();
+      $data = $request->validate([
+          'name' => ['required','max:100'],
+          'nip' => ['required','NIP'],
+          'bank_name' => ['required','max:100'],
+          'account_number' => ['required','iban'],
+          'email' => ['required','max:100', 'email'],
+          'phone' => ['required','max:100'],
+          'street' => ['required','max:100'],
+          'post_code' => ['required','post_code'],
+          'city' => ['required','max:100'],
+      ]);
         try {
             $user = Auth::user();
             $data['country_id'] = $user->country->getId();

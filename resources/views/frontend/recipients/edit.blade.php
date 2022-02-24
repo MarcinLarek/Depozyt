@@ -56,6 +56,11 @@
                                     </div>
                                     <span asp-validation-for="AccountNumber" class="text-danger"></span>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="bank-name" class="control-label">{{ __('clientbankaccounts.EDI-name') }}</label>
+                                    <input name="bank_name" id="bank-name" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-name') }}" value="{{ old('bank_name') }}" />
+                                    @error('bank_name')<span class="text-danger">{{ $message }}</span>@enderror
+                                </div>
                             </div>
                         </fieldset>
                         <fieldset>

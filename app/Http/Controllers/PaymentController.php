@@ -61,80 +61,117 @@ class PaymentController extends Controller
       ]);
 
       try {
-        $user = Auth::user();
-        $recipient =  Recipient::where('id',$request['recipment_id'])->first();
-        $wallet = Auth::user()->wallet->where('currency_id',$request['currency_id'])->first();
-        $wallethistory = WalletHistory::where('user_id',$user['id'])->first();
-        $clientbank = ClientBankAccount::where('account_number',$recipient['account_number'])->first();
-        $data = array(
-          'user_id' => $user['id'],
-          'recipient_id' => $request['recipment_id'],
-          'account_number' => $recipient['account_number'],
-          'token' => $request['_token'],
-          'amount' => $request['amount'],
-          'payment_title' => $request['payment_title']
-        );
+
+              $user = Auth::user();
+              $recipient =  Recipient::where('id',$request['recipment_id'])->first();
+              $wallet = Auth::user()->wallet->where('currency_id',$request['currency_id'])->first();
+              if ($wallet ==null) {
+                $walletdata = array(
+                  'user_id' => $user['id'],
+                  'currency_id' => $request['currency_id'],
+                );
+                Wallet::create($walletdata);
+              }
+              $wallet = Wallet::where('currency_id',$request['currency_id'])->first();
+              $wallethistory = WalletHistory::where('user_id',$user['id'])->first();
+              $clientbank = ClientBankAccount::where('account_number',$recipient['account_number'])->first();
+              $data = array(
+                'user_id' => $user['id'],
+                'recipient_id' => $request['recipment_id'],
+                'account_number' => $recipient['account_number'],
+                'token' => $request['_token'],
+                'amount' => $request['amount'],
+                'payment_title' => $request['payment_title']
+              );
+
+              if ($clientbank !=null) {
+
+                $wallethistorydata = array(
+                  'user_id' => $user['id'],
+                  'bank_name' => $clientbank['bank_name'],
+                  'currency_id' => $request['currency_id'],
+                  'amount' => -$request['amount']
+                );
+                $walletupdate = $wallet['amount'] - $data['amount'];
+
+                if ($walletupdate >= 0) {
+                  Payment::create($data);
+                  WalletHistory::create($wallethistorydata);
+                  $wallet->update(['amount' => $walletupdate ]);
+                  $userrecipient =  User::where('id',$clientbank['user_id'])->first();
 
 
-        $wallethistorydata = array(
-          'user_id' => $user['id'],
-          'bank_name' => $clientbank['bank_name'],
-          'currency_id' => $request['currency_id'],
-          'amount' => -$request['amount']
-        );
-        $walletupdate = $wallet['amount'] - $data['amount'];
+                  if ($userrecipient != null) {
+                    $walletrecipient = $userrecipient->wallet->where('currency_id',$request['currency_id'])->first();
+                    if ($walletrecipient ==null) {
+                      $walletrecipientdata = array(
+                        'user_id' => $userrecipient['id'],
+                        'currency_id' => $request['currency_id'],
+                      );
+                      Wallet::create($walletrecipientdata);
+                    }
+                    $walletrecipient = Wallet::where('currency_id',$request['currency_id'])->first();
+                    $wallethistoryrecipient = WalletHistory::where('user_id',$user['id'])->first();
 
-        if ($walletupdate >= 0) {
-          Payment::create($data);
-          WalletHistory::create($wallethistorydata);
-          $wallet->update(['amount' => $walletupdate ]);
-          $userrecipient =  User::where('id',$clientbank['user_id'])->first();
-
-
-          if ($userrecipient != null) {
-            $walletrecipient = $userrecipient->wallet->where('currency_id',$request['currency_id'])->first();
-            $wallethistoryrecipient = WalletHistory::where('user_id',$user['id'])->first();
-
-            $wallethistoryrecipientdata = array(
-              'user_id' => $userrecipient['id'],
-              'bank_name' => $clientbank['bank_name'],
-              'currency_id' => $request['currency_id'],
-              'amount' => $request['amount']
-            );
-            WalletHistory::create($wallethistoryrecipientdata);
-            $walletupdaterecipient = $walletrecipient['amount'] + $data['amount'];
-            $walletrecipient->update(['amount' => $walletupdaterecipient ]);
-          }
+                    $wallethistoryrecipientdata = array(
+                      'user_id' => $userrecipient['id'],
+                      'bank_name' => $clientbank['bank_name'],
+                      'currency_id' => $request['currency_id'],
+                      'amount' => $request['amount']
+                    );
+                    WalletHistory::create($wallethistoryrecipientdata);
+                    $walletupdaterecipient = $walletrecipient['amount'] + $data['amount'];
+                    $walletrecipient->update(['amount' => $walletupdaterecipient ]);
+                  }
 
 
 
-          $recipients = Auth::user()->recipients()->get();
-          $wallets = Auth::user()->wallet()->get();
-          $walleterror = 1;
-          if ($wallets->count()) {
-              return view("/frontend/recipients/payment")
-                  ->with('recipients', $recipients)
-                  ->with('walleterror', $walleterror)
-                  ->with('wallets', $wallets);
-          } else {
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
-          }
+                  $recipients = Auth::user()->recipients()->get();
+                  $wallets = Auth::user()->wallet()->get();
+                  $walleterror = 0;
+                  $succesaalert = 1;
+                  return view("/frontend/recipients/payment")
+                      ->with('recipients', $recipients)
+                      ->with('walleterror', $walleterror)
+                      ->with('wallets', $wallets)
+                      ->with('succesaalert', $succesaalert);
 
-        }
-        else {
-          $recipients = Auth::user()->recipients()->get();
-          $wallets = Auth::user()->wallet()->get();
-          $walleterror = 1;
-          if ($wallets->count()) {
-              return view("/frontend/recipients/payment")
-                  ->with('recipients', $recipients)
-                  ->with('walleterror', $walleterror)
-                  ->with('wallets', $wallets);
-          } else {
-              return view('/frontend/recipients/_empty-wallet');
-          }
-        }
+                }
+                else {
+                  $recipients = Auth::user()->recipients()->get();
+                  $wallets = Auth::user()->wallet()->get();
+                  $walleterror = 1;
+                  return view("/frontend/recipients/payment")
+                      ->with('recipients', $recipients)
+                      ->with('walleterror', $walleterror)
+                      ->with('wallets', $wallets);
+                }
+              }
+              else {
+                $wallethistorydata = array(
+                  'user_id' => $user['id'],
+                  'bank_name' => $recipient['bank_name'],
+                  'currency_id' => $request['currency_id'],
+                  'amount' => -$request['amount']
+                );
+                $walletupdate = $wallet['amount'] - $data['amount'];
+
+                if ($walletupdate >= 0) {
+                  Payment::create($data);
+                  WalletHistory::create($wallethistorydata);
+                  $wallet->update(['amount' => $walletupdate ]);
+                  $recipients = Auth::user()->recipients()->get();
+                  $wallets = Auth::user()->wallet()->get();
+                  $walleterror = 0;
+                  $succesaalert = 1;
+                  return view("/frontend/recipients/payment")
+                      ->with('recipients', $recipients)
+                      ->with('walleterror', $walleterror)
+                      ->with('wallets', $wallets)
+                      ->with('succesaalert', $succesaalert);
+              }
+              }
+
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "paymentpost", $ex->getMessage(), $request->ip(), Auth::id());

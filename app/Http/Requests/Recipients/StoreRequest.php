@@ -22,6 +22,7 @@ class StoreRequest extends FormRequest
             'name' => ['required'],
             'nip' => ['required', 'NIP'],
             'account_number' => 'required',
+            'bank_name' => ['required','max:100'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
             'street' => ['required'],

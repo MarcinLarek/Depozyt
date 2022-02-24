@@ -21,6 +21,7 @@ class CreateRecipientsTable extends Migration
             $table->string('email');
             $table->unsignedBigInteger('country_id');
             $table->string('account_number');
+            $table->string('bank_name');
             $table->string('phone');
             $table->string('post_code');
             $table->string('street');
