@@ -26,7 +26,9 @@ class RecipientController extends Controller
                   saveException(sqlDateTime(), "Recipient", "idit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -49,7 +51,9 @@ class RecipientController extends Controller
                   saveException(sqlDateTime(), "Recipient", "edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -84,7 +88,9 @@ class RecipientController extends Controller
             saveException(sqlDateTime(), "Recipient", "update", $exception->getMessage(), $request->ip(), Auth::id());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -110,7 +116,9 @@ class RecipientController extends Controller
                   saveException(sqlDateTime(), "Recipient", "payment", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -130,7 +138,9 @@ class RecipientController extends Controller
             saveException(sqlDateTime(), "PaymentController", "getHistory", $exception->getMessage(), $request->ip(), Auth::id());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -164,7 +174,9 @@ class RecipientController extends Controller
             saveException(sqlDateTime(), "Recipient", "Create()", $ex->getMessage(), $request->ip(), Auth::id());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             $error = 1;
             return view("/frontend/home/index", compact('error'));

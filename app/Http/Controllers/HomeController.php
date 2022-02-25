@@ -50,7 +50,9 @@ class HomeController extends Controller
                   $error = 1;
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   return view("/frontend/home/index", compact('error'));
               }

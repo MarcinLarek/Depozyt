@@ -36,7 +36,9 @@ class TransactionController extends Controller
                   saveException(sqlDateTime(), "Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -249,7 +251,9 @@ class TransactionController extends Controller
                   saveException(sqlDateTime(), "Transaction", "create", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -314,7 +318,9 @@ class TransactionController extends Controller
             saveException(sqlDateTime(), "Transaction", "store", $ex->getMessage(), $request->ip());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -343,7 +349,9 @@ class TransactionController extends Controller
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -374,7 +382,9 @@ class TransactionController extends Controller
                   saveException(sqlDateTime(), "Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -460,7 +470,9 @@ class TransactionController extends Controller
             saveException(sqlDateTime(), 'Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -480,7 +492,9 @@ class TransactionController extends Controller
                   saveException(sqlDateTime(), "Transaction", "transactionsToAccept", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -559,7 +573,9 @@ class TransactionController extends Controller
                   saveException(sqlDateTime(), "Transaction", "confirm", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -578,7 +594,9 @@ class TransactionController extends Controller
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -633,7 +651,9 @@ class TransactionController extends Controller
       saveException(sqlDateTime(), "Transaction", "generatePdf2", $ex->getMessage(), $request->ip(), Auth::id());
       $admins = DB::table('admins')->get();
       foreach ($admins as $admin) {
-        Mail::to($admin->email)->send(new NewErrorMail());
+        if ($admin->error_notification==1) {
+          Mail::to($admin->email)->send(new NewErrorMail());
+        }
       }
       $error = 1;
       return view("/frontend/home/index", compact('error'));

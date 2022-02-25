@@ -4,7 +4,7 @@ return [
   'IND-menu1' => 'Withdraw funds',
   'IND-menu2' => 'Withdrawals history',
   'IND-alert' => 'CAUTION',
-  'IND-alertdesc' => 'You cannot withdraw because you do not have at least one bank account defined.',
+  'IND-alertdesc' => 'You cannot withdraw because you do not have at least one bank account or wallet defined.',
   'IND-withdraw' => 'Withdraw funds',
   'IND-bank-account' => 'Bank Account',
   'IND-currency' => 'Currency',

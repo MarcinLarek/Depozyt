@@ -67,6 +67,7 @@ Route::domain('localhost')->group(function () {
 
         Route::prefix('withdrawal')->group(function () {
             Route::get('/', [\App\Http\Controllers\WithdrawalController::class, 'index'])->name('withdrawal');
+            Route::post('/store', [\App\Http\Controllers\WithdrawalController::class, 'store'])->name('withdrawal.store');
             Route::get('/get-history', [\App\Http\Controllers\WithdrawalController::class, 'getHistory']);
             Route::get('/document/{walletHistoryId}', [\App\Http\Controllers\WithdrawalController::class, 'downloadDocument'])->name('withdrawal.download');
         });

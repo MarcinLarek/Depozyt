@@ -48,7 +48,9 @@ class RegisterController extends Controller
             saveException(sqlDateTime(), "Register", "Register", $ex->getMessage(), $request->ip());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             $registersucces = 0;
             return view("/frontend/register/index");
@@ -70,7 +72,9 @@ class RegisterController extends Controller
         saveException(sqlDateTime(), "Register", "confirmation", $ex->getMessage(), $request->ip(), Auth::id());
         $admins = DB::table('admins')->get();
         foreach ($admins as $admin) {
-          Mail::to($admin->email)->send(new NewErrorMail());
+          if ($admin->error_notification==1) {
+            Mail::to($admin->email)->send(new NewErrorMail());
+          }
         }
         $error = 2;
         return view("/frontend/home/index", compact('error'));
@@ -91,7 +95,9 @@ class RegisterController extends Controller
             saveException(date('Y-m-d H:m:s'), "Register", "CheckEmail", $ex->getMessage());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
         }
 

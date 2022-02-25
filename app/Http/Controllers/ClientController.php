@@ -24,7 +24,9 @@ class ClientController extends Controller
                   saveException(sqlDateTime(), "Client", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -42,7 +44,9 @@ class ClientController extends Controller
                   saveException(sqlDateTime(), "Client", "edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -72,7 +76,9 @@ class ClientController extends Controller
                   saveException(sqlDateTime(), "Client", "update", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));

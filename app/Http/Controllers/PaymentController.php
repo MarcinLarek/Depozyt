@@ -43,7 +43,9 @@ class PaymentController extends Controller
                   saveException(sqlDateTime(), "Payment", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -72,7 +74,9 @@ class PaymentController extends Controller
                 );
                 Wallet::create($walletdata);
               }
-              $wallet = Wallet::where('currency_id',$request['currency_id'])->first();
+              $wallet = Wallet::where('currency_id',$request['currency_id'])
+              ->where('user_id',$user['id'])
+              ->first();
               $wallethistory = WalletHistory::where('user_id',$user['id'])->first();
               $clientbank = ClientBankAccount::where('account_number',$recipient['account_number'])->first();
               $data = array(
@@ -110,7 +114,9 @@ class PaymentController extends Controller
                       );
                       Wallet::create($walletrecipientdata);
                     }
-                    $walletrecipient = Wallet::where('currency_id',$request['currency_id'])->first();
+                    $walletrecipient = Wallet::where('currency_id',$request['currency_id'])
+                    ->where('user_id',$userrecipient['id'])
+                    ->first();
                     $wallethistoryrecipient = WalletHistory::where('user_id',$user['id'])->first();
 
                     $wallethistoryrecipientdata = array(
@@ -177,7 +183,9 @@ class PaymentController extends Controller
                   saveException(sqlDateTime(), "Payment", "paymentpost", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));
@@ -205,7 +213,9 @@ class PaymentController extends Controller
             saveException(sqlDateTime(), "PaymentController", "downloadDocument()", $exception->getMessage(), $request->ip(), Auth::id());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             $error = 1;
             return view("/frontend/home/index", compact('error'));
@@ -251,7 +261,9 @@ class PaymentController extends Controller
                   saveException(sqlDateTime(), "Payment", "generatePdf", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
                   $error = 1;
                   return view("/frontend/home/index", compact('error'));

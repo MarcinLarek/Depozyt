@@ -13,8 +13,10 @@
             <thead>
             <tr>
                 <th>Id</th>
+                <th>Login</th>
                 <th>Imię i nazwisko</th>
                 <th>Email</th>
+                <th>Powiadomienia o błędach</th>
                 <th>Data rejestracji</th>
                 <th>Opcje</th>
             </tr>
@@ -25,8 +27,14 @@
             @foreach($admins as $admin)
                 <tr>
                     <td>{{ $admin->id }}</td>
+                    <td>{{ $admin->login }}</td>
                     <td>{{ $admin->name}} {{$admin->surname}}</td>
                     <td>{{ $admin->email }}</td>
+                    @if($admin->error_notification == 1)
+                    <td class="table-success">Tak</td>
+                    @else
+                    <td class="table-danger">Nie</td>
+                    @endif
                     <td>{{ $admin->created_at }}</td>
                     <td>
                         <a href="{{ route('admin.admins.edit', ['id' => $admin->id]) }}">

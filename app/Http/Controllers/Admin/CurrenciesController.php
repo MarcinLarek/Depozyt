@@ -23,7 +23,9 @@ class CurrenciesController extends Controller
                   saveException(sqlDateTime(), "Admin-Currencies", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -47,7 +49,9 @@ class CurrenciesController extends Controller
             saveException(sqlDateTime(), 'CurrenciesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             return view('/frontend/admin/admin/index');
         }
@@ -65,7 +69,9 @@ class CurrenciesController extends Controller
                   saveException(sqlDateTime(), "Admin-Currencies", "PLACEHOLDER", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -81,7 +87,9 @@ class CurrenciesController extends Controller
             saveException(sqlDateTime(), 'CurrenciesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());
             $admins = DB::table('admins')->get();
             foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
+              if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+              }
             }
             return view('/frontend/admin/admin/index');
         }

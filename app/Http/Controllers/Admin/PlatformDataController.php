@@ -26,7 +26,9 @@ class PlatformDataController extends Controller
                   saveException(sqlDateTime(), "Admin-PlatformData", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -57,7 +59,9 @@ class PlatformDataController extends Controller
                   saveException(sqlDateTime(), "Admin-PlatformData", "update", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }

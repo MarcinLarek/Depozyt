@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Auth;
     </tr>
     </thead>
     <tbody>
-    @if($walletHistory->count() < 0 )
+    @if($walletHistory->count() > 0 )
         @foreach ($walletHistory as $wallet)
-        @if($wallet->amount < 0)
+        @if($wallet->amount > 0)
             <tr>
                 <td class="text-left">
                     {{ $wallet->bank_name }}

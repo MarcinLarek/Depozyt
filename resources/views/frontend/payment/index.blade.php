@@ -25,7 +25,7 @@
                                 <fieldset>
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <label for="bank-name" class="control-label">{{ __('payment.IND-bank-account') }}:</label>
+                                            <label for="bank-name" class="control-label">{{ __('payment.IND-bank-account') }}</label>
                                             <select name="bank_name" id="bank-name" class="custom-select">
                                                 @foreach(Auth::user()->bankAccounts as $bank)
                                                     <option>{{ $bank->name }}</option>
@@ -48,7 +48,7 @@
 
                               <div class="col">
                                 <div class="row">
-                                  <h2 class="w-100" >{{ __('payment.IND-transfer-details') }}:</h2>
+                                  <h2 class="w-100" >{{ __('payment.IND-transfer-details') }}</h2>
                                   <div class="col-3">
                                       <p> <b>{{ __('payment.IND-transfer-title') }}:</b> </p>
                                       <p> <b>{{ __('payment.IND-account-number') }}:</b> </p>
@@ -81,12 +81,15 @@
                               </div>
 
                               <div class="col">
+                                <?php
+                                use App\Models\Currency; ?>
                                 <h2>{{ __('payment.IND-wallet-ammount') }}:</h2>
                                 @foreach(Auth::user()->wallet as $wallet)
-                                <h5>{{$wallet -> amount}}
-                                  @if($wallet->currency_id === 1)
-                                  PLN-Polski Złoty
-                                  @endif
+                                <?php
+                                $currency = Currency::where('id',$wallet['currency_id'])->first();
+                                 ?>
+                                <h5>
+                                  {{$wallet -> amount}} {{$currency['symbol']}} {{$currency['name']}}
                                 </h5>
                                 @endforeach
                               </div>

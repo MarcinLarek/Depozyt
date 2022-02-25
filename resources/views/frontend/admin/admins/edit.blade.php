@@ -24,7 +24,7 @@
                                 <div class="form-group col-md-12">
                                     <label for="name" class="control-label">Imie</label>
                                     <input name="name" id="name" class="form-control" value="{{ old('name', $admin->name) }}" placeholder="Imie"/>
-                                    @error('login')
+                                    @error('name')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -33,7 +33,19 @@
                                 <div class="form-group col-md-12">
                                     <label for="surname" class="control-label">Nazwisko</label>
                                     <input name="surname" id="surname" class="form-control" value="{{ old('surname', $admin->surname) }}" placeholder="Nazwisko"/>
-                                    @error('login')
+                                    @error('surname')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="error_notification" class="control-label">Otrzymywać powiadomienia o błędach?</label>
+                                    <select name="error_notification" id="error_notification" class="custom-select">
+                                      <option value="1">Tak</option>
+                                      <option value="0">Nie</option>
+                                    </select>
+                                    @error('error_notification')
                                         {{ $message }}
                                     @enderror
                                 </div>

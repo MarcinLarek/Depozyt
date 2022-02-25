@@ -25,7 +25,9 @@ class UsersController extends Controller
                   saveException(sqlDateTime(), "Admin-Users", "index", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -42,7 +44,9 @@ class UsersController extends Controller
                   saveException(sqlDateTime(), "Admin-Users", "edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -87,7 +91,9 @@ class UsersController extends Controller
                   saveException(sqlDateTime(), "Admin-Users", "update", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -104,8 +110,9 @@ class UsersController extends Controller
                   saveException(sqlDateTime(), "Admin-Users", "delete", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
-                  }
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
       	    return view('/frontend/admin/admin/index');
               }
     }
@@ -124,7 +131,9 @@ class UsersController extends Controller
                   saveException(sqlDateTime(), "Admin-Users", "deleteuser", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }

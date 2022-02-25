@@ -1,8 +1,15 @@
 @extends('frontend.layout.master')
 
 @section('content')
+<?php
+use App\Models\Currency; ?>
     <h1 class="mt-md-4">{{ __('withdrawal.IND-title') }}</h1>
     <hr/>
+    @if($succesaalert == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
+    @endif
     <ul class="nav nav-tabs bg-white">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#withdrawalTab"> {{ __('withdrawal.IND-menu1') }} </a>
@@ -18,8 +25,10 @@
                   <?php
                   $bankAccounts = Auth::user()->bankAccounts;
                   $temp = count($bankAccounts);
+                  $wallets = Auth::user()->wallets;
+                  $temp2 = count($bankAccounts);
                    ?>
-                   @if($temp < 1)
+                   @if($temp < 1 && $temp2 < 1)
                     <div id="warningAlert">
                         <h4 class="alert-heading">{{ __('withdrawal.IND-alert') }}!</h4>
                         <p class="mb-0">{{ __('withdrawal.IND-alertdesc') }}</p>
@@ -28,38 +37,43 @@
                     <div id="withdrawal" class="card border-0">
                         <div class="card-body">
                             <h4 class="card-title">{{ __('withdrawal.IND-withdraw') }}</h4>
-                            <form id="Create" asp-action="Create" asp-controller="Withdrawal" method="post">
+                            <form method="post" action="{{ route('withdrawal.store') }}">
+                              @csrf
                                 <fieldset>
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <label for="BankName" class="control-label">{{ __('withdrawal.IND-bank-account') }}</label>
-                                            <select name="BankName" class="custom-select">
+                                            <label for="bank_name" class="control-label">{{ __('withdrawal.IND-bank-account') }}</label>
+                                            <select name="bank_name" class="custom-select">
                                               @foreach(Auth::user()->bankAccounts as $bank)
                                                   <option>{{ $bank->name }}</option>
                                               @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="CurrencyName" class="control-label">{{ __('withdrawal.IND-currency') }}</label>
-                                            <select name="CurrencyName" class="custom-select">
+                                            <label for="currency_id" class="control-label">{{ __('withdrawal.IND-currency') }}</label>
+                                            <select name="currency_id" class="custom-select">
                                               @foreach($currencies as $currency)
-                                                  <option>{{ $currency->symbol }}</option>
+                                                  <option value="{{ $currency->id }}">{{ $currency->symbol }}</option>
                                               @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row align-items-center justify-content-center mt-md-3">
-                                        <h5><strong>{{ __('withdrawal.IND-avaliable-ammount') }}</strong></h5>
+                                    <div class="row justify-content-center">
+                                        <div class="col">
+                                          <h5><strong>{{ __('withdrawal.IND-avaliable-ammount') }}</strong></h5>
+                                          @foreach(Auth::user()->wallet as $wallet)
+                                          <?php
+                                          $currency = Currency::where('id',$wallet['currency_id'])->first();
+                                           ?>
+                                          <h5>{{$wallet -> amount}} {{$currency['symbol']}} {{$currency['name']}}</h5>
+                                          @endforeach
+                                        </div>
                                     </div>
                                     <div class="row align-items-center justify-content-center mb-md-3">
                                         <span id="AvailableAmount" name="AvailableAmount"></span>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="transfer_name" class="control-label">{{ __('withdrawal.IND-transfer-title') }}</label>
-                                            <input name="transfer_name" id="transfer_name" class="form-control" placeholder="{{ __('withdrawal.IND-transfer-title') }}" value="{{ old('transfer_name') }}"/>
-                                            <span asp-validation-for="Name" class="text-danger"></span>
-                                        </div>
+
                                         <div class="form-group col-md-6">
                                             <label for="amount" class="control-label">{{ __('withdrawal.IND-amount') }}</label>
                                             <input name="amount" id="amount" class="form-control" placeholder="{{ __('withdrawal.IND-amount') }}" value="{{ old('amount') }}"/>

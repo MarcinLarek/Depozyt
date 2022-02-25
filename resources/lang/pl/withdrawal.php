@@ -4,7 +4,7 @@ return [
   'IND-menu1' => 'Wypłać pieniądzę',
   'IND-menu2' => 'Historia wypłat',
   'IND-alert' => 'UWAGA',
-  'IND-alertdesc' => 'Nie możesz dokonać wypłaty, ponieważ nie masz zdefiniowanego przynajmniej jednego konta bankowego.',
+  'IND-alertdesc' => 'Nie możesz dokonać wypłaty, ponieważ nie masz zdefiniowanego przynajmniej jednego konta bankowego lub nie utworzono jeszcze portfela',
   'IND-withdraw' => 'Wypłać pieniądze',
   'IND-bank-account' => 'Konto Bankowe',
   'IND-currency' => 'Waluta',

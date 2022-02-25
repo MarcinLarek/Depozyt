@@ -26,7 +26,9 @@ class AdminsController extends Controller
                   saveException(sqlDateTime(), "Admin-Admin", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -42,7 +44,9 @@ class AdminsController extends Controller
                   saveException(sqlDateTime(), "Admin-Admin", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -55,6 +59,7 @@ class AdminsController extends Controller
           'name' => ['required','max:100'],
           'surname' => ['required','max:100'],
           'password' => ['max:100'],
+          'error_notification' => ['required'],
           'email' => ['required','max:100']
       ]);
       try {
@@ -63,6 +68,7 @@ class AdminsController extends Controller
             'login' => $request['login'],
             'name' => $request['name'],
             'surname' => $request['surname'],
+            'error_notification' => $request['error_notification'],
             'email' => $request['email']
           );
         } else {
@@ -70,6 +76,7 @@ class AdminsController extends Controller
             'login' => $request['login'],
             'name' => $request['name'],
             'surname' => $request['surname'],
+            'error_notification' => $request['error_notification'],
             'password' => Hash::make($request['password']),
             'email' => $request['email']
           );
@@ -87,7 +94,9 @@ class AdminsController extends Controller
                   saveException(sqlDateTime(), "Admin-Admin", "update", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -104,7 +113,9 @@ class AdminsController extends Controller
                   saveException(sqlDateTime(), "Admin-Admin", "delete", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }
@@ -124,7 +135,9 @@ class AdminsController extends Controller
                   saveException(sqlDateTime(), "Admin-Admin", "deleteadmin", $ex->getMessage(), $request->ip(), Auth::id());
                   $admins = DB::table('admins')->get();
                   foreach ($admins as $admin) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
                   }
       	    return view('/frontend/admin/admin/index');
               }

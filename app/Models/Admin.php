@@ -17,6 +17,7 @@ class Admin extends Authenticatable
         'surname',
         'token',
         'email',
+        'error_notification',
         'password',
     ];
 }
