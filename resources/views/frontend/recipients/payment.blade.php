@@ -1,6 +1,7 @@
 @extends('frontend.layout.master')
 
 @section('content')
+<?php use App\Models\Currency; ?>
     <h1 class="mt-md-4">{{ __('recipient.PAY-title') }}</h1>
     <hr/>
     @if ($errors->any())
@@ -63,8 +64,11 @@
                                     <div class="form-group col-md-4">
                                         <label for="currency" class="control-label">{{ __('recipient.PAY-currency') }}</label>
                                         <select name="currency_id" id="currency" class="custom-select">
-                                            @foreach($wallets as $wallet)
-                                                <option value="{{ $wallet->id }}">{{ $wallet->currency->getSymbol() }} - {{ $wallet->currency->getName() }}</option>
+                                          <?php
+                                          $currencies = Currency::get();
+                                           ?>
+                                            @foreach($currencies as $currency)
+                                                <option value="{{$currency['id']}}">{{$currency['symbol']}} {{$currency['name']}}</option>
                                             @endforeach
                                         </select>
                                     </div>

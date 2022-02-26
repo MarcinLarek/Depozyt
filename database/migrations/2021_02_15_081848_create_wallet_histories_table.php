@@ -19,7 +19,7 @@ class CreateWalletHistoriesTable extends Migration
             $table->string('bank_name');
             $table->unsignedBigInteger('currency_id');
             $table->double('amount')->unsigned();
-            $table->unsignedBigInteger('generated_document_id')->nullable();
+            $table->unsignedBigInteger('generated_document_id')->default(0);
             $table->timestamps();
         });
     }
