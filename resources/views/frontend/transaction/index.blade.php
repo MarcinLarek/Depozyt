@@ -190,13 +190,24 @@
                 <td>
                     <a href="{{ route('transactions.generatepdf2', ['id' => $transaction->id]) }}"><img src="{{ asset('/images/document.svg') }}" /></a>
                 </td>
+                @if($transaction->status=='Completed')
+                <td>
+                  {{$transaction->status}}
+                </td>
+                @else
                 <td>
                     <a href="{{ route('transactions.edit', ['id' => $transaction->id]) }}">
                         <img src="{{ asset('/images/edit.svg')}}" alt="Edytuj tranzakcję"/>
                     </a>
                 </td>
+                @endif
             </tr>
             <?php $i++ ?>
+        @if($transaction->payment >= $transaction->amount && $transaction->status != 'Completed')
+        <tr class="text-center font-weight-bold">
+          <td colspan="14"> <a class="text-dark" href="{{ route('transactions.complete', ['id' => $transaction->id]) }}">Zakończ Transakcje {{$transaction->name}}</a> </td>
+        </tr>
+        @endif
         @endforeach
         @else
         <tr class="text-center">

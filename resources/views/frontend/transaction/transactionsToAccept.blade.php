@@ -1,6 +1,21 @@
 @extends('frontend.layout.master')
 
 @section('content')
+@if($nomoneyerror == 1)
+<div class="alert alert-danger">
+<h3>Nie posiadasz wystarczającej ilości środków aby zaakceptować tą zmiane</h3>
+</div>
+@endif
+@if($nomoneyerror == 2)
+<div class="alert alert-danger">
+<h3>Nie można zaakceptować zmian poniewać zleceniodawca nie ma wpłaconych żadnych środków na platformie.</h3>
+</div>
+@endif
+@if($nomoneyerror == 3)
+<div class="alert alert-danger">
+<h3>Nie można zaakceptować zmian poniewać wykonawca nie ma wpłaconych żadnych środków na platformie.</h3>
+</div>
+@endif
     <h1 class="mt-md-4" style="font-size: 350%;">{{ __('transaction.IND-title') }}</h1>
     <hr/>
     <div class="card border-0">
@@ -193,6 +208,13 @@
                 </td>
               @endif
           </tr>
+          @if($transaction['status']=='Completed')
+          <tr class="table-warning font-weight-bold text-center">
+            <td colspan='13'>
+              Obecny status transackji wynosi: {{$transaction['status']}}. Potwierdzając zmiany kończysz transakcje.
+            </td>
+          </tr>
+          @endif
           <?php $i++ ?>
       @endforeach
       @else

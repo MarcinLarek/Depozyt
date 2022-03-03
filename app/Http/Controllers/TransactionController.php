@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewErrorMail;
 use Illuminate\Support\Facades\DB;
+use App\Models\WalletHistory;
+use App\Models\Wallet;
+use App\Models\WalletTransactions;
+use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
@@ -262,20 +266,20 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-      $request->validate([
-          'personal-code2' => ['required'],
-          'name' => ['required','max:100'],
-          'transaction_type' => ['required','max:100'],
-          'from_date' => ['required','max:100','date'],
-          'to_date' => ['required','max:100','date'],
-          'commission_payer' => ['required'],
-          'bank_name' => ['required','max:100'],
-          'currency_name' => ['required'],
-          'amount' => ['required','numeric'],
-          'description' => ['required','max:200']
-      ]);
 
         try {
+          $request->validate([
+              'personal-code2' => ['required'],
+              'name' => ['required','max:100'],
+              'transaction_type' => ['required','max:100'],
+              'from_date' => ['required','max:100','date'],
+              'to_date' => ['required','max:100','date'],
+              'commission_payer' => ['required'],
+              'bank_name' => ['required','max:100'],
+              'currency_name' => ['required'],
+              'amount' => ['required','numeric'],
+              'description' => ['required','max:200']
+          ]);
           $user =  User::where('personal_code',$request['personal-code2'])->first();
           if ($user == null) {
             $currencies = DB::table('currencies')->get();
@@ -293,7 +297,7 @@ class TransactionController extends Controller
             'bank_name' => $request['bank_name'],
             'currency_id' => $currency['id'],
             'name' => $request['name'],
-            'transaction_code' => $request['personal-code2'],
+            'transaction_code' => Str::random(60),
             'commission_payer' => $request['commission_payer'],
             'from_date' => $request['from_date'],
             'to_date' => $request['to_date'],
@@ -301,11 +305,19 @@ class TransactionController extends Controller
             'date_of_order' => $mytime,
             'payment' => 0.00,
             'status' => 'Ready',
-            'token' => $request['_token'],
+            'token' => Str::random(60),
             'transaction_type' => $request['transaction_type'],
             'description' => $request['description']
           );
           Transaction::create($data);
+          $transactionforwallet = Transaction::where('transaction_code',$data['transaction_code'])->first();
+          $platfromwallet = array(
+            'transaction_id' => $transactionforwallet['id'],
+            'currency_id' => $transactionforwallet['currency_id'],
+            'amount' => 0.00,
+          );
+          WalletTransactions::create($platfromwallet);
+
           $user = Auth::user();
           $succesaalert = 1;
           $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
@@ -332,7 +344,7 @@ class TransactionController extends Controller
       try {
         $personalCode = $request->post('personal_code');
         $client = User::where('personal_code', $personalCode)->first();
-        if ($client['client_type_id' == 1]) {
+        if ($client['client_type_id'] == 1) {
           $data =ClientData::where('user_id',$client['id'])->get();
           return view('/frontend/transaction/_client-data')
           ->with('data', $data)
@@ -377,6 +389,79 @@ class TransactionController extends Controller
             ->with('usercustomer', $usercustomer)
             ->with('usercontractordata', $usercontractordata)
             ->with('usercustomerdata', $usercustomerdata);
+      }
+      catch (\Exception $ex) {
+                  saveException(sqlDateTime(), "Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+                  $admins = DB::table('admins')->get();
+                  foreach ($admins as $admin) {
+                    if ($admin->error_notification==1) {
+                      Mail::to($admin->email)->send(new NewErrorMail());
+                    }
+                  }
+                  $error = 1;
+                  return view("/frontend/home/index", compact('error'));
+              }
+    }
+
+    public function complete($id, Request $request)
+    {
+      $transaction = Transaction::where('id',$id)->first();
+      $user = Auth::user();
+
+      if ($user['id'] == $transaction['customer_id'] ) {
+        $data = array(
+          'customer_id' => $transaction['customer_id'],
+          'contractor_id' => $transaction['contractor_id'],
+          'customer_accept' => 1,
+          'contractor_accept' => 0,
+          'bank_name' => $transaction['bank_name'],
+          'currency_id' => $transaction['currency_id'],
+          'name' => $transaction['name'],
+          'commission_payer' => $transaction['commission_payer'],
+          'from_date' => $transaction['from_date'],
+          'to_date' => $transaction['to_date'],
+          'amount' => $transaction['amount'],
+          'payment' => $transaction['payment'],
+          'transaction_type' => $transaction['transaction_type'],
+          'description' => $transaction['description'],
+          'status' => 'Completed',
+          'transaction_code' => $transaction['transaction_code'],
+          'date_of_order' => $transaction['date_of_order'],
+          'token' => $transaction['token']
+        );
+      }
+      elseif ($user['id'] == $transaction['contractor_id']) {
+        $data = array(
+          'customer_id' => $transaction['customer_id'],
+          'contractor_id' => $transaction['contractor_id'],
+          'customer_accept' => 0,
+          'contractor_accept' => 1,
+          'bank_name' => $transaction['bank_name'],
+          'currency_id' => $transaction['currency_id'],
+          'name' => $transaction['name'],
+          'commission_payer' => $transaction['commission_payer'],
+          'from_date' => $transaction['from_date'],
+          'to_date' => $transaction['to_date'],
+          'amount' => $transaction['amount'],
+          'payment' => $transaction['payment'],
+          'transaction_type' => $transaction['transaction_type'],
+          'description' => $transaction['description'],
+          'status' => 'Completed',
+          'transaction_code' => $transaction['transaction_code'],
+          'date_of_order' => $transaction['date_of_order'],
+          'token' => $transaction['token']
+        );
+      }
+      TransactionToAccept::create($data);
+
+      $succesaalert = 1;
+      $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
+      return view("/frontend/transaction/index")
+        ->with('transactions', $transactions)
+        ->with('user', $user)
+        ->with('succesaalert', $succesaalert);
+      try {
+
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
@@ -484,8 +569,10 @@ class TransactionController extends Controller
       try {
         $currentuser = Auth::user();
         $transactions =TransactionToAccept::where('contractor_id',$currentuser['id'])->orWhere('customer_id',$currentuser['id'])->get();
+        $nomoneyerror = 0;
         return view("/frontend/transaction/transactionsToAccept")
           ->with('transactions', $transactions)
+          ->with('nomoneyerror', $nomoneyerror)
           ->with('currentuser', $currentuser);
       }
       catch (\Exception $ex) {
@@ -517,6 +604,7 @@ class TransactionController extends Controller
         $transaction =  Transaction::where('transaction_code',$changes['transaction_code'])->first();
         $changes =TransactionToAccept::where('id',$request['id'])->first();
 
+
         if ($changes['contractor_accept'] == 1 && $changes['customer_accept'] == 1) {
           if ($changes['payment'] >= $changes['amount']) {
             $data = array(
@@ -532,7 +620,7 @@ class TransactionController extends Controller
               'amount' => $changes['amount'],
               'date_of_order' => $changes['date_of_order'],
               'payment' => $changes['payment'],
-              'status' => 'Completed',
+              'status' => $changes['status'],
               'token' => $changes['token'],
               'transaction_type' => $changes['transaction_type'],
               'description' => $changes['description']
@@ -552,15 +640,86 @@ class TransactionController extends Controller
               'amount' => $changes['amount'],
               'date_of_order' => $changes['date_of_order'],
               'payment' => $changes['payment'],
-              'status' => 'Ready',
+              'status' => $changes['status'],
               'token' => $changes['token'],
               'transaction_type' => $changes['transaction_type'],
               'description' => $changes['description']
             );
           }
+          $transactionwallet = WalletTransactions::where('transaction_id',$transaction['id'])->first();
+          $contractorwallet = Wallet::where('user_id',$transaction['contractor_id'])
+                                    ->where('currency_id',$transaction['currency_id'])->first();
+          if ($contractorwallet==null) {
+            $currentuser = Auth::user();
+            $transactions =TransactionToAccept::where('contractor_id',$currentuser['id'])->orWhere('customer_id',$currentuser['id'])->get();
+            $nomoneyerror = 2;
+            $changes->delete();
+            return view("/frontend/transaction/transactionsToAccept")
+              ->with('transactions', $transactions)
+              ->with('nomoneyerror', $nomoneyerror)
+              ->with('currentuser', $currentuser);
+          }
+
+          $payment = $changes['payment'] - $transaction['payment'];
+
+          $update = $contractorwallet['amount'] - $payment;
+          if ($update > 0) {
+            $wallethistorydata = array(
+              'user_id' => $contractorwallet['user_id'],
+              'bank_name' => $changes['bank_name'],
+              'currency_id' => $contractorwallet['currency_id'],
+              'amount' => -$payment
+            );
+            if ($wallethistorydata['amount'] != 0) {
+              WalletHistory::create($wallethistorydata);
+            }
+            $contractorwallet->update(['amount' => $update ]);
+          }
+          else {
+            $currentuser = Auth::user();
+            $transactions =TransactionToAccept::where('contractor_id',$currentuser['id'])->orWhere('customer_id',$currentuser['id'])->get();
+            $nomoneyerror = 1;
+            $changes->delete();
+            return view("/frontend/transaction/transactionsToAccept")
+              ->with('transactions', $transactions)
+              ->with('nomoneyerror', $nomoneyerror)
+              ->with('currentuser', $currentuser);
+          }
+          $transactionwallet = WalletTransactions::where('transaction_id',$transaction['id'])->first();
+          $payment = $changes['payment'] - $transactionwallet['payment'];
+          $transactionwallet->update(['amount' => $payment ]);
+
           $transaction->update($data);
           $changes->delete();
         }
+
+        $transaction =  Transaction::where('transaction_code',$changes['transaction_code'])->first();
+        if ($transaction['status'] == 'Completed') {
+          $customerwallet = Wallet::where('user_id',$transaction['customer_id'])
+                                    ->where('currency_id',$transaction['currency_id'])->first();
+          if ($customerwallet==null) {
+              $walletdata = array(
+                'user_id' => $transaction['customer_id'],
+                'currency_id' => $transaction['currency_id'],
+              );
+              Wallet::create($walletdata);
+            }
+        $customerwallet = Wallet::where('user_id',$transaction['customer_id'])
+                                  ->where('currency_id',$transaction['currency_id'])->first();
+        $updatecustomer = $customerwallet['amount'] + $transactionwallet['amount'];
+        $customerwallet->update(['amount' => $updatecustomer ]);
+        $wallethistorydata = array(
+          'user_id' => $customerwallet['user_id'],
+          'bank_name' => $changes['bank_name'],
+          'currency_id' => $customerwallet['currency_id'],
+          'amount' => $transactionwallet['amount']
+        );
+        WalletHistory::create($wallethistorydata);
+        $transactionwallet->delete();
+
+      }
+
+
         $user = Auth::user();
         $succesaalert = 1;
         $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
@@ -614,6 +773,7 @@ class TransactionController extends Controller
 */
 
 // Tutaj loadView() nie chce znaleźć ściżki do pliku, nieważne jak bym ją podał. Nie wiem już co robić żeby wygenerować tego pdfa
+
     public function generatePdf2($id)
     {
     try {
@@ -647,7 +807,8 @@ class TransactionController extends Controller
       $pdfPath = storage_path('\TransactionPDF.pdf');
       return response()->download($pdfPath);
     }
-    catch (\Exception $e) {
+    catch (\Exception $e)
+     {
       saveException(sqlDateTime(), "Transaction", "generatePdf2", $ex->getMessage(), $request->ip(), Auth::id());
       $admins = DB::table('admins')->get();
       foreach ($admins as $admin) {
@@ -660,4 +821,5 @@ class TransactionController extends Controller
     }
 
     }
+
 }
