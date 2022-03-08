@@ -17,10 +17,10 @@ class CountriesController extends Controller
     {
       try {
         $countries = Country::all();
-        $succesaalert = 0;
+        $succesalert = 0;
         return view('/frontend/admin/countries/index')
             ->with('countries', $countries)
-            ->with('succesaalert', $succesaalert);
+            ->with('succesalert', $succesalert);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Countries", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -44,10 +44,10 @@ class CountriesController extends Controller
         try {
             Country::create($request->all());
             $countries = Country::all();
-            $succesaalert = 1;
+            $succesalert = 1;
             return view('/frontend/admin/countries/index')
                 ->with('countries', $countries)
-                ->with('succesaalert', $succesaalert);
+                ->with('succesalert', $succesalert);
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CountriesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());
@@ -82,18 +82,49 @@ class CountriesController extends Controller
 
     public function update($id, Request $request)
     {
-      $this->validate($request, [
-          'country_name' => ['required', 'unique:countries'],
-          'country_code' => ['required', 'unique:countries'],
-      ]);
+      $country = Country::find($id);
+
+      if ($country['country_name'] == $request['country_name'] && $country['country_code'] == $request['country_code'])
+      {
+        $this->validate($request, [
+            'country_name' => ['required'],
+            'country_code' => ['required']
+        ]);
+      }
+      elseif ($country['country_name'] == $request['country_name'])
+      {
+        $this->validate($request, [
+            'country_name' => ['required'],
+            'country_code' => ['required', 'unique:countries']
+        ]);
+      }
+      elseif ($country['country_code'] == $request['country_code'])
+      {
+        $this->validate($request, [
+        'country_name' => ['required', 'unique:countries'],
+        'country_code' => ['required']
+        ]);
+      }
+      else
+      {
+        $this->validate($request, [
+            'country_name' => ['required', 'unique:countries'],
+            'country_code' => ['required', 'unique:countries']
+        ]);
+      }
+
+
         try {
-            $country = Country::find($id);
-            $country->update($request->all());
+          $data = array(
+            'country_name' => $request['country_name'],
+            'country_code' => $request['country_code'],
+           );
+            $country->update($data);
             $countries = Country::all();
-            $succesaalert = 1;
+            $succesalert = 1;
             return view('/frontend/admin/countries/index')
                 ->with('countries', $countries)
-                ->with('succesaalert', $succesaalert);
+                ->with('succesalert', $succesalert);
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CountriesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());

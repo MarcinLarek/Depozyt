@@ -15,27 +15,43 @@ class SignInController extends Controller
 {
     public function index()
     {
-        return view('/frontend/admin/sign-in/index');
+      $notification = 0;
+        return view('/frontend/admin/sign-in/index')
+        ->with('notification',$notification);
     }
 
     public function login(Request $request)
     {
         $user = Admin::where('login',$request['username'])->first();
-        $user->update(['token' => Str::random(60)]);
-        Mail::to($user['email'])->send(new AdminLoginMail($user));
-        return view('/frontend/admin/sign-in/index');
-
-        //if ($user->count() != 0 && Hash::check($request->post('password'), $user->first()->password)) {
-        //    Auth::guard('admin')->login($user->first());
-        //    return redirect()->route('admin');
-        //}
+        if ($user !=null && Hash::check($request['password'], $user['password'])) {
+          $user->update(['token' => Str::random(60)]);
+          Mail::to($user['email'])->send(new AdminLoginMail($user));
+          $notification = 2;
+            return view('/frontend/admin/sign-in/index')
+            ->with('notification',$notification);
+        }
+        else {
+          $notification = 1;
+            return view('/frontend/admin/sign-in/index')
+            ->with('notification',$notification);
+        }
     }
 
     public function AdminLogin($token)
     {
       $user = Admin::where('token',$token)->first();
+      if ($user == null) {
+        return redirect()->route('admin');
+      }
+      $user->update(['token' => Str::random(60)]);
       Auth::guard('admin')->login($user->first());
         return redirect()->route('admin');
+    }
+
+    public function adminlogout()
+    {
+      Auth::guard('admin')->logout();
+      return redirect()->route('admin');
     }
 
 }

@@ -56,13 +56,21 @@ class ClientController extends Controller
 
     public function update(User $user, Request $request)
     {
-      try {
+      $user2 = Auth::user();
+
+      if ($request['email'] == $user2['email']) {
         $request->validate([
             'newpassword' => ['required','max:100'],
-            'email' => ['required','max:100','email','unique'],
-
         ]);
+      }
+      else {
+        $request->validate([
+            'newpassword' => ['required','max:100'],
+            'email' => ['required','max:100','email','unique:users'],
+        ]);
+      }
 
+      try {
         $data = array(
           'password' => Hash::make($request['newpassword']),
           'email' => $request['email']

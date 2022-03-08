@@ -113,6 +113,7 @@ class UsersController extends Controller
                     if ($admin->error_notification==1) {
                       Mail::to($admin->email)->send(new NewErrorMail());
                     }
+                  }
       	    return view('/frontend/admin/admin/index');
               }
     }

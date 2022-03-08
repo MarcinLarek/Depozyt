@@ -58,7 +58,7 @@
 
 
 
-                                        <input type="hidden" class="hidden" id="personal-code2" name="personal-code2" >
+                                        <input type="hidden" class="hidden" id="personal-code2" name="personal-code2" value="{{ old('personal_code2') }}">
                                         <script type="text/javascript">
                                         window.onload = function() {
                                             var src = document.getElementById("personal-code"),
@@ -131,8 +131,8 @@
                                               </select>
                                           </div>
                                           <div class="form-group col-md-4">
-                                              <label for="amount" class="control-label">{{ __('transaction.TABLE-ammount') }}</label>
-                                              <input name="amount" class="form-control" placeholder="{{ __('transaction.TABLE-ammount') }}" value="{{ old('ammount') }}"/>
+                                              <label for="amount" class="control-label">{{ __('transaction.TABLE-amount') }}</label>
+                                              <input name="amount" class="form-control" placeholder="{{ __('transaction.TABLE-amount') }}" value="{{ old('amount') }}"/>
                                               <span asp-validation-for="Amount" class="text-danger"></span>
                                           </div>
                                       </div>

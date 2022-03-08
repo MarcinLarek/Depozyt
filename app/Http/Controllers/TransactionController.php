@@ -31,6 +31,10 @@ class TransactionController extends Controller
           $user = Auth::user();
           $succesaalert = 0;
           $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
+          foreach ($transactions as $transaction) {
+            $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
+            $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
+          }
           return view("/frontend/transaction/index")
             ->with('transactions', $transactions)
             ->with('user', $user)
@@ -53,6 +57,8 @@ class TransactionController extends Controller
     {
       $user = Auth::user();
       $succesaalert = 0;
+      $request['from_date'] = Carbon::parse($request['from_date'])->format('d/m/Y');
+      $request['to_date'] = Carbon::parse($request['to_date'])->format('d/m/Y');
       if ($request['client_type'] == 'AN') {
         if ($request['serach'] != null) {
           if ($request['from_date'] == null && $request['to_date'] == null) {
@@ -266,20 +272,19 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-
+      $request->validate([
+          'personal-code2' => ['required'],
+          'name' => ['required','max:100'],
+          'transaction_type' => ['required','max:100'],
+          'from_date' => ['required','max:100','date'],
+          'to_date' => ['required','max:100','date'],
+          'commission_payer' => ['required'],
+          'bank_name' => ['required','max:100'],
+          'currency_name' => ['required'],
+          'amount' => ['required','numeric'],
+          'description' => ['required','max:200']
+      ]);
         try {
-          $request->validate([
-              'personal-code2' => ['required'],
-              'name' => ['required','max:100'],
-              'transaction_type' => ['required','max:100'],
-              'from_date' => ['required','max:100','date'],
-              'to_date' => ['required','max:100','date'],
-              'commission_payer' => ['required'],
-              'bank_name' => ['required','max:100'],
-              'currency_name' => ['required'],
-              'amount' => ['required','numeric'],
-              'description' => ['required','max:200']
-          ]);
           $user =  User::where('personal_code',$request['personal-code2'])->first();
           if ($user == null) {
             $currencies = DB::table('currencies')->get();
@@ -569,6 +574,10 @@ class TransactionController extends Controller
       try {
         $currentuser = Auth::user();
         $transactions =TransactionToAccept::where('contractor_id',$currentuser['id'])->orWhere('customer_id',$currentuser['id'])->get();
+        foreach ($transactions as $transaction) {
+          $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
+          $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
+        }
         $nomoneyerror = 0;
         return view("/frontend/transaction/transactionsToAccept")
           ->with('transactions', $transactions)

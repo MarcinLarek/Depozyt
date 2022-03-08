@@ -20,6 +20,10 @@ class TransactionsController extends Controller
     {
       try {
         $transactions = Transaction::all();
+        foreach ($transactions as $transaction) {
+          $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
+          $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
+        }
         $succesaalert = 0;
         return view('/frontend/admin/transactions/index')
             ->with('succesaalert', $succesaalert)
@@ -98,6 +102,10 @@ class TransactionsController extends Controller
           );
           $transaction->update($data);
           $transactions = Transaction::all();
+          foreach ($transactions as $transaction) {
+            $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
+            $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
+          }
           $succesaalert = 1;
           return view('/frontend/admin/transactions/index')
               ->with('succesaalert', $succesaalert)

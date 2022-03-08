@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClientDataRequest;
 use App\Http\Requests\RepresentativeRequest;
 use App\Models\ClientData;
 use App\Models\Representative;
@@ -48,7 +47,7 @@ class ClientDataController extends Controller
 
     }
 
-    public function edit(ClientDataRequest $request)
+    public function edit(Request $request)
     {
         $request->validate([
             'name' => ['required','max:100'],

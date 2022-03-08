@@ -3,7 +3,7 @@
 @section('content')
     <h1>Kraje</h1>
     <hr/>
-    @if($succesaalert == 1)
+    @if($succesalert == 1)
     <div class="alert alert-success">
       <h1>{{ __('alerts.data_save_success') }}</h1>
     </div>
@@ -31,13 +31,13 @@
             @csrf
             <div class="row">
                 <div class="form-group col-md-8">
-                    <label for="country-name">Nazwa</label>
-                    <input type="text" name="country_name" id="country-name" class="form-control"
+                    <label for="country_name">Nazwa</label>
+                    <input type="text" name="country_name" id="country_name" class="form-control"
                            placeholder="Nazwa" value="{{ old('country_name') }}">
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="country-code">Kod kraju</label>
-                    <input type="text" name="country_code" id="country-code" class="form-control"
+                    <label for="country_code">Kod kraju</label>
+                    <input type="text" name="country_code" id="country_code" class="form-control"
                            placeholder="Kod kraju" value="{{ old('country_code') }}">
                 </div>
             </div>

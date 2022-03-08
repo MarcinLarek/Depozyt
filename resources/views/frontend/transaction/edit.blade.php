@@ -85,7 +85,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="amount" class="control-label">{{ __('transaction.TABLE-ammount') }}</label>
+                        <label for="amount" class="control-label">{{ __('transaction.TABLE-amount') }}</label>
                         <input name="amount" class="form-control" value="{{ old('amount', $transaction['amount']) }}"/>
                         <span asp-validation-for="amount" class="text-danger"></span>
                     </div>

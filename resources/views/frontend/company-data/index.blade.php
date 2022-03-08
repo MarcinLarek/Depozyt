@@ -3,6 +3,15 @@
 @section('content')
     <h1 class="mt-md-4">{{ __('company.COM-title') }}</h1>
     <hr/>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     @if($succesaalert == 1)
     <div class="alert alert-success">
       <h1>{{ __('alerts.data_save_success') }}</h1>

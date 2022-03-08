@@ -43,7 +43,7 @@
                     </div>
                 </li>
                 <li class="nav-item mr-4">
-                    <a class="nav-link" href="{{ route('logout') }}">Wyloguj</a>
+                    <a class="nav-link" href="{{ route('admin.adminlogout') }}">Wyloguj</a>
                 </li>
             </ul>
         </div>

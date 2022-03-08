@@ -30,7 +30,7 @@ return [
   'TABLE-currency' => 'Waluta',
   'TABLE-from' => 'Od',
   'TABLE-to' => 'Do',
-  'TABLE-ammount' => 'Kwota',
+  'TABLE-amount' => 'Kwota',
   'TABLE-payment' => 'Wpłata',
   'TABLE-description' => 'Opis',
   'TABLE-tpye' => 'Typ Transakcji',

@@ -76,7 +76,8 @@ class LoginController extends Controller
         {
           $uservar->update(['token' => Str::random(60)]);
           Mail::to($varmail)->send(new ResetPasswordMail($uservar));
-          return redirect()->route('home');
+          $wrongemail = 2;
+          return View("/frontend/sign-in/ForgotPassword", compact('wrongemail'));
         }
       }
       catch (\Exception $ex) {
@@ -115,7 +116,9 @@ class LoginController extends Controller
               'username' => 'required',
               'password' => 'required',
           ]);
-          $user =  User::where('username',$request['username'])->first();
+          $user =  User::where('username',$request['username'])
+                       ->orwhere('email',$request['username'])
+                       ->first();
           if ($user == null) {
             $failstatus = 0;
             $errortype = 1;
@@ -138,7 +141,7 @@ class LoginController extends Controller
              {
                  return redirect()->route('home');
              }else{
-               $failstatus = 0;
+               $failstatus = 1;
                $errortype = 0;
                  return view("/frontend/sign-in/index")
                    ->with('errortype', $errortype)

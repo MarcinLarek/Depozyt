@@ -42,8 +42,13 @@
                                 <div class="form-group col-md-12">
                                     <label for="error_notification" class="control-label">Otrzymywać powiadomienia o błędach?</label>
                                     <select name="error_notification" id="error_notification" class="custom-select">
+                                      @if($admin->error_notification == 1)
                                       <option value="1">Tak</option>
                                       <option value="0">Nie</option>
+                                      @else
+                                      <option value="0">Nie</option>
+                                      <option value="1">Tak</option>
+                                      @endif
                                     </select>
                                     @error('error_notification')
                                         {{ $message }}

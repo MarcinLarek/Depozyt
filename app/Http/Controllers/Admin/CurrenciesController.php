@@ -79,9 +79,47 @@ class CurrenciesController extends Controller
 
     public function update($id, Request $request)
     {
+      $currency = Currency::find($id);
+
+      if ($currency['name'] == $request['name'] && $currency['symbol'] == $request['symbol'])
+      {
+        $this->validate($request, [
+            'name' => ['required'],
+            'symbol' => ['required']
+        ]);
+      }
+      elseif ($currency['name'] == $request['name'])
+      {
+        $this->validate($request, [
+            'name' => ['required'],
+            'symbol' => ['required', 'unique:currencies']
+        ]);
+      }
+      elseif ($currency['symbol'] == $request['symbol'])
+      {
+        $this->validate($request, [
+        'name' => ['required', 'unique:currencies'],
+        'symbol' => ['required']
+        ]);
+      }
+      else
+      {
+        $this->validate($request, [
+            'name' => ['required', 'unique:currencies'],
+            'symbol' => ['required', 'unique:currencies']
+        ]);
+      }
         try {
-          $currency = Currency::find($id);
-          return redirect()->route('admin.currencies');
+          $data = array(
+            'name' => $request['name'],
+            'symbol' => $request['symbol'],
+           );
+          $currency->update($data);
+          $currencies = Currency::all();
+          $succesalert = 1;
+          return view('/frontend/admin/currencies/index')
+              ->with('currencies', $currencies)
+              ->with('succesalert', $succesalert);
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CurrenciesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());

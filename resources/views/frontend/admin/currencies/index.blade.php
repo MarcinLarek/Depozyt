@@ -3,20 +3,18 @@
 @section('content')
     <h1>Waluty</h1>
     <hr/>
-    @if(isset($success) && $success)
-        <div class="col-md-12 mt-md-2">
-            <div id="successAlert" class="alert alert-success d-none">
-                <strong>UDAŁO SIĘ!</strong> Twoje dane zostały zapisane.<br/><strong>Sprawdź
-                    skrzynkę pocztową z linkiem aktywacyjnym.</strong>
-            </div>
-        </div>
-    @endif
-    @if(isset($success) && !$success)
-        <div class="col-md-12 mt-md-2">
-            <div id="invalidAlert" class="alert alert-danger d-none">
-                <strong>UPS... Coś poszło nie tak!</strong> Twoje dane nie zostały zapisane.
-            </div>
-        </div>
+    @if(isset($succesalert) && $succesalert == 1)
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
+    @elseif ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
     <div class="w-50 mx-auto">
         <form method="post" action="{{ route('admin.currencies.store') }}">

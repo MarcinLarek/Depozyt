@@ -3,6 +3,11 @@
 @section('content')
 <h1 class="mt-md-4">{{ __('sigin.FOR-title') }}</h1>
 <hr />
+@if($wrongemail === 2)
+<div class="alert alert-success">
+    <h5>{{ __('sigin.FOR-resetlink') }}</h5>
+</div>
+@endif
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card border-0">

@@ -18,6 +18,7 @@ return [
   'FOR-subtitle' => 'Podaj swoje dane',
   'FOR-email' => 'Email',
   'FOR-wrongemail' => ' Nie znaleziono użytkownika o podanym mailu ',
+  'FOR-resetlink' => 'Wiadomość z linkiem do resetu hasła została wysłana na twojego maila',
   'FOR-save' => 'Zapisz',
   //
   //SetNewPassword

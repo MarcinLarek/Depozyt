@@ -89,7 +89,7 @@
                 {{ __('transaction.TABLE-to') }}
             </th>
             <th>
-                {{ __('transaction.TABLE-ammount') }}
+                {{ __('transaction.TABLE-amount') }}
             </th>
             <th>
                 {{ __('transaction.TABLE-payment') }}

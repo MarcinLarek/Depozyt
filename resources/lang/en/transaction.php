@@ -30,7 +30,7 @@ return [
   'TABLE-currency' => 'Currency',
   'TABLE-from' => 'From',
   'TABLE-to' => 'To',
-  'TABLE-ammount' => 'Amount',
+  'TABLE-amount' => 'Amount',
   'TABLE-payment' => 'Payment',
   'TABLE-description' => 'Description',
   'TABLE-tpye' => 'Transaction type',

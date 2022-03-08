@@ -203,6 +203,7 @@ Route::domain('admin.localhost')->group(function () {
             Route::post('/login', [\App\Http\Controllers\Admin\SignInController::class, 'login'])->name('admin.login');
             Route::get('/LoginAdmin', [\App\Http\Controllers\Admin\SignInController::class, 'LoginAdmin'])->name('admin.LoginAdmin');
             Route::get('/AdminLogin/{token}', [\App\Http\Controllers\Admin\SignInController::class, 'AdminLogin'])->name('admin.AdminLogin');
+            Route::get('/adminlogout', [\App\Http\Controllers\Admin\SignInController::class, 'adminlogout'])->name('admin.adminlogout');
         });
     });
 });

@@ -18,6 +18,7 @@ return [
   'FOR-subtitle' => 'Enter your details',
   'FOR-email' => 'Email',
   'FOR-wrongemail' => ' No user found with the given e-mail address ',
+  'FOR-resetlink' => 'A message with a link to reset your password has been sent to your email',
   'FOR-save' => 'Save',
   //
   //SetNewPassword

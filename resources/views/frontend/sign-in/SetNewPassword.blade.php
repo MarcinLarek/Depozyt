@@ -12,7 +12,10 @@
                     <fieldset>
                         <div class="row align-items-center justify-content-center">
                             <div class="form-group col-md-6">
-                                <label for="UserPassword" class="control-label">{{ __('sigin.SET-password') }}</label><a class="alert-link" data-toggle="modal" href="#myModal"><img class="ml-2" src="~/Images/info.svg" title="Wymogi dotyczące hasła." /></a>
+                                <label for="UserPassword" class="control-label">{{ __('sigin.SET-password') }}</label>
+                                <a class="alert-link" data-toggle="modal" href="#myModal">
+                                    <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="{{ __('sigin.SET-passwordhelp') }}"/>
+                                </a>
                                 <input name="password" type="password" class="form-control" placeholder="{{ __('sigin.SET-password') }}" />
                                 <span asp-validation-for="UserPassword" class="text-danger"></span>
                             </div>
@@ -50,14 +53,5 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 @endsection

@@ -3,6 +3,15 @@
 @section('content')
     <h1>Edytuj walute - <strong>{{ $currency->name }}</strong></h1>
     <hr/>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="col-md-12 mt-md-2">
         <div id="invalidAlert" class="alert alert-danger d-none">
             @error('name')

@@ -29,7 +29,15 @@ class CompanyDataRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+          'name' => ['required','max:100'],
+          'nip' => ['required','NIP'],
+          'regon' => ['required','REGON'],
+          'krs' => ['required','max:100'],
+          'email' => ['required','email','max:100'],
+          'phone_number' => ['required','numeric',],
+          'street' => ['required','max:100'],
+          'post_code' => ['required','post_code'],
+          'city' => ['required','max:100'],
         ];
     }
 }

@@ -158,7 +158,7 @@
     <div class="col-md-3">
       <div class="card text-center shadow">
         <div class="card-header">
-          {{ __('transaction.TABLE-ammount') }}
+          {{ __('transaction.TABLE-amount') }}
         </div>
           <div class="card-body">
             {{$transaction['amount']}}

@@ -3,6 +3,15 @@
 @section('content')
     <h1 class="mt-md-4">Logowanie</h1>
     <hr/>
+    @if($notification==1)
+    <div class="alert alert-danger">
+      Błędna nazwa użytkownika/hasło
+    </div>
+    @elseif($notification==2)
+    <div class="alert alert-success">
+      Dane wprowadzone pomyślnie. W celu zalogowania proszę wejść w link wysłany na maila.
+    </div>
+    @endif
     <div clasms="row">
         <div class="col-md-8 offset-md-2">
             <div class="card border-0">
@@ -13,8 +22,8 @@
                         <fieldset>
                             <div class="row align-items-center justify-content-center">
                                 <div class="form-group col-md-6">
-                                    <label for="username" class="control-label">{{ __('account.username') }}</label>
-                                    <input name="username" id="username" class="form-control" placeholder="{{ __('account.username') }}" value="{{ old('username') }}"/>
+                                    <label for="username" class="control-label">Nazwa użytkownika</label>
+                                    <input name="username" id="username" class="form-control" placeholder="Nazwa użytkownika" value="{{ old('username') }}"/>
                                     @error('username')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -22,8 +31,8 @@
                             </div>
                             <div class="row align-items-center justify-content-center">
                                 <div class="form-group col-md-6">
-                                    <label for="password" class="control-label">{{ __('account.password') }}</label>
-                                    <input name="password" id="password" class="form-control" type="password" placeholder="{{ __('account.password') }}" value="{{ old('password') }}"/>
+                                    <label for="password" class="control-label">Hasło</label>
+                                    <input name="password" id="password" class="form-control" type="password" placeholder="Hasło" value="{{ old('password') }}"/>
                                     @error('password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
