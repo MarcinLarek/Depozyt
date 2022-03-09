@@ -22,6 +22,7 @@ class SignInController extends Controller
 
     public function login(Request $request)
     {
+      try {
         $user = Admin::where('login',$request['username'])->first();
         if ($user !=null && Hash::check($request['password'], $user['password'])) {
           $user->update(['token' => Str::random(60)]);
@@ -35,17 +36,29 @@ class SignInController extends Controller
             return view('/frontend/admin/sign-in/index')
             ->with('notification',$notification);
         }
+      }
+      catch (\Exception $ex) {
+                  saveException(sqlDateTime(), "SignInController", "login", $ex->getMessage(), $request->ip(), Auth::id());
+                  return redirect()->route('admin.siteerror');
+      }
     }
 
     public function AdminLogin($token)
     {
-      $user = Admin::where('token',$token)->first();
-      if ($user == null) {
-        return redirect()->route('admin');
+      try {
+        $user = Admin::where('token',$token)->first();
+        if ($user == null) {
+          return redirect()->route('admin');
+        }
+        $user->update(['token' => Str::random(60)]);
+        Auth::guard('admin')->login($user->first());
+          return redirect()->route('admin');
       }
-      $user->update(['token' => Str::random(60)]);
-      Auth::guard('admin')->login($user->first());
-        return redirect()->route('admin');
+      catch (\Exception $ex) {
+                  saveException(sqlDateTime(), "SignInController", "AdminLogin", $ex->getMessage(), $request->ip(), Auth::id());
+                  return redirect()->route('admin.siteerror');
+      }
+
     }
 
     public function adminlogout()

@@ -41,14 +41,7 @@ class PaymentController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
 
     }
@@ -130,27 +123,11 @@ class PaymentController extends Controller
                     $walletrecipient->update(['amount' => $walletupdaterecipient ]);
                   }
 
-
-
-                  $recipients = Auth::user()->recipients()->get();
-                  $wallets = Auth::user()->wallet()->get();
-                  $walleterror = 0;
-                  $succesaalert = 1;
-                  return view("/frontend/recipients/payment")
-                      ->with('recipients', $recipients)
-                      ->with('walleterror', $walleterror)
-                      ->with('wallets', $wallets)
-                      ->with('succesaalert', $succesaalert);
+                  return redirect()->route('recipients.payment')->with('successalert','successalert');
 
                 }
                 else {
-                  $recipients = Auth::user()->recipients()->get();
-                  $wallets = Auth::user()->wallet()->get();
-                  $walleterror = 1;
-                  return view("/frontend/recipients/payment")
-                      ->with('recipients', $recipients)
-                      ->with('walleterror', $walleterror)
-                      ->with('wallets', $wallets);
+                  return redirect()->route('recipients.payment')->with('walleterror','walleterror');
                 }
               }
               else {
@@ -166,29 +143,14 @@ class PaymentController extends Controller
                   Payment::create($data);
                   WalletHistory::create($wallethistorydata);
                   $wallet->update(['amount' => $walletupdate ]);
-                  $recipients = Auth::user()->recipients()->get();
-                  $wallets = Auth::user()->wallet()->get();
-                  $walleterror = 0;
-                  $succesaalert = 1;
-                  return view("/frontend/recipients/payment")
-                      ->with('recipients', $recipients)
-                      ->with('walleterror', $walleterror)
-                      ->with('wallets', $wallets)
-                      ->with('succesaalert', $succesaalert);
+                return redirect()->route('recipients.payment')->with('successalert','successalert');
               }
               }
 
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "paymentpost", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -211,14 +173,7 @@ class PaymentController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "downloadDocument()", $exception->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
     }
 
@@ -259,14 +214,7 @@ class PaymentController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Payment", "generatePdf", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
 
     }

@@ -26,12 +26,12 @@ class RegisterController extends Controller
 
     public function index()
     {
-      $registersucces = 0;
-        return view("/frontend/register/index", compact('registersucces'));
+        return view("/frontend/register/index");
     }
 
     public function store(RegisterRequest $request)
     {
+
         $data = $request->validated();
         try {
             $this->usersService->create($data);
@@ -39,21 +39,14 @@ class RegisterController extends Controller
 
             $uservar =  User::where('email',$request['email'])->first();
             Mail::to($request['email'])->send(new RegisterConfirmation($uservar));
-            return view("/frontend/register/index", compact('registersucces'));
+            return redirect()->route('register')->with('registersucces','registersucces');
 
         }
         catch (\Exception $ex) {
             var_dump($ex->getMessage());
             die;
             saveException(sqlDateTime(), "Register", "Register", $ex->getMessage(), $request->ip());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $registersucces = 0;
-            return view("/frontend/register/index");
+            return redirect()->route('siteerror');
         }
     }
 
@@ -65,42 +58,13 @@ class RegisterController extends Controller
         $user =  User::where('personal_code',$token)->first();
         $data = array('email_verified_at' => $mytime , );
         $user->update($data);
-        $error = 0;
-          return view("/frontend/home/index", compact('error'));
+        return redirect()->route('home')->with('confirmsuccess','confirmsuccess');
       }
       catch (\Exception $e) {
         saveException(sqlDateTime(), "Register", "confirmation", $ex->getMessage(), $request->ip(), Auth::id());
-        $admins = DB::table('admins')->get();
-        foreach ($admins as $admin) {
-          if ($admin->error_notification==1) {
-            Mail::to($admin->email)->send(new NewErrorMail());
-          }
-        }
-        $error = 2;
-        return view("/frontend/home/index", compact('error'));
+        return redirect()->route('siteerror');
       }
 
     }
 
-    public function checkEmail(Request $request)
-    {
-        $isExist = false;
-        $email = $request->input->post('email');
-        try {
-            if (User::where('email', $email)->count()) {
-                $isExist = true;
-            }
-        }
-        catch (\Exception $ex) {
-            saveException(date('Y-m-d H:m:s'), "Register", "CheckEmail", $ex->getMessage());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-        }
-
-        return $isExist;
-    }
 }

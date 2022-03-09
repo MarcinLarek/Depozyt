@@ -28,14 +28,7 @@ class CompanyDataController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "CompanyData", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -53,22 +46,12 @@ class CompanyDataController extends Controller
             if (empty($companyData)) {
                 $companyData = CompanyData::make();
             }
-            $succesaalert = 1;
-            return View("/frontend/company-data/index")
-                ->with('companyData', $companyData)
-                ->with('succesaalert', $succesaalert);
+            return redirect()->route('company-data')->with('succesaalert','succesaalert');
 
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "CompanyData", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
 
     }

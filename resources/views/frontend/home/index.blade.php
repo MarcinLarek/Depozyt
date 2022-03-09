@@ -2,11 +2,11 @@
 
 @section('content')
 
-@if($error == 1)
+@if(session()->has('siteerror'))
 <div class="alert alert-danger">
   <h1>{{ __('home.error') }}</h1>
 </div>
-@elseif($error == 2)
+@elseif(session()->has('confirmsuccess'))
 <div class="alert alert-succes">
   <h1>{{ __('home.confirmsuccess') }}</h1>
 </div>

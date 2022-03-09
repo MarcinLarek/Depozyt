@@ -12,7 +12,7 @@
         </ul>
     </div>
     @endif
-    @if($succesaalert == 1)
+    @if(session()->has('successalert'))
     <div class="alert alert-success">
       <h1>{{ __('alerts.data_save_success') }}</h1>
     </div>

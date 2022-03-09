@@ -24,9 +24,9 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'bank_name' => ['required'],
-            'currency_id' => ['required'],
+            'name' => ['required','max:100'],
+            'bank_name' => ['required','max:100'],
+            'currency_id' => ['required','numeric','max:100'],
             'account_number' => ['required','iban'],
             'swift' => ['required','bic']
         ];

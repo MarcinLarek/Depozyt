@@ -35,14 +35,7 @@ class ClientDataController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientData", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
 
     }
@@ -80,22 +73,12 @@ class ClientDataController extends Controller
             if (empty($clientData)) {
                 $clientData = ClientData::make();
             }
-            $succesaalert = 1;
-            return View("/frontend/client-data/index")
-                ->with('clientData', $clientData)
-                ->with('succesaalert', $succesaalert);
+            return redirect()->route('client-data')->with('succesaalert','succesaalert');
 
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientData", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
     }
 }

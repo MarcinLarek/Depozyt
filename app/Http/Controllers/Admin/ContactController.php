@@ -22,13 +22,7 @@ class ContactController extends Controller
           }
           catch (\Exception $ex) {
             saveException(sqlDateTime(), "Admin-Contact", "index", $ex->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-	    return view('/frontend/admin/admin/index');
+            return redirect()->route('admin.siteerror');
         }
     }
 
@@ -41,13 +35,7 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "show", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
 
     }
@@ -60,13 +48,7 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "reply", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
     public function sendreply(Request $request, $id)
@@ -83,13 +65,7 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "sendreply", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
     public function delete($id)
@@ -101,13 +77,7 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "delete", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
     public function deletemessege($id)
@@ -120,13 +90,7 @@ class ContactController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "deletemessege", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
 

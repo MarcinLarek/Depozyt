@@ -31,13 +31,7 @@ class TransactionsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
 
@@ -56,13 +50,7 @@ class TransactionsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
 
@@ -112,13 +100,7 @@ class TransactionsController extends Controller
               ->with('transactions', $transactions);
         } catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            return view('/frontend/admin/admin/index');
+            return redirect()->route('admin.siteerror');
         }
     }
 }

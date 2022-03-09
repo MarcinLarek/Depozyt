@@ -26,14 +26,7 @@ class RepresentativeController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Representative", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -70,11 +63,7 @@ class RepresentativeController extends Controller
         $representativeData = Auth::user()->representative()->first();
         if ($representativeData == null) {
           Representative::create($data);
-          $representativeData = Auth::user()->representative()->first();
-          $succesaalert = 1;
-          return View("/frontend/representative/index")
-              ->with('representative', $representativeData)
-              ->with('succesaalert', $succesaalert);
+          return redirect()->route('representative')->with('succesaalert','succesaalert');
         }
         else {
           $representativeData->update($request->all());
@@ -86,14 +75,7 @@ class RepresentativeController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Representative", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
 
 

@@ -23,13 +23,7 @@ class ClientTypesController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-ClientTypes", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
 
@@ -67,14 +61,7 @@ class ClientTypesController extends Controller
             ->with('clientType', $clientType);
       }
       catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Admin-ClientTypes", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
 
@@ -94,13 +81,7 @@ class ClientTypesController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-ClientTypes', 'store', $exception->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            return view('/frontend/admin/admin/index');
+            return redirect()->route('admin.siteerror');
         }
     }
 

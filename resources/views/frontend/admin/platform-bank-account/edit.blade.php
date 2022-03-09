@@ -3,36 +3,31 @@
 @section('content')
     <h1>Edytuj konto bankowe - <strong>{{ $bankAccount->bank_name }} - {{ $bankAccount->currency->getName() }}</strong></h1>
     <hr />
-    @if(isset($success) && $success)
-        <div class="col-md-12 mt-md-2">
-            <div id="successAlert" class="alert alert-success d-none">
-                <strong>UDAŁO SIĘ!</strong> Twoje dane zostały zapisane.
-            </div>
-        </div>
-    @endif
-    @if(isset($success) && !$success)
-        <div class="col-md-12 mt-md-2">
-            <div id="invalidAlert" class="alert alert-danger d-none">
-                <strong>UPS... Coś poszło nie tak!</strong> Twoje dane nie zostały zapisane.
-            </div>
-        </div>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
     <div class="col-md-6 mx-auto">
         <form method="post" action="{{ route('admin.platform-bank-account.update', ['id' => $bankAccount->id]) }}">
             @csrf
             @method('PUT')
             <div class="form-group col-md-8 mx-auto">
-                <label for="account-number">{{ __('bank-account.account-number') }}</label>
+                <label for="account-number">Numer konta</label>
                 <input type="text" name="account_number" id="account-number" class="form-control"
-                       placeholder="{{ __('bank-account.account-number') }}" value="{{ old('account_number', $bankAccount->account_number) }}">
+                       placeholder="Numer konta" value="{{ old('account_number', $bankAccount->account_number) }}">
             </div>
             <div class="form-group col-md-8 mx-auto">
-                <label for="bank_name">{{ __('bank-account.bank-name') }}</label>
+                <label for="bank_name">Nazwa banku</label>
                 <input type="text" name="bank_name" id="bank_name" class="form-control"
-                       placeholder="{{ __('bank-account.bank-name') }}" value="{{ old('bank_name', $bankAccount->bank_name) }}">
+                       placeholder="Nazwa banku" value="{{ old('bank_name', $bankAccount->bank_name) }}">
             </div>
             <div class="form-group col-md-8 mx-auto">
-                <label for="currency-id" class="control-label">{{ __('bank-account.currency') }}</label>
+                <label for="currency-id" class="control-label">Waluta</label>
                 <select name="currency_id" id="currency-id" class="custom-select">
                     <option value="">{{ __('bank-account.select-currency') }}</option>
                     @foreach(\App\Models\Currency::getActiveCurrency() as $currency)
@@ -41,7 +36,7 @@
                 </select>
             </div>
             <div class="form-group col-md-8 mx-auto">
-                <label for="active" class="control-label">{{ __('bank-account.active') }}</label>
+                <label for="active" class="control-label">Czy aktywne</label>
                 <select name="active" id="active" class="custom-select">
                     <option value="1" @if ($bankAccount->isActive()) selected @endif>Tak</option>
                     <option value="0" @if (!$bankAccount->isActive()) selected @endif>Nie</option>

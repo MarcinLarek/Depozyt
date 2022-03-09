@@ -27,14 +27,7 @@ class WithdrawalController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Withdrawal", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -51,35 +44,26 @@ class WithdrawalController extends Controller
         ->where('user_id',$user['id'])
         ->first();
 
-        $wallethistorydata = array(
-          'user_id' => $user['id'],
-          'bank_name' => $request['bank_name'],
-          'currency_id' => $request['currency_id'],
-          'amount' => -$request['amount']
-        );
         $walletupdate = $wallet['amount'] - $request['amount'];
+        if ($wallet != null && $walletupdate >= 0) {
+            $wallethistorydata = array(
+              'user_id' => $user['id'],
+              'bank_name' => $request['bank_name'],
+              'currency_id' => $request['currency_id'],
+              'amount' => -$request['amount']
+            );
 
-        if ($walletupdate >= 0) {
-          WalletHistory::create($wallethistorydata);
-          $wallet->update(['amount' => $walletupdate ]);
-        }
-
-        $currencies = DB::table('currencies')->get();
-        $succesaalert = 1;
-          return View("/frontend/withdrawal/index")
-          ->with('currencies', $currencies)
-          ->with('succesaalert', $succesaalert);
+            WalletHistory::create($wallethistorydata);
+            $wallet->update(['amount' => $walletupdate ]);
+            return redirect()->route('withdrawal')->with('successalert','successalert');
+          }
+        else {
+            return redirect()->route('withdrawal')->with('nomoney','nomoney');
+          }
       }
       catch (\Exception $e) {
         saveException(sqlDateTime(), "Withdrawal", "store", $exception->getMessage(), $request->ip(), Auth::id());
-        $admins = DB::table('admins')->get();
-        foreach ($admins as $admin) {
-          if ($admin->error_notification==1) {
-            Mail::to($admin->email)->send(new NewErrorMail());
-          }
-        }
-        $error = 1;
-        return view("/frontend/home/index", compact('error'));
+        return redirect()->route('siteerror');
       }
 
     }
@@ -94,14 +78,7 @@ class WithdrawalController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "Withdrawal", "getHistory", $exception->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
     }
 

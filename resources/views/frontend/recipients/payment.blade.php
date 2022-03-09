@@ -13,12 +13,10 @@
         </ul>
     </div>
     @endif
-    @if(isset($succesaalert))
-      @if($succesaalert == 1)
-        <div class="alert alert-success">
-          <h1>{{ __('alerts.data_save_success') }}</h1>
-        </div>
-      @endif
+    @if(session()->has('successalert'))
+    <div class="alert alert-success">
+      <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
     @endif
     <ul class="nav nav-tabs bg-white">
         <li class="nav-item">
@@ -35,11 +33,6 @@
                     <div class="card  border-0">
                         <div class="card-body">
                             <h4 class="card-title">{{ __('recipient.PAY-subtitle') }}</h4>
-                            <form id="Search" asp-action="GetDataRecipient" asp-controller="Recipient" method="post">
-                                <fieldset>
-
-                                </fieldset>
-                            </form>
                             <div class="row">
                                 <div id="payment" class="col-md-12 mb-md-2"></div>
                             </div>
@@ -83,7 +76,7 @@
                                     </div>
                                 </div>
                             </form>
-                            @if($walleterror === 1)
+                            @if(session()->has('walleterror'))
                             <div class="row">
                               <h5>{{ __('recipient.PAY-walleterror') }}</h5>
                             </div>

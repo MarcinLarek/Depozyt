@@ -55,11 +55,7 @@ class LoginController extends Controller
 
     public function logout(Request $request) {
       Auth::logout();
-      $failstatus = 0;
-      $errortype = 0;
-        return view("/frontend/sign-in/index")
-          ->with('errortype', $errortype)
-          ->with('failstatus', $failstatus);
+      return redirect()->route('home');
     }
 
     public function forgotPasswordReset(Request $request)

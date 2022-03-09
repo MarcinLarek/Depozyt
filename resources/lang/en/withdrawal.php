@@ -12,8 +12,7 @@ return [
   'IND-transfer-title' => 'Transfer title',
   'IND-amount' => 'Amount',
   'IND-save' => 'Save',
-  'IND-succes' => 'SUCCESS! Your data has been saved. Check your e-mail with the confirmation message of the escrow service.',
-  'IND-failure' => 'OOPS... Something went wrong! Your data has not been saved.',
+  'IND-nomoney' => 'You don\'t have enough money in your wallet',
   //
   //gethistory
   //

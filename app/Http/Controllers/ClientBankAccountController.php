@@ -35,14 +35,7 @@ class ClientBankAccountController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -55,14 +48,7 @@ class ClientBankAccountController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "create", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
 
     }
@@ -74,20 +60,11 @@ class ClientBankAccountController extends Controller
                 $user = Auth::user();
                 $data['country_id'] = $user->country->getId();
                 $user->bankAccounts()->create($data);
-                $bankAccounts = Auth::user()->bankAccounts;
-                $succesaalert = 1;
-                return View("/frontend/client-bank-account/index")
-                    ->with('succesaalert', $succesaalert)
-                    ->with('bankAccounts', $bankAccounts);
+                return redirect()->route('bank-accounts')->with('successalert','successalert');
             }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientBankAccount", "store", $ex->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              Mail::to($admin->email)->send(new NewErrorMail());
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
     }
 
@@ -100,14 +77,7 @@ class ClientBankAccountController extends Controller
         }
        catch (\Exception $ex) {
           saveException(sqlDateTime(), "ClientBankAccount", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-          $admins = DB::table('admins')->get();
-          foreach ($admins as $admin) {
-            if ($admin->error_notification==1) {
-              Mail::to($admin->email)->send(new NewErrorMail());
-            }
-          }
-          $error = 1;
-          return view("/frontend/home/index", compact('error'));
+          return redirect()->route('siteerror');
         }
 
     }
@@ -133,22 +103,11 @@ class ClientBankAccountController extends Controller
           'swift' => $request['swift'],
           'active' => $request['active']
         ]);
-        $bankAccounts = Auth::user()->bankAccounts;
-        $succesaalert = 1;
-        return View("/frontend/client-bank-account/index")
-            ->with('succesaalert', $succesaalert)
-            ->with('bankAccounts', $bankAccounts);
+        return redirect()->route('bank-accounts')->with('successalert','successalert');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "ClientBankAccount", "update", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 }

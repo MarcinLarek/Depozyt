@@ -27,13 +27,7 @@ class PaymentsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
 
     }
@@ -49,13 +43,7 @@ class PaymentsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "withdrawal", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
 
@@ -74,13 +62,7 @@ class PaymentsController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-      	    return view('/frontend/admin/admin/index');
+                  return redirect()->route('admin.siteerror');
               }
     }
 
@@ -113,13 +95,7 @@ class PaymentsController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Payments', 'update', $exception->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            return view('/frontend/admin/admin/index');
+            return redirect()->route('admin.siteerror');
         }
     }
 }

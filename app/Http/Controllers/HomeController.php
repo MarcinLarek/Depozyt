@@ -14,8 +14,18 @@ class HomeController extends Controller
 {
     public function index()
     {
-      $error = 0;
-        return view("/frontend/home/index", compact('error'));
+        return view("/frontend/home/index");
+    }
+
+    public function siteerror()
+    {
+      $admins = DB::table('admins')->get();
+      foreach ($admins as $admin) {
+        if ($admin->error_notification==1) {
+          Mail::to($admin->email)->send(new NewErrorMail());
+        }
+      }
+      return redirect()->route('home')->with('siteerror','siteerror');
     }
 
     public function regulations()
@@ -25,8 +35,7 @@ class HomeController extends Controller
 
     public function contact()
     {
-      $issend = 0;
-        return View("/frontend/home/contact", compact('issend'));
+        return View("/frontend/home/contact");
     }
 
     public function sendcontact(Request $request, Contact $contact)
@@ -42,19 +51,11 @@ class HomeController extends Controller
         );
         $contact->create($data);
         Mail::to('kontakt@domena.pl')->send(new NewContactMessage());
-        $issend = 1;
-        return View("/frontend/home/contact", compact('issend'));
+        return redirect()->route('contact')->with('issend','issend');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Home", "sendcontact", $ex->getMessage(), $request->ip(), Auth::id());
-                  $error = 1;
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 

@@ -12,8 +12,7 @@ return [
   'IND-transfer-title' => 'Tytuł przelewu',
   'IND-amount' => 'Kwota',
   'IND-save' => 'Zapisz',
-  'IND-succes' => '  UDAŁO SIĘ! Twoje dane zostały zapisane.Sprawdź skrzynkę pocztową z linkiem aktywacyjnym.',
-  'IND-failure' => 'UPS... Coś poszło nie tak! Twoje dane nie zostały zapisane.',
+  'IND-nomoney' => 'Nie posiadasz wystarczającej ilości gotówki w portfelu',
   //
   //gethistory
   //

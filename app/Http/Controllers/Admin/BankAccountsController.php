@@ -28,13 +28,7 @@ class BankAccountsController extends Controller
     }
     catch (\Exception $ex) {
                 saveException(sqlDateTime(), "Admin-BankAccounts", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                $admins = DB::table('admins')->get();
-                foreach ($admins as $admin) {
-                  if ($admin->error_notification==1) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
-                  }
-                }
-          return view('/frontend/admin/admin/index');
+                return redirect()->route('admin.siteerror');
             }
   }
 
@@ -53,13 +47,7 @@ class BankAccountsController extends Controller
     }
     catch (\Exception $ex) {
                 saveException(sqlDateTime(), "Admin-BankAccounts", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                $admins = DB::table('admins')->get();
-                foreach ($admins as $admin) {
-                  if ($admin->error_notification==1) {
-                    Mail::to($admin->email)->send(new NewErrorMail());
-                  }
-                }
-          return view('/frontend/admin/admin/index');
+                return redirect()->route('admin.siteerror');
             }
   }
 
@@ -100,11 +88,7 @@ class BankAccountsController extends Controller
       }
       catch (\Exception $exception) {
           saveException(sqlDateTime(), 'Admin-BankAccounts', 'store', $exception->getMessage(), $request->ip(), Auth::id());
-          $admins = DB::table('admins')->get();
-          foreach ($admins as $admin) {
-            Mail::to($admin->email)->send(new NewErrorMail());
-          }
-          return view('/frontend/admin/admin/index');
+          return redirect()->route('admin.siteerror');
       }
   }
 }

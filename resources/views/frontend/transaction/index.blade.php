@@ -9,7 +9,7 @@
     use App\Models\CompanyData;
     use App\Models\User;
     $i = 1; ?>
-    @if($succesaalert == 1)
+    @if(session()->has('successalert'))
     <div class="alert alert-success">
       <h1>{{ __('alerts.data_save_success') }}</h1>
     </div>

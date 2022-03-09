@@ -42,14 +42,7 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -287,10 +280,7 @@ class TransactionController extends Controller
         try {
           $user =  User::where('personal_code',$request['personal-code2'])->first();
           if ($user == null) {
-            $currencies = DB::table('currencies')->get();
-            $viewPath = '/frontend/transaction/create';
-            return View($viewPath)
-              ->with('currencies', $currencies);
+            return redirect()->route('transaction.create');
           }
           $usercontractor = Auth::user();
           $currency =  Currency::where('symbol',$request['currency_name'])->first();
@@ -323,13 +313,7 @@ class TransactionController extends Controller
           );
           WalletTransactions::create($platfromwallet);
 
-          $user = Auth::user();
-          $succesaalert = 1;
-          $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
-          return view("/frontend/transaction/index")
-            ->with('transactions', $transactions)
-            ->with('user', $user)
-            ->with('succesaalert', $succesaalert);
+          return redirect()->route('transaction')->with('successalert','successalert');
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "Transaction", "store", $ex->getMessage(), $request->ip());
@@ -459,12 +443,7 @@ class TransactionController extends Controller
       }
       TransactionToAccept::create($data);
 
-      $succesaalert = 1;
-      $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
-      return view("/frontend/transaction/index")
-        ->with('transactions', $transactions)
-        ->with('user', $user)
-        ->with('succesaalert', $succesaalert);
+      return redirect()->route('transaction')->with('successalert','successalert');
       try {
 
       }
@@ -548,13 +527,7 @@ class TransactionController extends Controller
             }
 
             TransactionToAccept::create($data);
-            $user = Auth::user();
-            $succesaalert = 1;
-            $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
-            return view("/frontend/transaction/index")
-              ->with('transactions', $transactions)
-              ->with('user', $user)
-              ->with('succesaalert', $succesaalert);
+            return redirect()->route('transaction')->with('successalert','successalert');
         }
     catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
@@ -578,10 +551,8 @@ class TransactionController extends Controller
           $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
           $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
         }
-        $nomoneyerror = 0;
         return view("/frontend/transaction/transactionsToAccept")
           ->with('transactions', $transactions)
-          ->with('nomoneyerror', $nomoneyerror)
           ->with('currentuser', $currentuser);
       }
       catch (\Exception $ex) {
@@ -659,14 +630,8 @@ class TransactionController extends Controller
           $contractorwallet = Wallet::where('user_id',$transaction['contractor_id'])
                                     ->where('currency_id',$transaction['currency_id'])->first();
           if ($contractorwallet==null) {
-            $currentuser = Auth::user();
-            $transactions =TransactionToAccept::where('contractor_id',$currentuser['id'])->orWhere('customer_id',$currentuser['id'])->get();
-            $nomoneyerror = 2;
             $changes->delete();
-            return view("/frontend/transaction/transactionsToAccept")
-              ->with('transactions', $transactions)
-              ->with('nomoneyerror', $nomoneyerror)
-              ->with('currentuser', $currentuser);
+            return redirect()->route('transaction.transactionsToAccept')->with('nomoneyerror2','nomoneyerror2');
           }
 
           $payment = $changes['payment'] - $transaction['payment'];
@@ -687,12 +652,8 @@ class TransactionController extends Controller
           else {
             $currentuser = Auth::user();
             $transactions =TransactionToAccept::where('contractor_id',$currentuser['id'])->orWhere('customer_id',$currentuser['id'])->get();
-            $nomoneyerror = 1;
             $changes->delete();
-            return view("/frontend/transaction/transactionsToAccept")
-              ->with('transactions', $transactions)
-              ->with('nomoneyerror', $nomoneyerror)
-              ->with('currentuser', $currentuser);
+            return redirect()->route('transaction.transactionsToAccept')->with('nomoneyerror1','nomoneyerror1');
           }
           $transactionwallet = WalletTransactions::where('transaction_id',$transaction['id'])->first();
           $payment = $changes['payment'] - $transactionwallet['payment'];
@@ -729,13 +690,7 @@ class TransactionController extends Controller
       }
 
 
-        $user = Auth::user();
-        $succesaalert = 1;
-        $transactions =Transaction::where('contractor_id',$user['id'])->orWhere('customer_id',$user['id'])->get();
-        return view("/frontend/transaction/index")
-          ->with('transactions', $transactions)
-          ->with('user', $user)
-          ->with('succesaalert', $succesaalert);
+        return redirect()->route('transaction')->with('successalert','successalert');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "confirm", $ex->getMessage(), $request->ip(), Auth::id());

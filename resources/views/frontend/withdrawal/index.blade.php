@@ -5,9 +5,13 @@
 use App\Models\Currency; ?>
     <h1 class="mt-md-4">{{ __('withdrawal.IND-title') }}</h1>
     <hr/>
-    @if($succesaalert == 1)
+    @if(session()->has('successalert'))
     <div class="alert alert-success">
       <h1>{{ __('alerts.data_save_success') }}</h1>
+    </div>
+    @elseif(session()->has('nomoney'))
+    <div class="alert alert-danger">
+      <h1>{{ __('withdrawal.IND-nomoney') }}</h1>
     </div>
     @endif
     <ul class="nav nav-tabs bg-white">

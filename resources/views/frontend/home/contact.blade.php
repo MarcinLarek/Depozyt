@@ -33,7 +33,7 @@
                     </div>
                 </form>
                 <div class="row justify-content-center">
-                  @if($issend===1)
+                  @if(session()->has('issend'))
                   <p>{{ __('home.CON-issend') }}</p>
                   @endif
                 </div>

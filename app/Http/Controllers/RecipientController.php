@@ -24,14 +24,7 @@ class RecipientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "idit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -49,14 +42,7 @@ class RecipientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -78,22 +64,11 @@ class RecipientController extends Controller
         try {
             $recipient = Auth::user()->recipients()->find($recipientId);
             $recipient->update($request->all());
-            $recipients = Auth::user()->recipients()->get();
-            $succesaalert = 1;
-            return View("/frontend/recipients/index")
-                ->with('succesaalert', $succesaalert)
-                ->with('recipients', $recipients);
+          return redirect()->route('recipients')->with('succesaalert','succesaalert');
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "Recipient", "update", $exception->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
     }
 
@@ -102,11 +77,9 @@ class RecipientController extends Controller
       try {
         $recipients = Auth::user()->recipients()->get();
         $wallets = Auth::user()->wallet()->get();
-        $walleterror = 0;
         if ($wallets->count()) {
             return view("/frontend/recipients/payment")
                 ->with('recipients', $recipients)
-                ->with('walleterror', $walleterror)
                 ->with('wallets', $wallets);
         } else {
             return view('/frontend/recipients/_empty-wallet');
@@ -114,14 +87,7 @@ class RecipientController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Recipient", "payment", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -136,14 +102,7 @@ class RecipientController extends Controller
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "getHistory", $exception->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
     }
 
@@ -164,22 +123,11 @@ class RecipientController extends Controller
             $user = Auth::user();
             $data['country_id'] = $user->country->getId();
             $user->recipients()->create($data);
-            $recipients = Auth::user()->recipients()->get();
-            $succesaalert = 1;
-            return View("/frontend/recipients/index")
-                ->with('succesaalert', $succesaalert)
-                ->with('recipients', $recipients);
+            return redirect()->route('recipients')->with('succesaalert','succesaalert');
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "Recipient", "Create()", $ex->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
 
     }
