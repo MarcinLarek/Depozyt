@@ -3,9 +3,9 @@
 @section('content')
     <h1>Waluty</h1>
     <hr/>
-    @if(isset($succesalert) && $succesalert == 1)
+    @if(session()->has('successalert'))
     <div class="alert alert-success">
-      <h1>{{ __('alerts.data_save_success') }}</h1>
+      <h1>Zmiany zostały zapisane</h1>
     </div>
     @elseif ($errors->any())
     <div class="alert alert-danger">

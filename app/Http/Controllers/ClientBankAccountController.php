@@ -9,9 +9,7 @@ use App\Services\CurrenciesService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
+
 
 class ClientBankAccountController extends Controller
 {

@@ -5,7 +5,7 @@
     <hr/>
     @if(session()->has('successalert'))
     <div class="alert alert-success">
-      <h1>{{ __('alerts.data_save_success') }}</h1>
+      <h1>Zmiany zostały zapisane</h1>
     </div>
     @endif
     @if ($errors->any())

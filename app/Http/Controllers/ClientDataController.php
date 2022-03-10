@@ -8,9 +8,6 @@ use App\Models\Representative;
 use App\Services\UsersService;
 use Illuminate\Support\Facades\Auth;
 use function GuzzleHttp\Promise\all;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class ClientDataController extends Controller
 {

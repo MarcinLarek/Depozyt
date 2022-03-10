@@ -7,9 +7,6 @@ use App\Models\Admin;
 use App\Models\WalletHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class AdminsController extends Controller
 {
@@ -17,10 +14,8 @@ class AdminsController extends Controller
     {
       try {
         $admins = Admin::all();
-        $succesaalert = 0;
         return view('/frontend/admin/admins/index')
-            ->with('admins', $admins)
-            ->with('succesaalert', $succesaalert);
+            ->with('admins', $admins);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
@@ -72,11 +67,7 @@ class AdminsController extends Controller
 
         $admin = Admin::find($id);
         $admin->update($data);
-        $admins = Admin::all();
-        $succesaalert = 1;
-        return view('/frontend/admin/admins/index')
-            ->with('admins', $admins)
-            ->with('succesaalert', $succesaalert);
+        return redirect()->route('admin.admins')->with('successalert','successalert');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "update", $ex->getMessage(), $request->ip(), Auth::id());
@@ -102,10 +93,7 @@ class AdminsController extends Controller
         $admin = Admin::find($id);
         $admin->delete();
         $admins = Admin::all();
-        $succesaalert = 0;
-        return view('/frontend/admin/admins/index')
-            ->with('admins', $admins)
-            ->with('succesaalert', $succesaalert);
+        return redirect()->route('admin.admins')->with('successalert','successalert');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Admin", "deleteadmin", $ex->getMessage(), $request->ip(), Auth::id());

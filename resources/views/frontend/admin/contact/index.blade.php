@@ -3,6 +3,11 @@
 @section('content')
     <h1>Waluty</h1>
     <hr/>
+    @if(session()->has('successalert'))
+    <div class="alert alert-success">
+      <h1>Zmiany zostały zapisane</h1>
+    </div>
+    @endif
     <div class="w-50 mx-auto">
         <div class="table-responsive">
             <table class="table table-striped">

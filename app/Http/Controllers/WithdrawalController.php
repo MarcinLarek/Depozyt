@@ -4,22 +4,21 @@ namespace App\Http\Controllers;
 use App\Models\PlatformData;
 use App\Models\WalletHistory;
 use App\Models\Wallet;
+use App\Models\Currency;
 use App\Services\PlatformBankAccountsService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
+
 
 class WithdrawalController extends Controller
 {
     public function index()
     {
       try {
-        $currencies = DB::table('currencies')->get();
+        $currencies = Currency::all();
         $succesaalert = 0;
           return View("/frontend/withdrawal/index")
           ->with('currencies', $currencies)

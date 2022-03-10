@@ -3,9 +3,9 @@
 @section('content')
     <h1>Konta Bankowe</h1>
     <hr/>
-    @if($succesaalert == 1)
+    @if(session()->has('successalert'))
     <div class="alert alert-success">
-      <h1>{{ __('alerts.data_save_success') }}</h1>
+      <h1>Zmiany zostały zapisane</h1>
     </div>
     @endif
     <div class="mx-auto">
@@ -48,7 +48,11 @@
                         <td>{{ $country['country_name'] }}</td>
                         <td>{{ $bank['account_number'] }}</td>
                         <td>{{ $bank['swift'] }}</td>
-                        <td>{{ $bank['active'] }}</td>
+                        @if($bank['active'] == 1)
+                        <td>Tak</td>
+                        @else
+                        <td>Nie</td>
+                        @endif
                         <td>
                             <a href="{{ route('admin.bankaccounts.edit', ['id' => $bank->id]) }}">
                                 <img src="{{ asset('/images/edit.svg')}}" alt="Edytuj Bank"/>

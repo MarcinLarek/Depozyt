@@ -6,9 +6,6 @@ use App\Http\Requests\Recipients\StoreRequest;
 use App\Models\Recipient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class RecipientController extends Controller
 {

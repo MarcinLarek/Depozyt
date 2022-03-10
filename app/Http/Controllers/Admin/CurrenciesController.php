@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class CurrenciesController extends Controller
 {
@@ -98,10 +95,7 @@ class CurrenciesController extends Controller
            );
           $currency->update($data);
           $currencies = Currency::all();
-          $succesalert = 1;
-          return view('/frontend/admin/currencies/index')
-              ->with('currencies', $currencies)
-              ->with('succesalert', $succesalert);
+          return redirect()->route('admin.currencies')->with('successalert','successalert');
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CurrenciesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());

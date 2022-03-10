@@ -12,8 +12,6 @@ use PharIo\Manifest\Email;
 use App\Mail\RegisterConfirmation;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {

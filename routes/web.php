@@ -151,6 +151,7 @@ Route::domain('admin.localhost')->group(function () {
         Route::prefix('/payments')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\PaymentsController::class, 'index'])->name('admin.payments');
             Route::post('/store', [\App\Http\Controllers\Admin\PaymentsController::class, 'store'])->name('admin.payments.store');
+            Route::get('/create', [\App\Http\Controllers\Admin\PaymentsController::class, 'create'])->name('admin.payments.create');
             Route::get('/{id}/edit', [\App\Http\Controllers\Admin\PaymentsController::class, 'edit'])->name('admin.payments.edit');
             Route::put('/{id}/update', [\App\Http\Controllers\Admin\PaymentsController::class, 'update'])->name('admin.payments.update');
         });

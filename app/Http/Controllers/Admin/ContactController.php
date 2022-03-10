@@ -7,8 +7,6 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 use App\Mail\ResponseEmail;
 
 class ContactController extends Controller
@@ -57,11 +55,7 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         $varmail = $contact->email;
         Mail::to($varmail)->send(new ResponseEmail());
-
-
-          $contacts = Contact::all();
-          return view('/frontend/admin/contact/index')
-              ->with('contacts', $contacts);
+        return redirect()->route('admin.contact')->with('successalert','successalert');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "sendreply", $ex->getMessage(), $request->ip(), Auth::id());
@@ -85,8 +79,7 @@ class ContactController extends Controller
       try {
         $contact = Contact::find($id);
         $contact->delete();
-        $contacts = Contact::all();
-        return view('/frontend/admin/contact/index', compact('contacts'));
+        return redirect()->route('admin.contact')->with('successalert','successalert');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Contact", "deletemessege", $ex->getMessage(), $request->ip(), Auth::id());

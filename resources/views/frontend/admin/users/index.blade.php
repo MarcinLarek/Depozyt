@@ -3,9 +3,9 @@
 @section('content')
     <h4>Użytkownicy</h4>
     <hr/>
-    @if($succesaalert == 1)
+    @if(session()->has('successalert'))
     <div class="alert alert-success">
-      <h1>{{ __('alerts.data_save_success') }}</h1>
+      <h1>Zmiany zostały zapisane</h1>
     </div>
     @endif
     <div class="table-responsive">

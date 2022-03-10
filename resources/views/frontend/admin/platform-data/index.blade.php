@@ -3,6 +3,11 @@
 @section('content')
     <h1>Edytuj dane platformy</h1>
     <hr />
+    @if(session()->has('successalert'))
+    <div class="alert alert-success">
+      <h1>Zmiany zostały zapisane</h1>
+    </div>
+    @endif
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

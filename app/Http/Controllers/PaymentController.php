@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
+use App\Models\Currency;
 
 
 class PaymentController extends Controller
@@ -34,7 +32,7 @@ class PaymentController extends Controller
       try {
         $this->platformBankAccountsService->getActive();
         $data = PlatformData::where('id',1)->first();
-        $currencies = DB::table('currencies')->get();
+        $currencies = Currency::all();
         return view("/frontend/payment/index")
         ->with('currencies', $currencies)
         ->with('data', $data);

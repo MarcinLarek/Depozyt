@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\PlatformBankAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class PlatformBankAccountController extends Controller
 {

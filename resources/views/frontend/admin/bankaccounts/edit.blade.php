@@ -81,8 +81,8 @@
                   <div class="form-group col-md-4">
                       <label for="active" class="control-label">Aktywne </label>
                       <select name="active" class="custom-select">
-                            <option value="1">1</option>
-                            <option value="0">0</option>
+                            <option value="1">Tak</option>
+                            <option value="0">Nie</option>
                       </select>
                   </div>
                 </div>

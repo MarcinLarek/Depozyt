@@ -7,11 +7,9 @@ use App\Models\Admin;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Currency;
+use App\Models\ClientBankAccount;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionsController extends Controller
@@ -39,8 +37,8 @@ class TransactionsController extends Controller
     {
       try {
         $transaction = Transaction::find($id);
-        $currencies = DB::table('currencies')->get();
-        $banks = DB::table('client_bank_accounts')->get();
+        $currencies = Currency::all();
+        $banks = ClientBankAccount::all();
         $users = User::all();
         return view('/frontend/admin/transactions/edit')
             ->with('transaction', $transaction)
@@ -94,10 +92,7 @@ class TransactionsController extends Controller
             $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
             $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
           }
-          $succesaalert = 1;
-          return view('/frontend/admin/transactions/index')
-              ->with('succesaalert', $succesaalert)
-              ->with('transactions', $transactions);
+          return redirect()->route('admin.transactions')->with('successalert','successalert');
         } catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('admin.siteerror');

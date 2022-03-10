@@ -7,9 +7,6 @@ use App\Models\Country;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class CountriesController extends Controller
 {
@@ -37,11 +34,7 @@ class CountriesController extends Controller
 
         try {
             Country::create($request->all());
-            $countries = Country::all();
-            $succesalert = 1;
-            return view('/frontend/admin/countries/index')
-                ->with('countries', $countries)
-                ->with('succesalert', $succesalert);
+            return redirect()->route('admin.countries')->with('successalert','successalert');
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CountriesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());
@@ -102,11 +95,7 @@ class CountriesController extends Controller
             'country_code' => $request['country_code'],
            );
             $country->update($data);
-            $countries = Country::all();
-            $succesalert = 1;
-            return view('/frontend/admin/countries/index')
-                ->with('countries', $countries)
-                ->with('succesalert', $succesalert);
+            return redirect()->route('admin.countries')->with('successalert','successalert');
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'CountriesController', 'store', $exception->getMessage(), $request->ip(), Auth::id());

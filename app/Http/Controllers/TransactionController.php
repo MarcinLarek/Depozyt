@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Currency;
+use App\Models\ClientBankAccount;
+use App\Models\Wallet;
 use App\Models\CompanyData;
 use App\Models\ClientData;
 use App\Models\Transaction;
@@ -16,8 +18,6 @@ use PDF;
 use Mpdf\Mpdf;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 use App\Models\WalletHistory;
 use App\Models\Wallet;
 use App\Models\WalletTransactions;
@@ -242,7 +242,7 @@ class TransactionController extends Controller
     public function create()
     {
       try {
-        $currencies = DB::table('currencies')->get();
+        $currencies = Currency::all();
         $viewPath = '/frontend/transaction/create';
         if (Auth::user()->canAddTransaction() == false) {
             $viewPath = '/frontend/transaction/complete-data';
@@ -252,14 +252,7 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "create", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -317,14 +310,7 @@ class TransactionController extends Controller
         }
         catch (\Exception $ex) {
             saveException(sqlDateTime(), "Transaction", "store", $ex->getMessage(), $request->ip());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
     }
 
@@ -348,14 +334,7 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -363,8 +342,8 @@ class TransactionController extends Controller
     {
       try {
         $transaction = Transaction::find($id);
-        $currencies = DB::table('currencies')->get();
-        $banks = DB::table('client_bank_accounts')->get();
+        $currencies = Currency::all();
+        $banks = ClientBankAccount::all();
         $usercontractor = User::where('id',$transaction['contractor_id'])->first();
           $usercontractordata = CompanyData::where('user_id',$usercontractor['id'])->first();
 
@@ -381,14 +360,7 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -449,14 +421,7 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -531,14 +496,7 @@ class TransactionController extends Controller
         }
     catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
-            $admins = DB::table('admins')->get();
-            foreach ($admins as $admin) {
-              if ($admin->error_notification==1) {
-                Mail::to($admin->email)->send(new NewErrorMail());
-              }
-            }
-            $error = 1;
-            return view("/frontend/home/index", compact('error'));
+            return redirect()->route('siteerror');
         }
     }
 
@@ -557,14 +515,7 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "transactionsToAccept", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
     public function confirm(Request $request)
@@ -694,14 +645,8 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "confirm", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
+
               }
 
     }
@@ -715,14 +660,7 @@ class TransactionController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Transaction", "Edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
 
     }
@@ -774,14 +712,7 @@ class TransactionController extends Controller
     catch (\Exception $e)
      {
       saveException(sqlDateTime(), "Transaction", "generatePdf2", $ex->getMessage(), $request->ip(), Auth::id());
-      $admins = DB::table('admins')->get();
-      foreach ($admins as $admin) {
-        if ($admin->error_notification==1) {
-          Mail::to($admin->email)->send(new NewErrorMail());
-        }
-      }
-      $error = 1;
-      return view("/frontend/home/index", compact('error'));
+      return redirect()->route('siteerror');
     }
 
     }

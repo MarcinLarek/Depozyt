@@ -11,9 +11,6 @@ use App\Models\Currency;
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class BankAccountsController extends Controller
 {
@@ -21,9 +18,7 @@ class BankAccountsController extends Controller
   {
     try {
       $banks = ClientBankAccount::all();
-      $succesaalert = 0;
       return view('/frontend/admin/bankaccounts/index')
-          ->with('succesaalert', $succesaalert)
           ->with('banks', $banks);
     }
     catch (\Exception $ex) {
@@ -36,8 +31,8 @@ class BankAccountsController extends Controller
   {
     try {
       $bank = ClientBankAccount::find($id);
-      $currencies = DB::table('currencies')->get();
-      $countries = DB::table('countries')->get();
+      $currencies = Currency::all();
+      $countries = Country::all();
       $users = User::all();
       return view('/frontend/admin/bankaccounts/edit')
           ->with('bank', $bank)
@@ -54,14 +49,14 @@ class BankAccountsController extends Controller
   public function update($id, Request $request)
   {
     $request->validate([
-        'user_username' => ['required'],
-        'name' => ['required'],
-        'bank_name' => ['required'],
-        'currency_name' => ['required'],
-        'country_name' => ['required'],
-        'account_number' => ['required'],
-        'swift' => ['required'],
-        'active' => ['required'],
+        'user_username' => ['required','max:100'],
+        'name' => ['required','max:100'],
+        'bank_name' => ['required','max:100'],
+        'currency_name' => ['required','max:100'],
+        'country_name' => ['required','max:100'],
+        'account_number' => ['required','iban'],
+        'swift' => ['required','bic'],
+        'active' => ['required','numeric','max:100'],
     ]);
       try {
         $bank = ClientBankAccount::find($id);
@@ -80,11 +75,7 @@ class BankAccountsController extends Controller
         );
         $bank->update($data);
 
-        $banks = ClientBankAccount::all();
-        $succesaalert = 1;
-        return view('/frontend/admin/bankaccounts/index')
-            ->with('succesaalert', $succesaalert)
-            ->with('banks', $banks);
+        return redirect()->route('admin.bankaccounts')->with('successalert','successalert');
       }
       catch (\Exception $exception) {
           saveException(sqlDateTime(), 'Admin-BankAccounts', 'store', $exception->getMessage(), $request->ip(), Auth::id());

@@ -3,19 +3,19 @@
 @section('content')
     <div class="row col-md-8 mx-auto mt-4">
         <div class="col-md-3">
-            <div class="card text-center shadow">
+            <div href="{{ route('admin.users') }}" class="card text-center shadow">
                 <div class="card-body">
-                    <a href="{{ route('admin.users') }}"><i class="fas fa-user-circle fa-4x"></i></a>
+                    <a class="stretched-link" href="{{ route('admin.users') }}"><i class="fas fa-user-circle fa-4x"></i></a>
                 </div>
                 <div class="card-title">
-                    <a href="{{ route('admin.users') }}">Użytkownicy ({{ \App\Models\User::count() }})</a>
+                    <a  href="{{ route('admin.users') }}">Użytkownicy ({{ \App\Models\User::count() }})</a>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <a href="{{ route('admin.admins') }}"><i class="fas fa-user fa-4x"></i></a>
+                    <a class="stretched-link" href="{{ route('admin.admins') }}"><i class="fas fa-user fa-4x"></i></a>
                 </div>
                 <div class="card-title">
                     <a href="{{ route('admin.admins') }}">Administratorzy ({{ \App\Models\Admin::count() }})</a>
@@ -25,7 +25,7 @@
         <div class="col-md-3">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <a href="{{ route('admin.countries') }}"><i class="fa fa-flag fa-4x"></i></a>
+                    <a class="stretched-link" href="{{ route('admin.countries') }}"><i class="fa fa-flag fa-4x"></i></a>
                 </div>
                 <div class="card-title">
                     <a href="{{ route('admin.countries') }}">Kraje ({{ \App\Models\Country::count() }})</a>
@@ -35,7 +35,7 @@
         <div class="col-md-3">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <a href="{{ route('admin.client-types') }}"><i class="fa fa-building fa-4x"></i></a>
+                    <a class="stretched-link" href="{{ route('admin.client-types') }}"><i class="fa fa-building fa-4x"></i></a>
                 </div>
                 <div class="card-title">
                     <a href="{{ route('admin.client-types') }}">Typ klienta ({{ \App\Models\ClientType::count() }})</a>
@@ -45,7 +45,7 @@
         <div class="col-md-3 mt-4">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <a href="{{ route('admin.bankaccounts') }}"><i class="fas fa-university fa-4x"></i></a>
+                    <a class="stretched-link" href="{{ route('admin.bankaccounts') }}"><i class="fas fa-university fa-4x"></i></a>
                 </div>
                 <div class="card-title">
                     <a href="{{ route('admin.bankaccounts') }}">Konta bankowe ({{ \App\Models\ClientBankAccount::count() }})</a>
@@ -55,7 +55,7 @@
         <div class="col-md-3 mt-4">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <a href="{{ route('admin.transactions') }}"><i class="fa fa-file fa-4x"></i></a>
+                    <a class="stretched-link" href="{{ route('admin.transactions') }}"><i class="fa fa-file fa-4x"></i></a>
                 </div>
                 <div class="card-title">
                     <a href="{{ route('admin.transactions') }}">Transakcje ({{ \App\Models\ClientBankAccount::count() }})</a>
@@ -65,27 +65,27 @@
         <div class="col-md-3 mt-4">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <a href="{{ route('admin.payments') }}"><i class="fas fa-arrow-circle-right fa-4x"></i></a>
+                    <a class="stretched-link" href="{{ route('admin.payments') }}"><i class="fas fa-arrow-circle-right fa-4x"></i></a>
                 </div>
                 <div class="card-title">
-                    <a href="{{ route('admin.payments') }}">Wpłaty na platformę ({{ \App\Models\WalletHistory::count() }})</a>
+                    <a href="{{ route('admin.payments') }}">Wpłaty na platformę ({{ \App\Models\WalletHistory::where('amount','>', 0)->count() }})</a>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mt-4">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <a href="withdrawal"><i class="fas fa-arrow-circle-left fa-4x"></i></a>
+                    <a class="stretched-link" href="withdrawal"><i class="fas fa-arrow-circle-left fa-4x"></i></a>
                 </div>
                 <div class="card-title">
-                    <a href="{{ route('admin.withdrawal') }}">Wypłaty z platformy ({{ \App\Models\ClientBankAccount::count() }})</a>
+                    <a href="{{ route('admin.withdrawal') }}">Wypłaty z platformy ({{ \App\Models\WalletHistory::where('amount','<=', 0)->count() }})</a>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mt-4">
             <div class="card text-center shadow">
                 <div class="card-body">
-                    <a href="{{ route('admin.errors') }}"><i class="fa fa-flag fa-4x"></i></a>
+                    <a class="stretched-link" href="{{ route('admin.errors') }}"><i class="fa fa-flag fa-4x"></i></a>
                 </div>
                 <div class="card-title">
                     <a href="{{ route('admin.errors') }}">Zgłoszone Wyjątki ({{ \App\Models\PlatformException::count() }})</a>

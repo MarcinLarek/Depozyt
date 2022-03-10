@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -42,14 +40,7 @@ class LoginController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Login", "SetNewPasswordUpdate", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -78,14 +69,7 @@ class LoginController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Login", "ForgotPasswordReset", $ex->getMessage(), $request->ip(), Auth::id());
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
     }
 
@@ -149,16 +133,7 @@ class LoginController extends Controller
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Login", "signIn", $ex->getMessage(), $request->ip(), Auth::id());
-
-                  $admins = DB::table('admins')->get();
-                  foreach ($admins as $admin) {
-                    if ($admin->error_notification==1) {
-                      Mail::to($admin->email)->send(new NewErrorMail());
-                    }
-                  }
-
-                  $error = 1;
-                  return view("/frontend/home/index", compact('error'));
+                  return redirect()->route('siteerror');
               }
 
     }

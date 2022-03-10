@@ -3,13 +3,13 @@
 @section('content')
     <h1>Wpłaty</h1>
     <hr/>
-    @if($succesaalert == 1)
+    @if(session()->has('successalert'))
     <div class="alert alert-success">
-      <h1>{{ __('alerts.data_save_success') }}</h1>
+      <h1>Zmiany zostały zapisane</h1>
     </div>
     @endif
+    <a href="{{route('admin.payments.create')}}"><button class="btn btn-primary mx-auto">Dodaj wpłate/wypłate</button></a>
     <div class="w-50 mx-auto">
-
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>

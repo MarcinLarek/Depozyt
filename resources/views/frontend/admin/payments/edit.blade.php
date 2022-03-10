@@ -35,9 +35,7 @@
               <label for="user_id" class="control-label">Użytkownik </label>
               <select name="user_id" class="custom-select">
                 @foreach($users as $user)
-                  @if( $user['client_type_id'] === 1)
                     <option>{{$user['username']}}</option>
-                  @endif
                 @endforeach
               </select>
           </div>

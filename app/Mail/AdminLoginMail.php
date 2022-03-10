@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Admin;
 
 class AdminLoginMail extends Mailable

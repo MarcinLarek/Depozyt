@@ -5,13 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\WalletHistory;
 use App\Models\Currency;
+use App\Models\ClientBankAccount;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentsController extends Controller
@@ -19,11 +16,9 @@ class PaymentsController extends Controller
     public function index()
     {
       try {
-        $succesaalert = 0;
         $history = WalletHistory::all();
         return view('/frontend/admin/payments/index')
-            ->with('history', $history)
-            ->with('succesaalert', $succesaalert);
+            ->with('history', $history);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "index", $ex->getMessage(), $request->ip(), Auth::id());
@@ -32,14 +27,23 @@ class PaymentsController extends Controller
 
     }
 
+    public function create()
+    {
+      $users = User::all();
+      $currencies = Currency::all();
+      $banks = ClientBankAccount::all();
+      return view('/frontend/admin/payments/create')
+             ->with('users', $users)
+             ->with('banks', $banks)
+             ->with('currencies', $currencies);
+    }
+
     public function withdrawal()
     {
       try {
-        $succesaalert = 0;
         $history = WalletHistory::all();
         return view('/frontend/admin/payments/withdrawal')
-            ->with('history', $history)
-            ->with('succesaalert', $succesaalert);
+            ->with('history', $history);
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Payments", "withdrawal", $ex->getMessage(), $request->ip(), Auth::id());
@@ -51,8 +55,8 @@ class PaymentsController extends Controller
     {
       try {
         $payment = WalletHistory::find($id);
-        $currencies = DB::table('currencies')->get();
-        $banks = DB::table('client_bank_accounts')->get();
+        $currencies = Currency::all();
+        $banks = ClientBankAccount::all();
         $users = User::all();
         return view('/frontend/admin/payments/edit')
             ->with('payment', $payment)
@@ -72,8 +76,8 @@ class PaymentsController extends Controller
           'user_id' => ['required'],
           'BankName' => ['required'],
           'CurrencyName' => ['required'],
-          'Amount' => ['required'],
-          'DocumentID' => ['required']
+          'Amount' => ['required','numeric'],
+          'DocumentID' => ['required','numeric']
       ]);
         try {
           $payment = WalletHistory::find($id);
@@ -87,15 +91,48 @@ class PaymentsController extends Controller
             'generated_document_id' => $request['DocumentID']
           );
           $payment->update($data);
-          $succesaalert = 1;
-          $history = WalletHistory::all();
-          return view('/frontend/admin/payments/index')
-              ->with('history', $history)
-              ->with('succesaalert', $succesaalert);
+          if ($request['amount']>0) {
+            return redirect()->route('admin.payments')->with('successalert','successalert');
+          }
+          else {
+            return redirect()->route('admin.withdrawal')->with('successalert','successalert');
+          }
         }
         catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Payments', 'update', $exception->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('admin.siteerror');
         }
+    }
+
+    public function store(Request $request)
+    {
+      $request->validate([
+          'user_id' => ['required','numeric'],
+          'bank_name' => ['required'],
+          'currency_id' => ['required'],
+          'amount' => ['required','numeric'],
+          'document_id' => ['required','numeric']
+      ]);
+
+        try {
+          $data = array(
+            'user_id' => $request['user_id'],
+            'bank_name' => $request['bank_name'],
+            'currency_id' => $request['currency_id'],
+            'amount' => $request['amount'],
+            'generated_document_id' => $request['document_id']
+          );
+          WalletHistory::create($data);
+          if ($request['amount']>0) {
+            return redirect()->route('admin.payments')->with('successalert','successalert');
+          }
+          else {
+            return redirect()->route('admin.withdrawal')->with('successalert','successalert');
+          }
+        } catch (\Exception $e) {
+          saveException(sqlDateTime(), 'Admin-Payments', 'store', $exception->getMessage(), $request->ip(), Auth::id());
+          return redirect()->route('admin.siteerror');
+        }
+
     }
 }

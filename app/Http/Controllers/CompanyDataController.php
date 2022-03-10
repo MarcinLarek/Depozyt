@@ -8,9 +8,6 @@ use App\Models\CompanyData;
 use App\Models\Representative;
 use Illuminate\Support\Facades\Auth;
 use function GuzzleHttp\Promise\all;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class CompanyDataController extends Controller
 {

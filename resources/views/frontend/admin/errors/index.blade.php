@@ -3,6 +3,11 @@
 @section('content')
     <h1>Wyjątki</h1>
     <hr/>
+    @if(session()->has('successalert'))
+    <div class="alert alert-success">
+      <h1>Zmiany zostały zapisane</h1>
+    </div>
+    @endif
 <div class="w-75 mx-auto">
         <div class="table-responsive">
             <table class="table table-striped">

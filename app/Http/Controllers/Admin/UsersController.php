@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewErrorMail;
-use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -69,11 +66,7 @@ class UsersController extends Controller
 
         $user = User::find($id);
         $user->update($data);
-        $users = User::all();
-        $succesaalert = 1;
-        return view('/frontend/admin/users/index')
-            ->with('users', $users)
-            ->with('succesaalert', $succesaalert);
+        return redirect()->route('admin.users')->with('successalert','successalert');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "update", $ex->getMessage(), $request->ip(), Auth::id());
@@ -98,11 +91,7 @@ class UsersController extends Controller
       try {
         $user = User::find($id);
         $user->delete();
-        $users = User::all();
-        $succesaalert = 0;
-        return view('/frontend/admin/users/index')
-            ->with('users', $users)
-            ->with('succesaalert', $succesaalert);
+        return redirect()->route('admin.users')->with('successalert','successalert');
       }
       catch (\Exception $ex) {
                   saveException(sqlDateTime(), "Admin-Users", "deleteuser", $ex->getMessage(), $request->ip(), Auth::id());
