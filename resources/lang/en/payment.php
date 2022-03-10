@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Payments',
   'IND-menu1' => 'Make a deposit',

@@ -20,13 +20,12 @@ class HomeController extends Controller
 
     public function siteerror()
     {
-      $admins = DB::table('admins')->get();
-      foreach ($admins as $admin) {
-        if ($admin->error_notification==1) {
-          Mail::to($admin->email)->send(new NewErrorMail());
+        $admins = DB::table('admins')->get();
+        foreach ($admins as $admin) {
+            if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+            }
         }
-      }
-      return redirect()->route('admin')->with('siteerror','siteerror');
+        return redirect()->route('admin')->with('siteerror', 'siteerror');
     }
-
 }

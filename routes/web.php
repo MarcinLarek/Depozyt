@@ -3,7 +3,6 @@
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::domain('localhost')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/register', [\App\Http\Controllers\RegisterController::class, 'index'])->name('register');
@@ -107,7 +106,6 @@ Route::domain('localhost')->group(function () {
 
 Route::domain('admin.localhost')->group(function () {
     Route::middleware('auth:admin')->group(function () {
-
         Route::prefix('/users')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\UsersController::class, 'index'])->name('admin.users');
             Route::get('/{id}/edit', [\App\Http\Controllers\Admin\UsersController::class, 'edit'])->name('admin.users.edit');

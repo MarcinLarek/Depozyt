@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-registersucces' => 'Account created successfully. To log in, activate your account by clicking the activation link sent to your email.',
   'IND-title' => 'Registration',

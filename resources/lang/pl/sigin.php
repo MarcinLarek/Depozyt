@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Logowanie',
   'IND-subtitle' => 'Zaloguj się',

@@ -1,4 +1,5 @@
 <?php
+
 return [
   'title' => 'Płatnicza platforma powiernicza',
   'login' => 'Zaloguj się',

@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Wpłaty',
   'IND-menu1' => 'Wpłać pieniądzę',

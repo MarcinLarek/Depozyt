@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Depository Services',
   'IND-add-transaction' => 'Create a new transaction',

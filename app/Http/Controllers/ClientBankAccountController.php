@@ -10,7 +10,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class ClientBankAccountController extends Controller
 {
     private $currenciesService;
@@ -24,43 +23,39 @@ class ClientBankAccountController extends Controller
 
     public function index(Request $request)
     {
-      try {
-        $bankAccounts = Auth::user()->bankAccounts;
-        $succesaalert = 0;
-        return View("/frontend/client-bank-account/index")
+        try {
+            $bankAccounts = Auth::user()->bankAccounts;
+            $succesaalert = 0;
+            return View("/frontend/client-bank-account/index")
             ->with('succesaalert', $succesaalert)
             ->with('bankAccounts', $bankAccounts);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "ClientBankAccount", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "ClientBankAccount", "index", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 
     public function create()
     {
-      try {
-        $currencies = $this->currenciesService->getActive();
-        return view("/frontend/client-bank-account/create")
+        try {
+            $currencies = $this->currenciesService->getActive();
+            return view("/frontend/client-bank-account/create")
             ->with('currencies', $currencies);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "ClientBankAccount", "create", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
-
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "ClientBankAccount", "create", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
         try {
-                $user = Auth::user();
-                $data['country_id'] = $user->country->getId();
-                $user->bankAccounts()->create($data);
-                return redirect()->route('bank-accounts')->with('successalert','successalert');
-            }
-        catch (\Exception $ex) {
+            $user = Auth::user();
+            $data['country_id'] = $user->country->getId();
+            $user->bankAccounts()->create($data);
+            return redirect()->route('bank-accounts')->with('successalert', 'successalert');
+        } catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientBankAccount", "store", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
         }
@@ -69,20 +64,18 @@ class ClientBankAccountController extends Controller
     public function edit(int $id, Request $request)
     {
         try {
-          $bankAccount =  ClientBankAccount::where('id',$id)->first();
-          return view("/frontend/client-bank-account/edit")
+            $bankAccount =  ClientBankAccount::where('id', $id)->first();
+            return view("/frontend/client-bank-account/edit")
               ->with('bankAccount', $bankAccount);
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "ClientBankAccount", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
         }
-       catch (\Exception $ex) {
-          saveException(sqlDateTime(), "ClientBankAccount", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-          return redirect()->route('siteerror');
-        }
-
     }
 
     public function update(Request $request)
     {
-      $request->validate([
+        $request->validate([
           'bank_name' => ['required','max:100'],
           'currency_id' => ['required'],
           'country_id' => ['required'],
@@ -91,9 +84,8 @@ class ClientBankAccountController extends Controller
           'active' => ['required'],
           'id' => ['required'],
       ]);
-      try {
-
-        ClientBankAccount::where('id',$request['id'])->update([
+        try {
+            ClientBankAccount::where('id', $request['id'])->update([
           'bank_name' => $request['bank_name'],
           'currency_id' => $request['currency_id'],
           'country_id' => $request['country_id'],
@@ -101,11 +93,10 @@ class ClientBankAccountController extends Controller
           'swift' => $request['swift'],
           'active' => $request['active']
         ]);
-        return redirect()->route('bank-accounts')->with('successalert','successalert');
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "ClientBankAccount", "update", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
+            return redirect()->route('bank-accounts')->with('successalert', 'successalert');
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "ClientBankAccount", "update", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 }

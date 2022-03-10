@@ -11,7 +11,8 @@ use App\Models\User;
 
 class RegisterConfirmation extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -30,8 +31,8 @@ class RegisterConfirmation extends Mailable
      */
     public function build(Request $request)
     {
-      $varmail = $request->email;
-      $uservar =  User::where('email',$varmail)->first();
+        $varmail = $request->email;
+        $uservar =  User::where('email', $varmail)->first();
         return $this->subject(__('mail.REG-title'))->markdown('emails.register-confirmation', compact('uservar'));
     }
 }

@@ -13,20 +13,19 @@ class CompanyDataController extends Controller
 {
     public function index()
     {
-      try {
-        $companyData = Auth::user()->companyData()->first();
-        if (empty($companyData)) {
-            $companyData = CompanyData::make();
-        }
-        $succesaalert = 0;
-        return View("/frontend/company-data/index")
+        try {
+            $companyData = Auth::user()->companyData()->first();
+            if (empty($companyData)) {
+                $companyData = CompanyData::make();
+            }
+            $succesaalert = 0;
+            return View("/frontend/company-data/index")
             ->with('companyData', $companyData)
             ->with('succesaalert', $succesaalert);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "CompanyData", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "CompanyData", "index", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 
     public function edit(companyDataRequest $request)
@@ -43,13 +42,10 @@ class CompanyDataController extends Controller
             if (empty($companyData)) {
                 $companyData = CompanyData::make();
             }
-            return redirect()->route('company-data')->with('succesaalert','succesaalert');
-
-        }
-        catch (\Exception $ex) {
+            return redirect()->route('company-data')->with('succesaalert', 'succesaalert');
+        } catch (\Exception $ex) {
             saveException(sqlDateTime(), "CompanyData", "edit", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
         }
-
     }
 }

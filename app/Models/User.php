@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     protected $guard = "client";
 

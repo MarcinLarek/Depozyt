@@ -20,21 +20,19 @@ class ClientDataController extends Controller
 
     public function index()
     {
-      try {
-        $clientData = Auth::user()->clientData;
-        if (empty($clientData)) {
-            $clientData = ClientData::make();
-        }
-        $succesaalert = 0;
-        return View("/frontend/client-data/index")
+        try {
+            $clientData = Auth::user()->clientData;
+            if (empty($clientData)) {
+                $clientData = ClientData::make();
+            }
+            $succesaalert = 0;
+            return View("/frontend/client-data/index")
             ->with('clientData', $clientData)
             ->with('succesaalert', $succesaalert);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "ClientData", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
-
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "ClientData", "index", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 
     public function edit(Request $request)
@@ -53,7 +51,7 @@ class ClientDataController extends Controller
         ]);
 
         try {
-          $data = array(
+            $data = array(
             'name' => $request['name'],
             'surname' => $request['surname'],
             'pesel' => $request['pesel'],
@@ -70,10 +68,8 @@ class ClientDataController extends Controller
             if (empty($clientData)) {
                 $clientData = ClientData::make();
             }
-            return redirect()->route('client-data')->with('succesaalert','succesaalert');
-
-        }
-        catch (\Exception $ex) {
+            return redirect()->route('client-data')->with('succesaalert', 'succesaalert');
+        } catch (\Exception $ex) {
             saveException(sqlDateTime(), "ClientData", "edit", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
         }

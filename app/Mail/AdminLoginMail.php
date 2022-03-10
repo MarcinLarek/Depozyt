@@ -11,7 +11,8 @@ use App\Models\Admin;
 
 class AdminLoginMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -30,7 +31,7 @@ class AdminLoginMail extends Mailable
      */
     public function build(Request $request)
     {
-        $uservar =  Admin::where('login',$request['username'])->first();
+        $uservar =  Admin::where('login', $request['username'])->first();
         return $this->subject(__('Zaloguj się na konto administratora'))->markdown('emails.admin-login', compact('uservar'));
     }
 }

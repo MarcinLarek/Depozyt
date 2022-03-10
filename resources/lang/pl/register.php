@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-registersucc' => 'Pomyślnie utworzono konto. Aby się zalogować, aktywuj konto klikając w link aktywacyjny wysłany na maila.',
   'IND-title' => 'Rejestracja',

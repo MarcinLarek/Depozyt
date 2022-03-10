@@ -132,7 +132,7 @@ return [
     'post_code'       => 'Kod pocztowy niepoprawny!',
     'PWZ'             => 'Numer PWZ niepoprawny!',
     'passport_number' => 'Numer paszportu jest niepoprawny!',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

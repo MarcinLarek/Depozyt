@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Bank accounts',
   'IND-your-bank-accounts' => 'Your bank accounts',

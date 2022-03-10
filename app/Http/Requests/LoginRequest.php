@@ -27,6 +27,5 @@ class LoginRequest extends FormRequest
             'username' => ['required'],
             'password' => ['required'],
         ];
-        
     }
 }

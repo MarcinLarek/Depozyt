@@ -1,4 +1,5 @@
 <?php
+
 return [
   //Index
   'error' => 'Strona napotkała problem, więc zostałeś przekierowany na strone stronę główną. Wyjątek został zgłoszony administratorowi. Przeprzaszamy za utrudnienia.',

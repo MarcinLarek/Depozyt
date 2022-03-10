@@ -1,4 +1,5 @@
 <?php
+
 return [
   //RegisterConfirmation
   'REG-title' => 'Registration confirmation',

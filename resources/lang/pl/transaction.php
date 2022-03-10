@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Usługi depozytowe',
   'IND-add-transaction' => 'Stwórz nową transakcję',

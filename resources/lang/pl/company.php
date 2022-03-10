@@ -1,4 +1,5 @@
 <?php
+
 return [
   'COM-title' => 'Dane firmy',
   'COM-subtitle1' => 'Rejestrowe',

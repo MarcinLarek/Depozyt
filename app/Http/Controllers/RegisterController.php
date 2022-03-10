@@ -29,18 +29,15 @@ class RegisterController extends Controller
 
     public function store(RegisterRequest $request)
     {
-
         $data = $request->validated();
         try {
             $this->usersService->create($data);
             $registersucces = 1;
 
-            $uservar =  User::where('email',$request['email'])->first();
+            $uservar =  User::where('email', $request['email'])->first();
             Mail::to($request['email'])->send(new RegisterConfirmation($uservar));
-            return redirect()->route('register')->with('registersucces','registersucces');
-
-        }
-        catch (\Exception $ex) {
+            return redirect()->route('register')->with('registersucces', 'registersucces');
+        } catch (\Exception $ex) {
             var_dump($ex->getMessage());
             die;
             saveException(sqlDateTime(), "Register", "Register", $ex->getMessage(), $request->ip());
@@ -50,19 +47,16 @@ class RegisterController extends Controller
 
     public function confirmation($token)
     {
-      try {
-        $carbon = Carbon::now();
-        $mytime = $carbon->format('Y-m-d H:i:s');
-        $user =  User::where('personal_code',$token)->first();
-        $data = array('email_verified_at' => $mytime , );
-        $user->update($data);
-        return redirect()->route('home')->with('confirmsuccess','confirmsuccess');
-      }
-      catch (\Exception $e) {
-        saveException(sqlDateTime(), "Register", "confirmation", $ex->getMessage(), $request->ip(), Auth::id());
-        return redirect()->route('siteerror');
-      }
-
+        try {
+            $carbon = Carbon::now();
+            $mytime = $carbon->format('Y-m-d H:i:s');
+            $user =  User::where('personal_code', $token)->first();
+            $data = array('email_verified_at' => $mytime , );
+            $user->update($data);
+            return redirect()->route('home')->with('confirmsuccess', 'confirmsuccess');
+        } catch (\Exception $e) {
+            saveException(sqlDateTime(), "Register", "confirmation", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
-
 }

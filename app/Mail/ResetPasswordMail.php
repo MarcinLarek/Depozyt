@@ -12,7 +12,8 @@ use App\Models\PlatformData;
 
 class ResetPasswordMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -32,8 +33,8 @@ class ResetPasswordMail extends Mailable
     public function build(Request $request)
     {
         $varmail = $request->email;
-        $uservar =  User::where('email',$varmail)->first();
-        $data = PlatformData::where('id',1)->first();
+        $uservar =  User::where('email', $varmail)->first();
+        $data = PlatformData::where('id', 1)->first();
         return $this->subject(__('mail.RES-title'))->markdown('emails.reset-password')
                   ->with('uservar', $uservar)
                   ->with('data', $data);

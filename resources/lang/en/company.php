@@ -1,4 +1,5 @@
 <?php
+
 return [
   'COM-title' => 'Company data',
   'COM-subtitle1' => 'Registered',

@@ -9,20 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class RecipientController extends Controller
 {
-
     public function index()
     {
-      try {
-        $recipients = Auth::user()->recipients()->get();
-        $succesaalert = 0;
-        return View("/frontend/recipients/index")
+        try {
+            $recipients = Auth::user()->recipients()->get();
+            $succesaalert = 0;
+            return View("/frontend/recipients/index")
             ->with('succesaalert', $succesaalert)
             ->with('recipients', $recipients);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Recipient", "idit", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "Recipient", "idit", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 
     public function create()
@@ -32,20 +30,19 @@ class RecipientController extends Controller
 
     public function edit($id)
     {
-      try {
-        $recipient = Auth::user()->recipients()->find($id);
-        return view("/frontend/recipients/edit")
+        try {
+            $recipient = Auth::user()->recipients()->find($id);
+            return view("/frontend/recipients/edit")
             ->with('recipient', $recipient);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Recipient", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "Recipient", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 
     public function update($recipientId, Request $request)
     {
-      $request->validate([
+        $request->validate([
           'name' => ['required','max:100'],
           'nip' => ['required','NIP'],
           'country_id' => ['required'],
@@ -61,9 +58,8 @@ class RecipientController extends Controller
         try {
             $recipient = Auth::user()->recipients()->find($recipientId);
             $recipient->update($request->all());
-          return redirect()->route('recipients')->with('succesaalert','succesaalert');
-        }
-        catch (\Exception $exception) {
+            return redirect()->route('recipients')->with('succesaalert', 'succesaalert');
+        } catch (\Exception $exception) {
             saveException(sqlDateTime(), "Recipient", "update", $exception->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
         }
@@ -71,33 +67,31 @@ class RecipientController extends Controller
 
     public function payment()
     {
-      try {
-        $recipients = Auth::user()->recipients()->get();
-        $wallets = Auth::user()->wallet()->get();
-        if ($wallets->count()) {
-            return view("/frontend/recipients/payment")
+        try {
+            $recipients = Auth::user()->recipients()->get();
+            $wallets = Auth::user()->wallet()->get();
+            if ($wallets->count()) {
+                return view("/frontend/recipients/payment")
                 ->with('recipients', $recipients)
                 ->with('wallets', $wallets);
-        } else {
-            return view('/frontend/recipients/_empty-wallet');
+            } else {
+                return view('/frontend/recipients/_empty-wallet');
+            }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "Recipient", "payment", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
         }
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Recipient", "payment", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
     }
 
 
     public function getHistory(Request $request)
     {
         try {
-          $walletHistory = Auth::user()->walletHistory()->get();
-          return view("/frontend/recipients/get-history", [
+            $walletHistory = Auth::user()->walletHistory()->get();
+            return view("/frontend/recipients/get-history", [
               'walletHistory' => $walletHistory
           ]);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "getHistory", $exception->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
         }
@@ -105,7 +99,7 @@ class RecipientController extends Controller
 
     public function store(StoreRequest $request)
     {
-      $data = $request->validate([
+        $data = $request->validate([
           'name' => ['required','max:100'],
           'nip' => ['required','NIP'],
           'bank_name' => ['required','max:100'],
@@ -120,13 +114,10 @@ class RecipientController extends Controller
             $user = Auth::user();
             $data['country_id'] = $user->country->getId();
             $user->recipients()->create($data);
-            return redirect()->route('recipients')->with('succesaalert','succesaalert');
-        }
-        catch (\Exception $ex) {
+            return redirect()->route('recipients')->with('succesaalert', 'succesaalert');
+        } catch (\Exception $ex) {
             saveException(sqlDateTime(), "Recipient", "Create()", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
         }
-
     }
-
 }

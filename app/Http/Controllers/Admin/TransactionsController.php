@@ -16,45 +16,43 @@ class TransactionsController extends Controller
 {
     public function index()
     {
-      try {
-        $transactions = Transaction::all();
-        foreach ($transactions as $transaction) {
-          $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
-          $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
-        }
-        $succesaalert = 0;
-        return view('/frontend/admin/transactions/index')
+        try {
+            $transactions = Transaction::all();
+            foreach ($transactions as $transaction) {
+                $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
+                $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
+            }
+            $succesaalert = 0;
+            return view('/frontend/admin/transactions/index')
             ->with('succesaalert', $succesaalert)
             ->with('transactions', $transactions);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Admin-Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('admin.siteerror');
-              }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "Admin-Transaction", "index", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('admin.siteerror');
+        }
     }
 
     public function edit($id)
     {
-      try {
-        $transaction = Transaction::find($id);
-        $currencies = Currency::all();
-        $banks = ClientBankAccount::all();
-        $users = User::all();
-        return view('/frontend/admin/transactions/edit')
+        try {
+            $transaction = Transaction::find($id);
+            $currencies = Currency::all();
+            $banks = ClientBankAccount::all();
+            $users = User::all();
+            return view('/frontend/admin/transactions/edit')
             ->with('transaction', $transaction)
             ->with('currencies', $currencies)
             ->with('banks', $banks)
             ->with('users', $users);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Admin-Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('admin.siteerror');
-              }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "Admin-Transaction", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('admin.siteerror');
+        }
     }
 
     public function update($id, Request $request)
     {
-      $request->validate([
+        $request->validate([
           'customer_id' => ['required'],
           'contractor_id' => ['required'],
           'name' => ['required'],
@@ -68,13 +66,13 @@ class TransactionsController extends Controller
           'amount' => ['required']
       ]);
         try {
-          $success = 1;
-          $transaction = Transaction::find($id);
-          $currency =  Currency::where('symbol',$request['currency_name'])->first();
-          $customer =  User::where('username',$request['customer_id'])->first();
-          $contractor =  User::where('username',$request['contractor_id'])->first();
+            $success = 1;
+            $transaction = Transaction::find($id);
+            $currency =  Currency::where('symbol', $request['currency_name'])->first();
+            $customer =  User::where('username', $request['customer_id'])->first();
+            $contractor =  User::where('username', $request['contractor_id'])->first();
 
-          $data = array(
+            $data = array(
             'customer_id' => $customer['id'],
             'contractor_id' => $contractor['id'],
             'bank_name' => $request['bank_name'],
@@ -86,13 +84,13 @@ class TransactionsController extends Controller
             'amount' => $request['amount'],
             'payment' => $request['payment']
           );
-          $transaction->update($data);
-          $transactions = Transaction::all();
-          foreach ($transactions as $transaction) {
-            $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
-            $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
-          }
-          return redirect()->route('admin.transactions')->with('successalert','successalert');
+            $transaction->update($data);
+            $transactions = Transaction::all();
+            foreach ($transactions as $transaction) {
+                $transaction['from_date'] = Carbon::parse($transaction['from_date'])->format('d/m/Y');
+                $transaction['to_date'] = Carbon::parse($transaction['to_date'])->format('d/m/Y');
+            }
+            return redirect()->route('admin.transactions')->with('successalert', 'successalert');
         } catch (\Exception $exception) {
             saveException(sqlDateTime(), 'Admin-Transaction', 'update', $exception->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('admin.siteerror');

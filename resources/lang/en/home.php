@@ -1,4 +1,5 @@
 <?php
+
 return [
   //Index
   'error' => 'Our website encountered a problem, so you have been redirected to the home page. An exception has been reported to the administrator. We apologize for the inconvenience.',

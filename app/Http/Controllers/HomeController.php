@@ -19,13 +19,13 @@ class HomeController extends Controller
 
     public function siteerror()
     {
-      $admins = DB::table('admins')->get();
-      foreach ($admins as $admin) {
-        if ($admin->error_notification==1) {
-          Mail::to($admin->email)->send(new NewErrorMail());
+        $admins = DB::table('admins')->get();
+        foreach ($admins as $admin) {
+            if ($admin->error_notification==1) {
+                Mail::to($admin->email)->send(new NewErrorMail());
+            }
         }
-      }
-      return redirect()->route('home')->with('siteerror','siteerror');
+        return redirect()->route('home')->with('siteerror', 'siteerror');
     }
 
     public function regulations()
@@ -40,23 +40,22 @@ class HomeController extends Controller
 
     public function sendcontact(Request $request, Contact $contact)
     {
-      $request->validate([
+        $request->validate([
           'message' => ['required'],
           'email' => ['required','max:100'],
       ]);
-      try {
-        $data = array(
+        try {
+            $data = array(
           'message' => $request['message'],
           'email' => $request['email']
         );
-        $contact->create($data);
-        Mail::to('kontakt@domena.pl')->send(new NewContactMessage());
-        return redirect()->route('contact')->with('issend','issend');
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Home", "sendcontact", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
+            $contact->create($data);
+            Mail::to('kontakt@domena.pl')->send(new NewContactMessage());
+            return redirect()->route('contact')->with('issend', 'issend');
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "Home", "sendcontact", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 
     public function whatIsDepozyt()

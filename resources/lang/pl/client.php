@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Moje konto',
   'IND-warning_top' => 'UWAGA!',

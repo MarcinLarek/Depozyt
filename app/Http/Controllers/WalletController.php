@@ -7,7 +7,6 @@ class WalletController extends Controller
     // lista banków dodanych przez użytkownika
     public function GetBank()
     {
-
     }
 
     /**
@@ -17,11 +16,9 @@ class WalletController extends Controller
      */
     public function getCurrency($bankName)
     {
-
     }
 
     public function GetAvailableAmount($currencyId)
     {
-
     }
 }

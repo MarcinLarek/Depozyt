@@ -11,25 +11,24 @@ class RepresentativeController extends Controller
 {
     public function index()
     {
-      try {
-        $representativeData = Auth::user()->representative()->first();
-        if (empty($representativeData)) {
-            $representativeData = Representative::make();
-        }
-        $succesaalert = 0;
-        return View("/frontend/representative/index")
+        try {
+            $representativeData = Auth::user()->representative()->first();
+            if (empty($representativeData)) {
+                $representativeData = Representative::make();
+            }
+            $succesaalert = 0;
+            return View("/frontend/representative/index")
             ->with('representative', $representativeData)
             ->with('succesaalert', $succesaalert);
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Representative", "index", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "Representative", "index", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
+        }
     }
 
     public function edit(RepresentativeRequest $request)
     {
-      $request->validate([
+        $request->validate([
           'surname' => ['required','max:100'],
           'name' => ['required','max:100'],
           'pesel' => ['required','PESEL'],
@@ -41,9 +40,9 @@ class RepresentativeController extends Controller
           'post_code' => ['required','post_code'],
           'city' => ['required','max:100']
       ]);
-      try {
-        $user = Auth::user();
-        $data = array(
+        try {
+            $user = Auth::user();
+            $data = array(
           'user_id' => $user['id'],
           'surname' => $request['surname'],
           'name' => $request['name'],
@@ -57,24 +56,20 @@ class RepresentativeController extends Controller
           'city' => $request['city'],
         );
 
-        $representativeData = Auth::user()->representative()->first();
-        if ($representativeData == null) {
-          Representative::create($data);
-          return redirect()->route('representative')->with('succesaalert','succesaalert');
-        }
-        else {
-          $representativeData->update($request->all());
-          $succesaalert = 1;
-          return View("/frontend/representative/index")
+            $representativeData = Auth::user()->representative()->first();
+            if ($representativeData == null) {
+                Representative::create($data);
+                return redirect()->route('representative')->with('succesaalert', 'succesaalert');
+            } else {
+                $representativeData->update($request->all());
+                $succesaalert = 1;
+                return View("/frontend/representative/index")
               ->with('representative', $representativeData)
               ->with('succesaalert', $succesaalert);
+            }
+        } catch (\Exception $ex) {
+            saveException(sqlDateTime(), "Representative", "edit", $ex->getMessage(), $request->ip(), Auth::id());
+            return redirect()->route('siteerror');
         }
-      }
-      catch (\Exception $ex) {
-                  saveException(sqlDateTime(), "Representative", "edit", $ex->getMessage(), $request->ip(), Auth::id());
-                  return redirect()->route('siteerror');
-              }
-
-
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'My account',
   'IND-warning_top' => 'CAUTION!',

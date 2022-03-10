@@ -1,4 +1,5 @@
 <?php
+
 return [
   'PAY-title' => 'Płatności',
   'PAY-menu1' => 'Zapłać odbiorcy',

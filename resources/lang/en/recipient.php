@@ -1,4 +1,5 @@
 <?php
+
 return [
   'PAY-title' => 'Payments',
   'PAY-menu1' => 'Pay the recipient',

@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Moje dane',
   'IND-subtitlegenral' => 'Zmień swoje dane',

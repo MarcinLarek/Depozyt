@@ -29,14 +29,15 @@
                   use App\Models\ClientData;
                   use App\Models\CompanyData;
                   use App\Models\User;
+
                   $i = 1; ?>
                 @if($history->isNotEmpty())
                 @foreach($history as $payment)
                 <?php
-                $user =  User::where('id',$payment['user_id'])->first();
-                $normaluser =  ClientData::where('user_id',$user['id'])->first();
-                $companyuser =  CompanyData::where('user_id',$user['id'])->first();
-                $currency = Currency::where('id',$payment['currency_id'])->first();
+                $user =  User::where('id', $payment['user_id'])->first();
+                $normaluser =  ClientData::where('user_id', $user['id'])->first();
+                $companyuser =  CompanyData::where('user_id', $user['id'])->first();
+                $currency = Currency::where('id', $payment['currency_id'])->first();
                  ?>
                     @if($payment['amount'] < 0)
                     <tr>

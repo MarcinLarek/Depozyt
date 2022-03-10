@@ -1,4 +1,5 @@
 <?php
+
 return [
   'IND-title' => 'Withdrawals',
   'IND-menu1' => 'Withdraw funds',
