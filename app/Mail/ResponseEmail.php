@@ -18,9 +18,9 @@ class ResponseEmail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -28,9 +28,9 @@ class ResponseEmail extends Mailable
      *
      * @return $this
      */
-    public function build(Request $request)
+    public function build()
     {
-        $reply = $request->message;
+        $reply = $this->message;
         return $this->subject(__('mail.REP-title'))->markdown('emails.response-email', compact('reply'));
     }
 }

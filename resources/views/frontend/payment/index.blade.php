@@ -21,7 +21,9 @@
         <div class="card  border-0">
           <div class="card-body">
             <h4 class="card-title">{{ __('payment.IND-menu1') }}</h4>
-            <form id="Search" asp-action="GetData" asp-controller="Payment" method="post">
+
+            <form id="getData" action="{{route('payment.getData')}}" method="post">
+              @csrf
               <fieldset>
                 <div class="row">
                   <div class="form-group col-md-6">
@@ -33,30 +35,39 @@
                     </select>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="CurrencyName" class="control-label">{{ __('payment.IND-currency') }}</label>
-                    <select name="CurrencyName" class="custom-select">
+                    <label for="currency_id" class="control-label">{{ __('payment.IND-currency') }}</label>
+                    <select name="currency_id" class="custom-select">
                       @foreach($currencies as $currency)
-                      <option>{{ $currency->symbol }}</option>
+                      <option value="{{ $currency->id }}">{{ $currency->symbol }} - {{ $currency->name }}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
+                <input type="submit" value="Zatwierdź" class="btn btn-primary" />
               </fieldset>
             </form>
 
-            <div class="row">
-
+            <div class="row pt-3">
+              @if(isset($selectedcurrency))
               <div class="col">
                 <div class="row">
                   <h2 class="w-100">{{ __('payment.IND-transfer-details') }}</h2>
-                  <div class="col-3">
-                    <p> <b>{{ __('payment.IND-transfer-title') }}:</b> </p>
-                    <p> <b>{{ __('payment.IND-account-number') }}:</b> </p>
+                  <div class="row">
+                    <div class="col-3">
+                      <p> <b>{{ __('payment.IND-transfer-title') }}:</b> </p>
+                    </div>
+                    <div class="col">
+                      <p style="word-break: break-all;">{{$user['personal_code']}}_{{ $selectedcurrency['symbol'] }}</p>
+                    </div>
                   </div>
-                  <div class="col">
-                    <p>kontoPlaceholder</p>
-                    <p>nrPlaceholder</p>
-                    <p style="color:red"><b>{{ __('payment.IND-warning1') }}!</b> {{ __('payment.IND-warning2') }}</p>
+                  <div class="row">
+                    <div class="col-3">
+                      <p> <b>{{ __('payment.IND-account-number') }}:</b> </p>
+                    </div>
+                    <div class="col">
+                      <p>{{ $platformbank['account_number'] }}</p>
+                      <p style="color:red"><b>{{ __('payment.IND-warning1') }}!</b> {{ __('payment.IND-warning2') }}</p>
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -79,7 +90,13 @@
                   </div>
                 </div>
               </div>
-
+              @else
+              <div class="col">
+                <div class="row">
+                  <h2>Wybierz walute i konto bankowe aby wyświetlić dane do przelewu</h2>
+                </div>
+              </div>
+              @endif
               <div class="col">
                 <?php
                                 use App\Models\Currency;
@@ -97,8 +114,6 @@
               </div>
 
             </div>
-
-
 
             <div class="row">
               <div class="col-md-12 mb-md-2">

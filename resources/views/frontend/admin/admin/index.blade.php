@@ -68,7 +68,7 @@
         <a class="stretched-link" href="{{ route('admin.payments') }}"><i class="fas fa-arrow-circle-right fa-4x"></i></a>
       </div>
       <div class="card-title">
-        <a href="{{ route('admin.payments') }}">Wpłaty na platformę ({{ \App\Models\WalletHistory::where('amount','>', 0)->count() }})</a>
+        <a href="{{ route('admin.payments') }}">Wpłaty na platformę ({{ \App\Models\WalletHistory::where('amount','>=', 0)->count() }})</a>
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@
         <a class="stretched-link" href="withdrawal"><i class="fas fa-arrow-circle-left fa-4x"></i></a>
       </div>
       <div class="card-title">
-        <a href="{{ route('admin.withdrawal') }}">Wypłaty z platformy ({{ \App\Models\WalletHistory::where('amount','<=', 0)->count() }})</a>
+        <a href="{{ route('admin.withdrawal') }}">Wypłaty z platformy ({{ \App\Models\WalletHistory::where('amount','<', 0)->count() }})</a>
       </div>
     </div>
   </div>

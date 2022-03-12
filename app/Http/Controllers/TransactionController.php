@@ -19,7 +19,6 @@ use Mpdf\Mpdf;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Mail;
 use App\Models\WalletHistory;
-use App\Models\Wallet;
 use App\Models\WalletTransactions;
 use Illuminate\Support\Str;
 

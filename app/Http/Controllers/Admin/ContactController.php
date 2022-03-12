@@ -50,7 +50,8 @@ class ContactController extends Controller
         try {
             $contact = Contact::find($id);
             $varmail = $contact->email;
-            Mail::to($varmail)->send(new ResponseEmail());
+            $message = $request['message'];
+            Mail::to($varmail)->send(new ResponseEmail($message));
             return redirect()->route('admin.contact')->with('successalert', 'successalert');
         } catch (\Exception $ex) {
             saveException(sqlDateTime(), "Admin-Contact", "sendreply", $ex->getMessage(), $request->ip(), Auth::id());

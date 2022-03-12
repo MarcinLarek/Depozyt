@@ -23,18 +23,18 @@ class SignInController extends Controller
     public function login(Request $request)
     {
         try {
-            $user = Admin::where('login', $request['username'])->first();
-            if ($user !=null && Hash::check($request['password'], $user['password'])) {
-                $user->update(['token' => Str::random(60)]);
-                Mail::to($user['email'])->send(new AdminLoginMail($user));
-                $notification = 2;
-                return view('/frontend/admin/sign-in/index')
-            ->with('notification', $notification);
-            } else {
-                $notification = 1;
-                return view('/frontend/admin/sign-in/index')
-            ->with('notification', $notification);
-            }
+          $user = Admin::where('login', $request['username'])->first();
+          if ($user !=null && Hash::check($request['password'], $user['password'])) {
+              $user->update(['token' => Str::random(60)]);
+              Mail::to($user['email'])->send(new AdminLoginMail($user));
+              $notification = 2;
+              return view('/frontend/admin/sign-in/index')
+          ->with('notification', $notification);
+          } else {
+              $notification = 1;
+              return view('/frontend/admin/sign-in/index')
+          ->with('notification', $notification);
+          }
         } catch (\Exception $ex) {
             saveException(sqlDateTime(), "SignInController", "login", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('admin.siteerror');

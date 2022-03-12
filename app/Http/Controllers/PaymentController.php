@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Wallet;
 use App\Models\Recipient;
 use App\Models\ClientBankAccount;
+use App\Models\PlatformBankAccount;
 use App\Services\PlatformBankAccountsService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
@@ -32,13 +33,31 @@ class PaymentController extends Controller
             $this->platformBankAccountsService->getActive();
             $data = PlatformData::where('id', 1)->first();
             $currencies = Currency::all();
+            $user = Auth::user();
             return view("/frontend/payment/index")
         ->with('currencies', $currencies)
+        ->with('user', $user)
         ->with('data', $data);
         } catch (\Exception $ex) {
             saveException(sqlDateTime(), "Payment", "index", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
         }
+    }
+
+    public function getdata(Request $request)
+    {
+        $this->platformBankAccountsService->getActive();
+        $data = PlatformData::where('id', 1)->first();
+        $platformbank = PlatformBankAccount::where('currency_id', $request['currency_id'])->first();
+        $selectedcurrency = Currency::where('id', $request['currency_id'])->first();
+        $currencies = Currency::all();
+        $user = Auth::user();
+        return view("/frontend/payment/index")
+      ->with('currencies', $currencies)
+      ->with('user', $user)
+      ->with('selectedcurrency', $selectedcurrency)
+      ->with('platformbank', $platformbank)
+      ->with('data', $data);
     }
 
     public function paymentpost(Request $request)

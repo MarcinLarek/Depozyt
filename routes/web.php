@@ -21,6 +21,7 @@ Route::domain('localhost')->group(function () {
         Route::prefix('/payment')->group(function () {
             Route::get('/', [\App\Http\Controllers\PaymentController::class, 'index'])->name('payment');
             Route::get('/get-amount', [\App\Http\Controllers\PaymentController::class, 'getAmount']);
+            Route::post('/getData', [\App\Http\Controllers\PaymentController::class, 'getData'])->name('payment.getData');
             Route::get('/document/{walletHistoryId}', [\App\Http\Controllers\PaymentController::class, 'downloadDocument'])->name('payment.download');
         });
 

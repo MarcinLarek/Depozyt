@@ -19,9 +19,9 @@ class RegisterConfirmation extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -29,9 +29,9 @@ class RegisterConfirmation extends Mailable
      *
      * @return $this
      */
-    public function build(Request $request)
+    public function build()
     {
-        $varmail = $request->email;
+        $varmail = $this->user->email;
         $uservar =  User::where('email', $varmail)->first();
         return $this->subject(__('mail.REG-title'))->markdown('emails.register-confirmation', compact('uservar'));
     }
