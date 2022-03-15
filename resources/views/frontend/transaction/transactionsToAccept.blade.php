@@ -1,21 +1,26 @@
 @extends('frontend.layout.master')
 
 @section('content')
-@elseif(session()->has('nomoneyerror1'))
+
+<h1 class="mt-md-4" style="font-size: 350%;">{{ __('transaction.IND-title') }}</h1>
+<hr />
+@if(session()->has('nomoneyerror1'))
 <div class="alert alert-success">
   <h1>Nie posiadasz wystarczającej ilości środków aby zaakceptować tą zmiane</h1>
 </div>
-@elseif(session()->has('nomoneyerror2'))
+@endif
+
+@if(session()->has('nomoneyerror2'))
 <div class="alert alert-success">
   <h1>Nie można zaakceptować zmian poniewać zleceniodawca nie ma wpłaconych żadnych środków na platformie.</h1>
 </div>
-@elseif(session()->has('nomoneyerror3'))
+@endif
+
+@if(session()->has('nomoneyerror3'))
 <div class="alert alert-success">
   <h1>Nie można zaakceptować zmian poniewać wykonawca nie ma wpłaconych żadnych środków na platformie.</h1>
 </div>
 @endif
-<h1 class="mt-md-4" style="font-size: 350%;">{{ __('transaction.IND-title') }}</h1>
-<hr />
 <div class="card border-0">
   <div class="card-body">
     <div class="row">

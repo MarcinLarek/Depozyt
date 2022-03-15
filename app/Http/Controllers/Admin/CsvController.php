@@ -25,14 +25,50 @@ class CsvController extends Controller
             "Expires"             => "0"
         );
 
-        $columns = array('id', 'user_id', 'bank_name', 'currency_id', 'amount', 'generated_document_id', 'created_at', 'updated_at');
+        $columns = array(
+                        'Kod_zlecenia',
+                        'Data_wykonania',
+                        'kwota',
+                        'Nr_rozliczeniowy_banku_zleceniodawcy',
+                        'Pole_zerowe1',
+                        'Nr_rachunku_banku_zleceniodawcy',
+                        'Nr_rachunku_banku_kontrahenta',
+                        'Nazwa_i_adres_zleceniodawcy',
+                        'Nazwa_i_adres_kontrahenta',
+                        'Pole_zerowe2',
+                        'Nr_rozliczeniowy_banku_kontrahenta',
+                        'Tytul_zlecenia',
+                        'Pole_puste1',
+                        'Pole_puste2',
+                        'Klasyfikacja_polecenia',
+                        'user_id',
+                        'bank_name',
+                        'currency_id',
+                        'amount',
+                        'generated_document_id',
+                        'created_at',
+                        'updated_at');
 
         $callback = function () use ($wallethistories, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
 
             foreach ($wallethistories as $task) {
-                $row['id']  = $task['id'];
+                $row['Kod_zlecenia']  = $task['Kod_zlecenia'];
+                $row['Data_wykonania']  = $task['Data_wykonania'];
+                $row['kwota']  = $task['kwota'];
+                $row['Nr_rozliczeniowy_banku_zleceniodawcy']  = $task['Nr_rozliczeniowy_banku_zleceniodawcy'];
+                $row['Pole_zerowe1']  = $task['Pole_zerowe1'];
+                $row['Nr_rachunku_banku_zleceniodawcy']  = $task['Nr_rachunku_banku_zleceniodawcy'];
+                $row['Nr_rachunku_banku_kontrahenta']  = $task['Nr_rachunku_banku_kontrahenta'];
+                $row['Nazwa_i_adres_zleceniodawcy']  = $task['Nazwa_i_adres_zleceniodawcy'];
+                $row['Nazwa_i_adres_kontrahenta']  = $task['Nazwa_i_adres_kontrahenta'];
+                $row['Pole_zerowe2']  = $task['Pole_zerowe2'];
+                $row['Nr_rozliczeniowy_banku_kontrahenta']  = $task['Nr_rozliczeniowy_banku_kontrahenta'];
+                $row['Tytul_zlecenia']  = $task['Tytul_zlecenia'];
+                $row['Pole_puste1']  = $task['Pole_puste1'];
+                $row['Pole_puste2']  = $task['Pole_puste2'];
+                $row['Klasyfikacja_polecenia']  = $task['Klasyfikacja_polecenia'];
                 $row['user_id']    = $task['user_id'];
                 $row['bank_name']    = $task['bank_name'];
                 $row['currency_id']  = $task['currency_id'];
@@ -40,7 +76,28 @@ class CsvController extends Controller
                 $row['generated_document_id']  = $task['generated_document_id'];
                 $row['created_at']  = $task['created_at'];
                 $row['updated_at']  = $task['updated_at'];
-                fputcsv($file, array($row['id'], $row['user_id'], $row['bank_name'], $row['currency_id'], $row['amount'], $row['generated_document_id'], $row['created_at'], $row['updated_at']));
+                fputcsv($file, array($row['Kod_zlecenia'],
+                                     $row['Data_wykonania'],
+                                     $row['kwota'],
+                                     $row['Nr_rozliczeniowy_banku_zleceniodawcy'],
+                                     $row['Pole_zerowe1'],
+                                     $row['Nr_rachunku_banku_zleceniodawcy'],
+                                     $row['Nr_rachunku_banku_kontrahenta'],
+                                     $row['Nazwa_i_adres_zleceniodawcy'],
+                                     $row['Nazwa_i_adres_kontrahenta'],
+                                     $row['Pole_zerowe2'],
+                                     $row['Nr_rozliczeniowy_banku_kontrahenta'],
+                                     $row['Tytul_zlecenia'],
+                                     $row['Pole_puste1'],
+                                     $row['Pole_puste2'],
+                                     $row['Klasyfikacja_polecenia'],
+                                     $row['user_id'],
+                                     $row['bank_name'],
+                                     $row['currency_id'],
+                                     $row['amount'],
+                                     $row['generated_document_id'],
+                                     $row['created_at'],
+                                     $row['updated_at']));
             }
 
             fclose($file);

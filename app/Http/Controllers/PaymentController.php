@@ -9,6 +9,8 @@ use App\Models\Payment;
 use App\Models\Wallet;
 use App\Models\Recipient;
 use App\Models\ClientBankAccount;
+use App\Models\ClientData;
+use App\Models\CompanyData;
 use App\Models\PlatformBankAccount;
 use App\Services\PlatformBankAccountsService;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +19,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
 use App\Models\Currency;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
@@ -67,39 +71,62 @@ class PaymentController extends Controller
           'currency_id' => ['required'],
           'payment_title' => ['required','max:100'],
           'amount' => ['required','numeric'],
+          'payment_title' => ['required', 'max:100']
       ]);
 
         try {
-            $user = Auth::user();
-            $recipient =  Recipient::where('id', $request['recipment_id'])->first();
-            $wallet = Auth::user()->wallet->where('currency_id', $request['currency_id'])->first();
-            if ($wallet ==null) {
-                $walletdata = array(
-                  'user_id' => $user['id'],
-                  'currency_id' => $request['currency_id'],
-                );
-                Wallet::create($walletdata);
-            }
-            $wallet = Wallet::where('currency_id', $request['currency_id'])
-              ->where('user_id', $user['id'])
-              ->first();
-            $wallethistory = WalletHistory::where('user_id', $user['id'])->first();
-            $clientbank = ClientBankAccount::where('account_number', $recipient['account_number'])->first();
-            $data = array(
-                'user_id' => $user['id'],
-                'recipient_id' => $request['recipment_id'],
-                'account_number' => $recipient['account_number'],
-                'token' => $request['_token'],
-                'amount' => $request['amount'],
-                'payment_title' => $request['payment_title']
-              );
+          $user = Auth::user();
+          $userdata = ClientData::where('user_id', $user['id'])->first();
+          if ($userdata == null) {
+              $userdata = CompanyData::where('user_id', $user['id'])->first();
+          }
+          $userbank= ClientBankAccount::where('currency_id', $request['currency_id'])->first();
 
+
+          $recipient =  Recipient::where('id', $request['recipment_id'])->first();
+          $clientbank = ClientBankAccount::where('account_number', $recipient['account_number'])->first();
+
+          $carbon = Carbon::now();
+          $mytime = $carbon->format('Ymd');
+
+
+          $wallet = Auth::user()->wallet->where('currency_id', $request['currency_id'])->first();
+          if ($wallet ==null) {
+              $walletdata = array(
+                'user_id' => $user['id'],
+                'currency_id' => $request['currency_id'],
+              );
+              Wallet::create($walletdata);
+          }
+          $wallet = Wallet::where('currency_id', $request['currency_id'])
+            ->where('user_id', $user['id'])
+            ->first();
+          $wallethistory = WalletHistory::where('user_id', $user['id'])->first();
+
+          $data = array(
+              'user_id' => $user['id'],
+              'recipient_id' => $request['recipment_id'],
+              'account_number' => $recipient['account_number'],
+              'token' => Str::random(60),
+              'amount' => $request['amount'],
+              'payment_title' => $request['payment_title'],
+            );
             if ($clientbank !=null) {
                 $wallethistorydata = array(
                   'user_id' => $user['id'],
                   'bank_name' => $clientbank['bank_name'],
                   'currency_id' => $request['currency_id'],
-                  'amount' => -$request['amount']
+                  'amount' => -$request['amount'],
+                  'Data_wykonania' => $mytime,
+                  'kwota' => $request['amount'] * 100,
+                  'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($userbank['account_number'],2, 8),
+                  'Nr_rozliczeniowy_banku_kontrahenta' => substr($recipient['account_number'],2, 8),
+                  'Nr_rachunku_banku_zleceniodawcy' => $userbank['account_number'],
+                  'Nr_rachunku_banku_kontrahenta' => $recipient['account_number'],
+                  'Nazwa_i_adres_zleceniodawcy' => $userdata['name']. ' ' . $userdata['surname'] . '|' . $userdata['street'] . '|' . $userdata['post_code'] . ' ' . $userdata['city'],
+                  'Nazwa_i_adres_kontrahenta' => $recipient['name'] . '|' . $recipient['street'] . '|' . $recipient['post_code'] . ' ' . $recipient['city'] ,
+                  'Tytul_zlecenia' => $request['payment_title'],
+
                 );
                 $walletupdate = $wallet['amount'] - $data['amount'];
 
@@ -128,7 +155,16 @@ class PaymentController extends Controller
                       'user_id' => $userrecipient['id'],
                       'bank_name' => $clientbank['bank_name'],
                       'currency_id' => $request['currency_id'],
-                      'amount' => $request['amount']
+                      'amount' => $request['amount'],
+                      'Data_wykonania' => $mytime,
+                      'kwota' => $request['amount'] * 100,
+                      'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($userbank['account_number'],2, 8),
+                      'Nr_rozliczeniowy_banku_kontrahenta' => substr($recipient['account_number'],2, 8),
+                      'Nr_rachunku_banku_zleceniodawcy' => $userbank['account_number'],
+                      'Nr_rachunku_banku_kontrahenta' => $recipient['account_number'],
+                      'Nazwa_i_adres_zleceniodawcy' => $userdata['name']. ' ' . $userdata['surname'] . '|' . $userdata['street'] . '|' . $userdata['post_code'] . ' ' . $userdata['city'],
+                      'Nazwa_i_adres_kontrahenta' => $recipient['name'] . '|' . $recipient['street'] . '|' . $recipient['post_code'] . ' ' . $recipient['city'],
+                      'Tytul_zlecenia' => $request['payment_title'],
                     );
                         WalletHistory::create($wallethistoryrecipientdata);
                         $walletupdaterecipient = $walletrecipient['amount'] + $data['amount'];
@@ -144,7 +180,16 @@ class PaymentController extends Controller
                   'user_id' => $user['id'],
                   'bank_name' => $recipient['bank_name'],
                   'currency_id' => $request['currency_id'],
-                  'amount' => -$request['amount']
+                  'amount' => -$request['amount'],
+                  'Data_wykonania' => $mytime,
+                  'kwota' => $request['amount'] * 100,
+                  'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($userbank['account_number'],2, 8),
+                  'Nr_rozliczeniowy_banku_kontrahenta' => substr($recipient['account_number'],2, 8),
+                  'Nr_rachunku_banku_zleceniodawcy' => $userbank['account_number'],
+                  'Nr_rachunku_banku_kontrahenta' => $recipient['account_number'],
+                  'Nazwa_i_adres_zleceniodawcy' => $userdata['name']. ' ' . $userdata['surname'] . '|' . $userdata['street'] . '|' . $userdata['post_code'] . ' ' . $userdata['city'],
+                  'Nazwa_i_adres_kontrahenta' => $recipient['name'] . '|' . $recipient['street'] . '|' . $recipient['post_code'] . ' ' . $recipient['city'],
+                  'Tytul_zlecenia' => $request['payment_title'],
                 );
                 $walletupdate = $wallet['amount'] - $data['amount'];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RepresentativeRequest;
+use Illuminate\Http\Request;
 use App\Models\ClientData;
 use App\Models\Representative;
 use App\Services\UsersService;

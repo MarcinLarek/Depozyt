@@ -96,7 +96,7 @@ Route::domain('localhost')->group(function () {
     Route::get('what-is-depozyt', [HomeController::class, 'whatIsDepozyt'])->name('what-is-depozyt');
     Route::get('how-it-works', [HomeController::class, 'howItWorks'])->name('how-it-works');
     Route::get('regulations', [HomeController::class, 'regulations'])->name('regulations');
-    Route::post('siteerror', [HomeController::class, 'siteerror'])->name('siteerror');
+    Route::get('siteerror', [HomeController::class, 'siteerror'])->name('siteerror');
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');
     Route::post('sendcontact', [HomeController::class, 'sendcontact'])->name('sendcontact');
     Route::get('/SetNewPassword/{token}', [\App\Http\Controllers\LoginController::class, 'setNewPassword'])->name('SetNewPassword');

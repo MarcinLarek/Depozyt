@@ -10,12 +10,28 @@ class WalletHistory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'generated_document_id',
         'user_id',
         'bank_name',
         'currency_id',
         'amount',
-        'generated_document_id'
+        'generated_document_id',
+
+        'Kod_zlecenia',
+        'Data_wykonania',
+        'kwota',
+        'Nr_rozliczeniowy_banku_zleceniodawcy',
+        'Pole_zerowe1',
+        'Nr_rachunku_banku_zleceniodawcy',
+        'Nr_rachunku_banku_kontrahenta',
+        'Nazwa_i_adres_zleceniodawcy',
+        'Nazwa_i_adres_kontrahenta',
+        'Pole_zerowe2',
+        'Nr_rozliczeniowy_banku_kontrahenta',
+        'Tytul_zlecenia',
+        'Pole_puste1',
+        'Pole_puste2',
+        'Klasyfikacja_polecenia',
+
     ];
 
     public function currency()

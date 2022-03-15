@@ -12,6 +12,7 @@ use App\Models\CompanyData;
 use App\Models\ClientData;
 use App\Models\Transaction;
 use App\Models\PlatformData;
+use App\Models\PlatformBankAccount;
 use App\Models\TransactionToAccept;
 use Illuminate\Support\Carbon;
 use PDF;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\WalletHistory;
 use App\Models\WalletTransactions;
 use Illuminate\Support\Str;
+
 
 class TransactionController extends Controller
 {
@@ -487,6 +489,28 @@ class TransactionController extends Controller
             $user = Auth::user();
             $changes =TransactionToAccept::where('id', $request['id'])->first();
 
+            //Zmienne dla historii portfela
+            $whcontractor = User::where('id', $changes['contractor_id'])->first();
+            $whcontractordata = ClientData::where('user_id', $whcontractor['id'])->first();
+            if ($whcontractordata == null) {
+                $whcontractordata = CompanyData::where('user_id', $whcontractor['id'])->first();
+            }
+            $whcontractorbank= ClientBankAccount::where('currency_id', $changes['currency_id'])->first();
+
+            $whcustomer = User::where('id', $changes['customer_id'])->first();
+            $whcustomerdata = ClientData::where('user_id', $whcustomer['id'])->first();
+            if ($whcustomerdata == null) {
+                $whcustomerdata = CompanyData::where('user_id', $whcustomer['id'])->first();
+            }
+            $whcustomerbank= ClientBankAccount::where('currency_id', $changes['currency_id'])->first();
+
+            $carbon2 = Carbon::now();
+            $mytime2 = $carbon2->format('Ymd');
+            $platformdata = PlatformData::where('id', 1)->first();
+            $platformbank = PlatformBankAccount::where('currency_id', $changes['currency_id'])->first();
+            //Zmienne dla historii portfela
+
+
             if ($user['id'] == $changes['customer_id'] && $changes['customer_accept'] == 0) {
                 $changes['customer_accept'] = 1;
                 $changes->update();
@@ -549,12 +573,23 @@ class TransactionController extends Controller
                 $payment = $changes['payment'] - $transaction['payment'];
 
                 $update = $contractorwallet['amount'] - $payment;
+
+
                 if ($update > 0) {
                     $wallethistorydata = array(
               'user_id' => $contractorwallet['user_id'],
               'bank_name' => $changes['bank_name'],
               'currency_id' => $contractorwallet['currency_id'],
-              'amount' => -$payment
+              'amount' => -$payment,
+              'Data_wykonania' => $mytime2,
+              'kwota' => $payment * 100,
+              'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($whcontractorbank['account_number'],2, 8),
+              'Nr_rozliczeniowy_banku_kontrahenta' => substr($platformbank['account_number'],2, 8),
+              'Nr_rachunku_banku_zleceniodawcy' => $whcontractorbank['account_number'],
+              'Nr_rachunku_banku_kontrahenta' => $platformbank['account_number'],
+              'Nazwa_i_adres_zleceniodawcy' => $whcontractordata['name']. ' ' . $whcontractordata['surname'] . '|' . $whcontractordata['street'] . '|' . $whcontractordata['post_code'] . ' ' . $whcontractordata['city'],
+              'Nazwa_i_adres_kontrahenta' => $platformdata['company'] . '|' . $platformdata['street'] . '|' . $platformdata['city'],
+              'Tytul_zlecenia' => $changes['name'],
             );
                     if ($wallethistorydata['amount'] != 0) {
                         WalletHistory::create($wallethistorydata);
@@ -593,7 +628,16 @@ class TransactionController extends Controller
           'user_id' => $customerwallet['user_id'],
           'bank_name' => $changes['bank_name'],
           'currency_id' => $customerwallet['currency_id'],
-          'amount' => $transactionwallet['amount']
+          'amount' => $transactionwallet['amount'],
+          'Data_wykonania' => $mytime2,
+          'kwota' => $transactionwallet['amount'] * 100,
+          'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($platformbank['account_number'],2, 8),
+          'Nr_rozliczeniowy_banku_kontrahenta' => substr($whcustomerbank['account_number'],2, 8),
+          'Nr_rachunku_banku_zleceniodawcy' => $platformbank['account_number'],
+          'Nr_rachunku_banku_kontrahenta' => $whcustomerbank['account_number'],
+          'Nazwa_i_adres_zleceniodawcy' => $platformdata['company'] . '|' . $platformdata['street'] . '|' . $platformdata['city'],
+          'Nazwa_i_adres_kontrahenta' => $whcustomerdata['name']. ' ' . $whcustomerdata['surname'] . '|' . $whcustomerdata['street'] . '|' . $whcustomerdata['post_code'] . ' ' . $whcustomerdata['city'],
+          'Tytul_zlecenia' => 'Opłata transakcji ' . $changes['name'],
         );
                 WalletHistory::create($wallethistorydata);
                 $transactionwallet->delete();

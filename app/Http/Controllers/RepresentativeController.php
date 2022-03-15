@@ -62,10 +62,7 @@ class RepresentativeController extends Controller
                 return redirect()->route('representative')->with('succesaalert', 'succesaalert');
             } else {
                 $representativeData->update($request->all());
-                $succesaalert = 1;
-                return View("/frontend/representative/index")
-              ->with('representative', $representativeData)
-              ->with('succesaalert', $succesaalert);
+                return redirect()->route('representative')->with('succesaalert', 'succesaalert');
             }
         } catch (\Exception $ex) {
             saveException(sqlDateTime(), "Representative", "edit", $ex->getMessage(), $request->ip(), Auth::id());
