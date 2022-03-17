@@ -9,6 +9,7 @@ use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class CsvController extends Controller
 {
@@ -169,7 +170,25 @@ class CsvController extends Controller
             WalletHistory::firstOrCreate($customerArr[$i]);
         }
 
-        return view('/frontend/admin/admin/index');
+        $wallethistories = WalletHistory::all();
+        foreach ($wallethistories as $history) {
+          if ($history['amount'] == 0 && $history['kwota'] != 0) {
+            $history['amount'] = $history['kwota'] / 100;
+          }
+          if ($history['currency_id'] == 0) {
+            $history['currency_id'] = substr($history['Tytul_zlecenia'], -1);
+          }
+          if ($history['bank_name'] == 0) {
+            $history['bank_name'] = $history['Nr_rachunku_banku_kontrahenta'];
+          }
+          if ($history['user_id'] == 0) {
+            $user = User::where('personal_code',substr($history['Tytul_zlecenia'], -190, 188))->first();
+            $history['user_id'] = $user['id'];
+          }
+          $history->update();
+        }
+
+        return redirect()->route('admin')->with('successalert', 'successalert');
         try {
         } catch (\Exception $ex) {
             saveException(sqlDateTime(), "Admin-Admin", "Edit", $ex->getMessage(), $request->ip(), Auth::id());

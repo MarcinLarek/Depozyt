@@ -1,6 +1,11 @@
 @extends('frontend.layout.master-dashboard')
 
 @section('content')
+@if(session()->has('successalert'))
+<div class="alert alert-success">
+  <h1>{{ __('alerts.data_save_success') }}</h1>
+</div>
+@endif
 <div class="row col-md-8 mx-auto mt-4">
   <div class="col-md-3">
     <div href="{{ route('admin.users') }}" class="card text-center shadow">

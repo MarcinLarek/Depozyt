@@ -125,7 +125,7 @@ class PaymentController extends Controller
                   'Nr_rachunku_banku_kontrahenta' => $recipient['account_number'],
                   'Nazwa_i_adres_zleceniodawcy' => $userdata['name']. ' ' . $userdata['surname'] . '|' . $userdata['street'] . '|' . $userdata['post_code'] . ' ' . $userdata['city'],
                   'Nazwa_i_adres_kontrahenta' => $recipient['name'] . '|' . $recipient['street'] . '|' . $recipient['post_code'] . ' ' . $recipient['city'] ,
-                  'Tytul_zlecenia' => $request['payment_title'],
+                  'Tytul_zlecenia' => $request['payment_title'] . ' ' . $user['personal_code'] . '_' . $request['currency_id'],
 
                 );
                 $walletupdate = $wallet['amount'] - $data['amount'];
@@ -164,7 +164,7 @@ class PaymentController extends Controller
                       'Nr_rachunku_banku_kontrahenta' => $recipient['account_number'],
                       'Nazwa_i_adres_zleceniodawcy' => $userdata['name']. ' ' . $userdata['surname'] . '|' . $userdata['street'] . '|' . $userdata['post_code'] . ' ' . $userdata['city'],
                       'Nazwa_i_adres_kontrahenta' => $recipient['name'] . '|' . $recipient['street'] . '|' . $recipient['post_code'] . ' ' . $recipient['city'],
-                      'Tytul_zlecenia' => $request['payment_title'],
+                      'Tytul_zlecenia' => $request['payment_title'] . ' ' . $user['personal_code'] . '_' . $request['currency_id'],
                     );
                         WalletHistory::create($wallethistoryrecipientdata);
                         $walletupdaterecipient = $walletrecipient['amount'] + $data['amount'];
@@ -189,7 +189,7 @@ class PaymentController extends Controller
                   'Nr_rachunku_banku_kontrahenta' => $recipient['account_number'],
                   'Nazwa_i_adres_zleceniodawcy' => $userdata['name']. ' ' . $userdata['surname'] . '|' . $userdata['street'] . '|' . $userdata['post_code'] . ' ' . $userdata['city'],
                   'Nazwa_i_adres_kontrahenta' => $recipient['name'] . '|' . $recipient['street'] . '|' . $recipient['post_code'] . ' ' . $recipient['city'],
-                  'Tytul_zlecenia' => $request['payment_title'],
+                  'Tytul_zlecenia' => $request['payment_title'] . ' ' . $user['personal_code'] . '_' . $request['currency_id'],
                 );
                 $walletupdate = $wallet['amount'] - $data['amount'];
 

@@ -589,7 +589,7 @@ class TransactionController extends Controller
               'Nr_rachunku_banku_kontrahenta' => $platformbank['account_number'],
               'Nazwa_i_adres_zleceniodawcy' => $whcontractordata['name']. ' ' . $whcontractordata['surname'] . '|' . $whcontractordata['street'] . '|' . $whcontractordata['post_code'] . ' ' . $whcontractordata['city'],
               'Nazwa_i_adres_kontrahenta' => $platformdata['company'] . '|' . $platformdata['street'] . '|' . $platformdata['city'],
-              'Tytul_zlecenia' => $changes['name'],
+              'Tytul_zlecenia' => 'Opłata transakcji '. $changes['name'] . ' ' . $whcontractor['personoal_code'] . '_' . $contractorwallet['currency_id'] ,
             );
                     if ($wallethistorydata['amount'] != 0) {
                         WalletHistory::create($wallethistorydata);
@@ -637,7 +637,7 @@ class TransactionController extends Controller
           'Nr_rachunku_banku_kontrahenta' => $whcustomerbank['account_number'],
           'Nazwa_i_adres_zleceniodawcy' => $platformdata['company'] . '|' . $platformdata['street'] . '|' . $platformdata['city'],
           'Nazwa_i_adres_kontrahenta' => $whcustomerdata['name']. ' ' . $whcustomerdata['surname'] . '|' . $whcustomerdata['street'] . '|' . $whcustomerdata['post_code'] . ' ' . $whcustomerdata['city'],
-          'Tytul_zlecenia' => 'Opłata transakcji ' . $changes['name'],
+          'Tytul_zlecenia' => 'Wypłata środków za transakcje ' . $changes['name'] . ' ' . $whcustomer['personal_code'] . '_' . $customerwallet['currency_id'] ,
         );
                 WalletHistory::create($wallethistorydata);
                 $transactionwallet->delete();
