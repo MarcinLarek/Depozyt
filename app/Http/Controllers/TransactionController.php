@@ -23,7 +23,6 @@ use App\Models\WalletHistory;
 use App\Models\WalletTransactions;
 use Illuminate\Support\Str;
 
-
 class TransactionController extends Controller
 {
     public function index()
@@ -583,8 +582,8 @@ class TransactionController extends Controller
               'amount' => -$payment,
               'Data_wykonania' => $mytime2,
               'kwota' => $payment * 100,
-              'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($whcontractorbank['account_number'],2, 8),
-              'Nr_rozliczeniowy_banku_kontrahenta' => substr($platformbank['account_number'],2, 8),
+              'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($whcontractorbank['account_number'], 2, 8),
+              'Nr_rozliczeniowy_banku_kontrahenta' => substr($platformbank['account_number'], 2, 8),
               'Nr_rachunku_banku_zleceniodawcy' => $whcontractorbank['account_number'],
               'Nr_rachunku_banku_kontrahenta' => $platformbank['account_number'],
               'Nazwa_i_adres_zleceniodawcy' => $whcontractordata['name']. ' ' . $whcontractordata['surname'] . '|' . $whcontractordata['street'] . '|' . $whcontractordata['post_code'] . ' ' . $whcontractordata['city'],
@@ -631,8 +630,8 @@ class TransactionController extends Controller
           'amount' => $transactionwallet['amount'],
           'Data_wykonania' => $mytime2,
           'kwota' => $transactionwallet['amount'] * 100,
-          'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($platformbank['account_number'],2, 8),
-          'Nr_rozliczeniowy_banku_kontrahenta' => substr($whcustomerbank['account_number'],2, 8),
+          'Nr_rozliczeniowy_banku_zleceniodawcy' => substr($platformbank['account_number'], 2, 8),
+          'Nr_rozliczeniowy_banku_kontrahenta' => substr($whcustomerbank['account_number'], 2, 8),
           'Nr_rachunku_banku_zleceniodawcy' => $platformbank['account_number'],
           'Nr_rachunku_banku_kontrahenta' => $whcustomerbank['account_number'],
           'Nazwa_i_adres_zleceniodawcy' => $platformdata['company'] . '|' . $platformdata['street'] . '|' . $platformdata['city'],
@@ -686,26 +685,30 @@ class TransactionController extends Controller
             $mytime = $carbon->format('Y-m-d H:i:s');
             $currency = Currency::where('id', $transaction['currency_id'])->first();
             $platformdata = PlatformData::where('id', 1)->first();
+            $user = Auth::user();
+            if ($user['id'] == $transaction['contractor_id'] || $user['id'] == $transaction['customer_id']) {
+                $mpdf = new Mpdf();
+                $css = file_get_contents(resource_path(). "\\views\\pdf\\TransactionPDF.blade.php");
+                $mpdf->WriteHTML($css, 1);
+                $billHtml = View::make('pdf/TransactionPDF')
+            ->with('transaction', $transaction)
+            ->with('usercontractor', $usercontractor)
+            ->with('usercontractordata', $usercontractordata)
+            ->with('usercustomer', $usercustomer)
+            ->with('usercustomerdata', $usercustomerdata)
+            ->with('mytime', $mytime)
+            ->with('currency', $currency)
+            ->with('platformdata', $platformdata);
 
-            $mpdf = new Mpdf();
-            $css = file_get_contents(resource_path(). "\\views\\pdf\\TransactionPDF.blade.php");
-            $mpdf->WriteHTML($css, 1);
-            $billHtml = View::make('pdf/TransactionPDF')
-          ->with('transaction', $transaction)
-          ->with('usercontractor', $usercontractor)
-          ->with('usercontractordata', $usercontractordata)
-          ->with('usercustomer', $usercustomer)
-          ->with('usercustomerdata', $usercustomerdata)
-          ->with('mytime', $mytime)
-          ->with('currency', $currency)
-          ->with('platformdata', $platformdata);
+                $mpdf->WriteHTML($billHtml, 2);
+                $path = storage_path('\TransactionPDF.pdf');
+                $mpdf->Output($path, 'F');
 
-            $mpdf->WriteHTML($billHtml, 2);
-            $path = storage_path('\TransactionPDF.pdf');
-            $mpdf->Output($path, 'F');
-
-            $pdfPath = storage_path('\TransactionPDF.pdf');
-            return response()->download($pdfPath);
+                $pdfPath = storage_path('\TransactionPDF.pdf');
+                return response()->download($pdfPath);
+            } else {
+                return redirect()->route('transaction')->with('autherror', 'autherror');
+            }
         } catch (\Exception $e) {
             saveException(sqlDateTime(), "Transaction", "generatePdf2", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');

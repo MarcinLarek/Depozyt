@@ -215,12 +215,19 @@ class PaymentController extends Controller
     public function downloadDocument($walletHistoryId, Request $request)
     {
         try {
+            $user = Auth::user();
             $walletHistory = Auth::user()->walletHistory->find($walletHistoryId);
-            $fileName = $walletHistory->getDocumentPath();
-            if (empty($fileName)) {
-                $fileName = $this->generatePdf($walletHistory);
+            if ($user['id'] == $walletHistory['user_id']) {
+              $fileName = $walletHistory->getDocumentPath();
+              if (empty($fileName)) {
+                  $fileName = $this->generatePdf($walletHistory);
+              }
+              return response()->download(Storage::disk('payments')->path($fileName));
             }
-            return response()->download(Storage::disk('payments')->path($fileName));
+            else {
+              return redirect()->route('payment')->with('autherror', 'autherror');
+            }
+
         } catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "downloadDocument()", $exception->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
@@ -229,38 +236,39 @@ class PaymentController extends Controller
 
     private function generatePdf($walletHistory)
     {
+      $mPdf = new Mpdf();
+      $mPdf->SetAuthor(config('app.name'));
+      $mPdf->SetSubject('Potwierdzenie wpłaty na platforę ' . config('app.name'));
+      $headerHtml = View::make('/pdf/header');
+      $mPdf->SetHTMLHeader($headerHtml);
+
+      $platformData = PlatformData::all()->first();
+      $footerHtml = View::make('/pdf/footer')
+      ->with('platformData', $platformData);
+      $mPdf->SetHTMLFooter($footerHtml);
+
+      $contentHtml = View::make('/pdf/payment')
+      ->with('payment', $walletHistory)
+      ->with('platformData', $platformData);
+      $mPdf->WriteHTML($contentHtml);
+      $clientName = Auth::user()->clientData->getFullName();
+      $fileName = 'wplata ' . $clientName . ' ' . date('Y-m-d') . '.pdf';
+      $mPdf->Output($fileName, 'F');
+      $file = file_get_contents($fileName);
+      Storage::disk('payments')->put($fileName, $file);
+      unlink($fileName);
+      $documentId = $walletHistory->document()->create([
+      'file_name' => $fileName,
+      'disk' => 'payments',
+      'created_at' => sqlDateTime()
+  ])->id;
+      $walletHistory->update([
+      'generated_document_id' => $documentId
+  ]);
+
+      return $fileName;
         try {
-            $mPdf = new Mpdf();
-            $mPdf->SetAuthor(config('app.name'));
-            $mPdf->SetSubject('Potwierdzenie wpłaty na platforę ' . config('app.name'));
-            $headerHtml = View::make('/pdf/header');
-            $mPdf->SetHTMLHeader($headerHtml);
 
-            $platformData = PlatformData::all()->first();
-            $footerHtml = View::make('/pdf/footer')
-            ->with('platformData', $platformData);
-            $mPdf->SetHTMLFooter($footerHtml);
-
-            $contentHtml = View::make('/pdf/payment')
-            ->with('payment', $walletHistory)
-            ->with('platformData', $platformData);
-            $mPdf->WriteHTML($contentHtml);
-            $clientName = Auth::user()->clientData->getFullName();
-            $fileName = 'wplata ' . $clientName . ' ' . date('Y-m-d') . '.pdf';
-            $mPdf->Output($fileName, 'F');
-            $file = file_get_contents($fileName);
-            Storage::disk('payments')->put($fileName, $file);
-            unlink($fileName);
-            $documentId = $walletHistory->document()->create([
-            'file_name' => $fileName,
-            'disk' => 'payments',
-            'created_at' => sqlDateTime()
-        ])->id;
-            $walletHistory->update([
-            'generated_document_id' => $documentId
-        ]);
-
-            return $fileName;
         } catch (\Exception $ex) {
             saveException(sqlDateTime(), "Payment", "generatePdf", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');

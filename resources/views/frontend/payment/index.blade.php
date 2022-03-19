@@ -3,6 +3,11 @@
 @section('content')
 <h1 class="mt-md-4">{{ __('payment.IND-title') }}</h1>
 <hr />
+@if(session()->has('autherror'))
+<div class="alert alert-danger">
+  <h1>{{ __('alerts.autherror') }}</h1>
+</div>
+@endif
 <ul class="nav nav-tabs bg-white">
   <li class="nav-item">
     <a class="nav-link active" data-toggle="tab" href="#searchTab"> {{ __('payment.IND-menu1') }}</a>

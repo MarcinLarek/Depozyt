@@ -7,25 +7,6 @@
 <h1>Edytuj wypłate ID:<strong>{{ $payment->id }}</strong></h1>
 @endif
 <hr />
-@if ($errors->any())
-<div class="alert alert-danger">
-  <ul>
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
-  </ul>
-</div>
-@endif
-<div class="col-md-12 mt-md-2">
-  <div id="invalidAlert" class="alert alert-danger d-none">
-    @error('name')
-    {{ $message }}
-    @enderror
-    @error('symbol')
-    {{ $message }}
-    @enderror
-  </div>
-</div>
 <form method="post" action="{{ route('admin.payments.update', ['id' => $payment->id]) }}" class="w-50 mx-auto">
   @csrf
   @method('PUT')
@@ -38,35 +19,48 @@
         <option>{{$user['username']}}</option>
         @endforeach
       </select>
+      @error('user_id')
+      <span class="text-danger">{{ $message }}</span>
+      @enderror
     </div>
     <div class="form-group col-md-6">
-      <label for="BankName" class="control-label">Nazwa Banku</label>
-      <select name="BankName" class="custom-select">
+      <label for="bank_name" class="control-label">Nazwa Banku</label>
+      <select name="bank_name" class="custom-select">
         @foreach($banks as $bank)
         <option>{{ $bank->bank_name }}</option>
         @endforeach
       </select>
+      @error('bank_name')
+      <span class="text-danger">{{ $message }}</span>
+      @enderror
     </div>
   </div>
 
   <div class="row">
     <div class="form-group col-md-4">
-      <label for="CurrencyName" class="control-label">Waluta </label>
-      <select name="CurrencyName" class="custom-select">
+      <label for="currency_name" class="control-label">Waluta </label>
+      <select name="currency_name" class="custom-select">
         @foreach($currencies as $currency)
         <option>{{ $currency->symbol }}</option>
         @endforeach
       </select>
+      @error('currency_name')
+      <span class="text-danger">{{ $message }}</span>
+      @enderror
     </div>
     <div class="form-group col-md-4">
-      <label for="Amount" class="control-label">Kwota</label>
-      <input name="Amount" id="Amount" class="form-control" value="{{ old('amount', $payment['amount']) }}" />
-      <span asp-validation-for="Amount" class="text-danger"></span>
+      <label for="amount" class="control-label">Kwota</label>
+      <input name="amount" id="amount" class="form-control" value="{{ old('amount', $payment['amount']) }}" />
+      @error('currency_name')
+      <span class="amount">{{ $message }}</span>
+      @enderror
     </div>
     <div class="form-group col-md-4">
-      <label for="DocumentID" class="control-label">Id dokumentu</label>
-      <input name="DocumentID" id="DocumentID" class="form-control" value="{{ old('DocumentID', $payment['generated_document_id']) }}" />
-      <span asp-validation-for="DocumentID" class="text-danger"></span>
+      <label for="document_id" class="control-label">Id dokumentu</label>
+      <input name="document_id" id="document_id" class="form-control" value="{{ old('document_id', $payment['generated_document_id']) }}" />
+      @error('document_id')
+      <span class="text-danger">{{ $message }}</span>
+      @enderror
     </div>
   </div>
   <div class="row py-3">

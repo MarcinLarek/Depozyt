@@ -133,7 +133,6 @@ return [
     'PWZ'             => 'PWZ code not valid!',
     'passport_number' => 'Passport number is not valid!',
 
-
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

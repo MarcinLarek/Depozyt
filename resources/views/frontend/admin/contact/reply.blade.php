@@ -15,7 +15,9 @@
           </label>
           <textarea name="message" id="message" class="form-control" placeholder="Twoja odpowiedź">{{ old('message') }}</textarea>
 
-          <span asp-validation-for="Email" class="text-danger"></span>
+          @error('message')
+          <span class="text-danger">{{ $message }}</span>
+          @enderror
         </div>
       </fieldset>
       <div class="row">

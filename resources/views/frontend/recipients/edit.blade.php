@@ -3,15 +3,6 @@
 @section('content')
 <h1 class="mt-md-4">{{ __('recipient.EDI-title') }}</h1>
 <hr />
-@if ($errors->any())
-<div class="alert alert-danger">
-  <ul>
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
-  </ul>
-</div>
-@endif
 <div class="row">
   <div class="col-md-8 offset-md-2">
     <div class="card border-0">
@@ -25,12 +16,16 @@
               <div class="form-group col-md-6">
                 <label for="name" class="control-label">{{ __('recipient.EDI-recipient_name') }}</label>
                 <input name="name" id="name" class="form-control" placeholder="{{ __('recipient.EDI-recipient_name') }}" value="{{ old('name', $recipient->name) }}" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                @error('name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
               <div class="form-group col-md-6">
                 <label for="nip" class="control-label">{{ __('recipient.EDI-nip') }}</label>
                 <input name="nip" id="nip" class="form-control" placeholder="{{ __('recipient.EDI-nip') }}" value="{{ old('name', $recipient->nip) }}" />
-                <span asp-validation-for="Nip" class="text-danger"></span>
+                @error('nip')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
             <div class="row">
@@ -46,12 +41,16 @@
                   </div>
                   <input name="account_number" id="account_number" class="form-control" placeholder="  {{ __('recipient.EDI-account_number') }}" value="{{ old('account_number', $recipient->getAccountNumber()) }}" />
                 </div>
-                <span asp-validation-for="AccountNumber" class="text-danger"></span>
+                @error('account_number')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
               <div class="form-group col-md-6">
                 <label for="bank-name" class="control-label">{{ __('clientbankaccounts.EDI-name') }}</label>
-                <input name="bank_name" id="bank-name" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-name') }}" value="{{ old('bank_name') }}" />
-                @error('bank_name')<span class="text-danger">{{ $message }}</span>@enderror
+                <input name="bank_name" id="bank-name" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-name') }}" value="{{ old('bank_name', $recipient->bank_name) }}" />
+                @error('bank_name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
           </fieldset>
@@ -61,12 +60,16 @@
               <div class="form-group col-md-6">
                 <label for="email" class="control-label">{{ __('recipient.EDI-email') }}</label>
                 <input name="email" id="email" class="form-control" placeholder="{{ __('recipient.EDI-email') }}" value="{{ old('email', $recipient->email) }}" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                @error('email')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
               <div class="form-group col-md-6">
                 <label for="phone" class="control-label">{{ __('recipient.EDI-telephone') }}</label>
                 <input name="phone" id="phone" class="form-control" placeholder="{{ __('recipient.EDI-telephone') }}" value="{{ old('phone', $recipient->phone) }}" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                @error('phone')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
           </fieldset>
@@ -76,17 +79,23 @@
               <div class="form-group col-md-4">
                 <label for="street" class="control-label">{{ __('recipient.EDI-street') }}</label>
                 <input name="street" id="street" class="form-control" placeholder="{{ __('recipient.EDI-street') }}" value="{{ old('street', $recipient->street) }}" />
-                <span asp-validation-for="Street" class="text-danger"></span>
+                @error('street')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
               <div class="form-group col-md-4">
                 <label for="post-code" class="control-label">{{ __('recipient.EDI-postcode') }}</label>
                 <input name="post_code" id="post-code" class="form-control" placeholder="{{ __('recipient.EDI-postcode') }}" value="{{ old('post_code', $recipient->getPostCode()) }}" />
-                <span asp-validation-for="PostCode" class="text-danger"></span>
+                @error('post_code')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
               <div class="form-group col-md-4">
                 <label for="city" class="control-label">{{ __('recipient.EDI-city') }}</label>
                 <input name="city" id="city" class="form-control" placeholder="{{ __('recipient.EDI-city') }}" value="{{ old('city', $recipient->getCity()) }}" />
-                <span asp-validation-for="City" class="text-danger"></span>
+                @error('city')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
           </fieldset>
@@ -100,6 +109,9 @@
                 <option value="1" {{$recipient->isActive() ? 'selected' : ''}}> {{ __('recipient.EDI-yes') }}</option>
                 <option value="0" {{!$recipient->isActive() ? 'selected' : ''}}> {{ __('recipient.EDI-no') }}</option>
               </select>
+              @error('active')
+              <span class="text-danger">{{ $message }}</span>
+              @enderror
             </div>
           </div>
           <div class="row">

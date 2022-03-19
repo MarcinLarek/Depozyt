@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RepresentativeRequest;
 use App\Models\Representative;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +25,7 @@ class RepresentativeController extends Controller
         }
     }
 
-    public function edit(RepresentativeRequest $request)
+    public function edit(Request $request)
     {
         $request->validate([
           'surname' => ['required','max:100'],

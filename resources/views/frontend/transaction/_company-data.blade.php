@@ -1,6 +1,5 @@
 <div class="card border-0">
   <div class="card-body">
-    <img id="more" class="float-right" src="~/Images/more.svg" />
     <h4 class="card-title">{{ __('transaction.CRE-data-customer') }}</h4>
     <div id="moreBox">
       <div class="row">
@@ -54,11 +53,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  $(document).ready(() => {
-    $("#more").click(function() {
-      $("#moreBox").slideToggle("slow");
-    });
-  });
-</script>

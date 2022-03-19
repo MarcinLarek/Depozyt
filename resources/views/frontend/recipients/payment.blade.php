@@ -6,15 +6,6 @@
 ?>
 <h1 class="mt-md-4">{{ __('recipient.PAY-title') }}</h1>
 <hr />
-@if ($errors->any())
-<div class="alert alert-danger">
-  <ul>
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
-  </ul>
-</div>
-@endif
 @if(session()->has('successalert'))
 <div class="alert alert-success">
   <h1>{{ __('alerts.data_save_success') }}</h1>
@@ -48,12 +39,18 @@
                     <option value="{{ $recipient->id }}">{{ $recipient->name }}</option>
                     @endforeach
                   </select>
+                  @error('recipment_id')
+                  <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col-md-4">
                   <label for="payment-title" class="control-label">{{ __('recipient.PAY-payment-name') }}</label>
                   <input name="payment_title" id="payment-title" class="form-control" placeholder="{{ __('recipient.PAY-payment-name') }}" />
+                  @error('payment_title')
+                  <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
                 <div class="form-group col-md-4">
                   <label for="currency" class="control-label">{{ __('recipient.PAY-currency') }}</label>
@@ -65,10 +62,16 @@
                     <option value="{{$currency['id']}}">{{$currency['symbol']}} {{$currency['name']}}</option>
                     @endforeach
                   </select>
+                  @error('currency_id')
+                  <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
                 <div class="form-group col-md-4">
                   <label for="amount" class="control-label">{{ __('recipient.PAY-amount') }}</label>
                   <input name="amount" type="number" step=".01" class="form-control" placeholder="{{ __('recipient.PAY-amount') }}" />
+                  @error('amount')
+                  <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
               </div>
               <div class="row">

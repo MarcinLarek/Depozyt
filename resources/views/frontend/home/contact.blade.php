@@ -13,6 +13,9 @@
               <div class="form-group col-md-6">
                 <label for="email" class="control-label">{{ __('home.CON-email') }}</label>
                 <input name="email" id="email" class="form-control" placeholder="{{ __('home.CON-email') }}" />
+                @error('email')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
                 <span asp-validation-for="Email" class="text-danger"></span>
               </div>
             </div>
@@ -21,7 +24,9 @@
               <div class="form-group col-md-6">
                 <label for="message" class="control-label">{{ __('home.CON-message') }}</label>
                 <textarea name="message" id="message" class="form-control" placeholder="{{ __('home.CON-message') }}"></textarea>
-
+                @error('message')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
                 <span asp-validation-for="Email" class="text-danger"></span>
               </div>
             </div>

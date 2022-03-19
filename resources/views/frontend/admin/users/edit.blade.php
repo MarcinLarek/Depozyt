@@ -16,7 +16,7 @@
                 <label for="username" class="control-label">Nazwa użytkownika</label>
                 <input name="username" id="username" class="form-control" value="{{ old('username', $user->username) }}" placeholder="Nazwa użytkownika" />
                 @error('username')
-                {{ $message }}
+                <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
             </div>
@@ -28,10 +28,16 @@
                   <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="Wymogi dotyczące hasła." />
                 </a>
                 <input name="password" id="password" type="password" class="form-control" placeholder="Hasło" />
+                @error('password')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
               <div class="form-group col-md-6">
                 <label for="compare-password" class="control-label">Potwierdź hasło</label>
                 <input name="compare-password" id="compare-password" type="password" class="form-control" placeholder="Potwierdź hasło" />
+                @error('compare-password')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
             <div class="row">

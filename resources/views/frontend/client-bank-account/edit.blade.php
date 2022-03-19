@@ -3,15 +3,7 @@
 @section('content')
 <h1 class="mt-md-4">{{ __('clientbankaccounts.EDI-title') }}</h1>
 <hr />
-@if ($errors->any())
-<div class="alert alert-danger">
-  <ul>
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
-  </ul>
-</div>
-@endif
+
 <div class="row">
   <div class="col-md-8 offset-md-2">
     <div class="card border-0">
@@ -22,9 +14,12 @@
           <input type="hidden" name="id" id="id" value="{{ $bankAccount->id }}">
           <div class="row">
             <div class="form-group col-md-6">
-              <label for="bank-name" class="control-label">{{ __('clientbankaccounts.EDI-name') }}</label>
+              <label for="bank_name" class="control-label">{{ __('clientbankaccounts.EDI-name') }}</label>
               <input name="bank_name" id="bank_name" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-name') }}" value="{{ old('bank_name', $bankAccount->bank_name) }}" />
-              <span asp-validation-for="BankName" class="text-danger"></span>
+              @error('bank_name')
+              <span class="text-danger">{{ $message }}</span>
+              @enderror
+              <span asp-validation-for="bank_name" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
               <label for="currency-id" class="control-label">{{ __('clientbankaccounts.EDI-currency') }}</label>
@@ -33,6 +28,9 @@
                 <option value="{{ $currency->id }}">{{ $currency->symbol }} - {{ $currency->name }}</option>
                 @endforeach
               </select>
+              @error('currency_id')
+              <span class="text-danger">{{ $message }}</span>
+              @enderror
             </div>
           </div>
           <div class="row">
@@ -48,6 +46,9 @@
                 </div>
                 <input name="account_number" id="account_number" class="form-control" placeholder="{{ __('clientbankaccounts.EDI-account_number') }}" value="{{ old('account_number', $bankAccount->account_number) }}" />
               </div>
+              @error('account_number')
+              <span class="text-danger">{{ $message }}</span>
+              @enderror
               <span asp-validation-for="Number" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
@@ -56,6 +57,9 @@
                 <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="{{ __('clientbankaccounts.EDI-requirements') }}" alt="{{ __('clientbankaccounts.EDI-requirements') }}" />
               </a>
               <input name="swift" id="swift" class="form-control" placeholder="Nr SWIFT" value="{{ old('swift', $bankAccount->swift) }}" />
+              @error('swift')
+              <span class="text-danger">{{ $message }}</span>
+              @enderror
               <span asp-validation-for="NumberSwift" class="text-danger"></span>
             </div>
           </div>
@@ -70,6 +74,9 @@
                 <option value="0">{{ __('clientbankaccounts.EDI-no') }}</option>
               </select>
             </div>
+            @error('account_number')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
           </div>
           <div class="row">
             <div class="form-group col-md-12 text-center mt-md-4">

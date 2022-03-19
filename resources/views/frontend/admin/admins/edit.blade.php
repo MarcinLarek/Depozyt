@@ -16,7 +16,7 @@
                 <label for="login" class="control-label">Login</label>
                 <input name="login" id="login" class="form-control" value="{{ old('login', $admin->login) }}" placeholder="Login" />
                 @error('login')
-                {{ $message }}
+                <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
             </div>
@@ -25,7 +25,7 @@
                 <label for="name" class="control-label">Imie</label>
                 <input name="name" id="name" class="form-control" value="{{ old('name', $admin->name) }}" placeholder="Imie" />
                 @error('name')
-                {{ $message }}
+                <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
             </div>
@@ -34,7 +34,7 @@
                 <label for="surname" class="control-label">Nazwisko</label>
                 <input name="surname" id="surname" class="form-control" value="{{ old('surname', $admin->surname) }}" placeholder="Nazwisko" />
                 @error('surname')
-                {{ $message }}
+                <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
             </div>
@@ -51,7 +51,7 @@
                   @endif
                 </select>
                 @error('error_notification')
-                {{ $message }}
+                <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
             </div>
@@ -62,10 +62,16 @@
                   <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="Wymogi dotyczące hasła." />
                 </a>
                 <input name="password" id="password" type="password" class="form-control" placeholder="Hasło" value="{{ old('password') }}" />
+                @error('password')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
               <div class="form-group col-md-6">
                 <label for="compare-password" class="control-label">Potwierdź hasło</label>
                 <input name="compare-password" id="compare-password" type="password" class="form-control" placeholder="Potwierdź hasło" value="{{ old('compare-password') }}" />
+                @error('compare-password')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
             <div class="row">

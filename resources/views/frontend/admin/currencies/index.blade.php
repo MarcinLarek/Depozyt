@@ -7,14 +7,6 @@
 <div class="alert alert-success">
   <h1>Zmiany zostały zapisane</h1>
 </div>
-@elseif ($errors->any())
-<div class="alert alert-danger">
-  <ul>
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
-  </ul>
-</div>
 @endif
 <div class="w-50 mx-auto">
   <form method="post" action="{{ route('admin.currencies.store') }}">
@@ -23,10 +15,16 @@
       <div class="form-group col-md-8">
         <label for="name">Nazwa</label>
         <input type="text" name="name" id="name" class="form-control" placeholder="Nazwa" value="{{ old('name') }}">
+        @error('name')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
       </div>
       <div class="form-group col-md-4">
         <label for="symbol">Symbol</label>
         <input type="text" name="symbol" id="symbol" class="form-control" placeholder="Symbol" value="{{ old('symbol') }}">
+        @error('symbol')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
       </div>
     </div>
     <div class="row py-3">

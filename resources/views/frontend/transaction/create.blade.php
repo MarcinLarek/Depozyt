@@ -25,7 +25,10 @@
                   <legend>{{ __('transaction.CRE-search-data') }}</legend>
                   <div class="row align-items-center justify-content-center">
                     <div class="form-group col-md-3">
-                      <label for="personal-code" class="control-label"></label>
+                      <label for="personal-code" class="control-label">
+                        @error('personal-code2')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror</label>
                       <input name="personal_code" id="personal-code" class="form-control" placeholder="{{ __('transaction.CRE-code') }}" value="{{ old('personal_code') }}" />
                     </div>
                   </div>
@@ -70,14 +73,20 @@
                     <div class="form-group col-md-6">
                       <label for="name" class="control-label">{{ __('transaction.TABLE-name') }}</label>
                       <input name="name" id="name" class="form-control" placeholder="{{ __('transaction.TABLE-name') }}" value="{{ old('name') }}" />
+                      @error('name')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="TransactionType">{{ __('transaction.TABLE-tpye') }}</label>
+                      <label for="transaction_type">{{ __('transaction.TABLE-tpye') }}</label>
                       <select id="transaction_type" name="transaction_type" class="custom-select" value="{{ old('transaction_type') }}">
                         <option value="1">{{ __('transaction.TABLE-services') }}</option>
                         <option value="2">{{ __('transaction.TABLE-general-goods') }}</option>
                         <option value="3">{{ __('transaction.TABLE-brokerage') }}</option>
                       </select>
+                      @error('transaction_type')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                   </div>
                   <div class="row">
@@ -85,11 +94,17 @@
                       <label for="from_date" id="from_date" class="control-label" value="{{ old('from_date') }}">{{ __('transaction.TABLE-from') }}:</label>
                       <input name="from_date" class="form-control" placeholder="{{ __('transaction.TABLE-from') }}" type="date" value="{{ old('from_date') }}" />
                       <span asp-validation-for="FromDate" class="text-danger"></span>
+                      @error('from_date')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                     <div class="form-group col-md-6">
                       <label for="to_date" class="control-label">{{ __('transaction.TABLE-to') }}:</label>
                       <input name="to_date" id="to_date" class="form-control" placeholder="{{ __('transaction.TABLE-to') }}" type="date" value="{{ old('to_date') }}" />
                       <span asp-validation-for="ToDate" class="text-danger"></span>
+                      @error('to_date')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                   </div>
                   <div class="row">
@@ -100,6 +115,9 @@
                         <option value="contractor">{{ __('transaction.TABLE-contractor') }}</option>
                         <option value="half">{{ __('transaction.TABLE-half') }}</option>
                       </select>
+                      @error('commission_payer')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                   </div>
                   <div class="row">
@@ -110,6 +128,9 @@
                         <option>{{ $bank->bank_name }}</option>
                         @endforeach
                       </select>
+                      @error('bank_name')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                     <div class="form-group col-md-4">
                       <label for="currency_name" class="control-label">{{ __('transaction.TABLE-currency') }} </label>
@@ -118,11 +139,17 @@
                         <option>{{ $currency->symbol }}</option>
                         @endforeach
                       </select>
+                      @error('currency_name')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                     <div class="form-group col-md-4">
                       <label for="amount" class="control-label">{{ __('transaction.TABLE-amount') }}</label>
                       <input name="amount" class="form-control" placeholder="{{ __('transaction.TABLE-amount') }}" value="{{ old('amount') }}" />
                       <span asp-validation-for="Amount" class="text-danger"></span>
+                      @error('amount')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                   </div>
                   <div class="row">
@@ -130,6 +157,9 @@
                       <label for="description" class="control-label">{{ __('transaction.TABLE-description') }}</label>
                       <textarea asp-for="description" id="description" class="form-control" name="description" placeholder="{{ __('transaction.TABLE-description') }}" cols="80" rows="3">{{ old('description') }}</textarea>
                       <span asp-validation-for="description" class="text-danger"></span>
+                      @error('description')
+                      <span class="text-danger">{{ $message }}</span>
+                      @enderror
                     </div>
                   </div>
                 </fieldset>

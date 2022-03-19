@@ -70,21 +70,21 @@ class PaymentsController extends Controller
     {
         $request->validate([
           'user_id' => ['required'],
-          'BankName' => ['required'],
-          'CurrencyName' => ['required'],
-          'Amount' => ['required','numeric'],
-          'DocumentID' => ['required','numeric']
+          'bank_name' => ['required'],
+          'currency_name' => ['required'],
+          'amount' => ['required','numeric'],
+          'document_id' => ['required','numeric']
       ]);
         try {
             $payment = WalletHistory::find($id);
-            $currency =  Currency::where('symbol', $request['CurrencyName'])->first();
+            $currency =  Currency::where('symbol', $request['currency_name'])->first();
             $user =  User::where('username', $request['user_id'])->first();
             $data = array(
             'user_id' => $user['id'],
-            'bank_name' => $request['BankName'],
+            'bank_name' => $request['bank_name'],
             'currency_id' => $currency['id'],
-            'amount' => $request['Amount'],
-            'generated_document_id' => $request['DocumentID']
+            'amount' => $request['amount'],
+            'generated_document_id' => $request['document_id']
           );
             $payment->update($data);
             if ($request['amount']>0) {

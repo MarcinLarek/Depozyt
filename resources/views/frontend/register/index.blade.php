@@ -20,7 +20,7 @@
                 <label for="username" class="control-label">{{ __('register.IND-username') }}</label>
                 <input name="username" id="username" class="form-control" placeholder="{{ __('register.IND-username') }}" value="{{ old('username') }}" />
                 @error('username')
-                {{ $message }}
+                <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
             </div>

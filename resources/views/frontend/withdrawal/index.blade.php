@@ -16,7 +16,8 @@ use App\Models\Currency;
   <h1>{{ __('withdrawal.IND-nomoney') }}</h1>
 </div>
 @endif
-<ul class="nav nav-tabs bg-whlass="nav-item">
+<ul class="nav nav-tabs bg-white">
+  <li class="nav-item">
     <a class="nav-link active" data-toggle="tab" href="#withdrawalTab"> {{ __('withdrawal.IND-menu1') }} </a>
   </li>
   <li class="nav-item">
@@ -81,6 +82,9 @@ use App\Models\Currency;
                 <div class="form-group col-md-6">
                   <label for="amount" class="control-label">{{ __('withdrawal.IND-amount') }}</label>
                   <input name="amount" id="amount" class="form-control" placeholder="{{ __('withdrawal.IND-amount') }}" value="{{ old('amount') }}" />
+                  @error('amount')
+                  <span class="text-danger">{{ $message }}</span>
+                  @enderror
                   <span asp-validation-for="Amount" class="text-danger"></span>
                 </div>
               </div>

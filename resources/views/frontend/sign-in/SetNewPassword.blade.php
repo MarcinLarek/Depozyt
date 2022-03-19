@@ -17,14 +17,18 @@
                   <img class="ml-2" src="{{ asset('/images/info.svg') }}" title="{{ __('sigin.SET-passwordhelp') }}" />
                 </a>
                 <input name="password" type="password" class="form-control" placeholder="{{ __('sigin.SET-password') }}" />
-                <span asp-validation-for="UserPassword" class="text-danger"></span>
+                @error('password')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
             <div class="row align-items-center justify-content-center">
               <div class="form-group col-md-6">
-                <label for="CofirmPassword" class="control-label">{{ __('sigin.SET-confirm_password') }}</label>
+                <label for="password_confirmation" class="control-label">{{ __('sigin.SET-confirm_password') }}</label>
                 <input name="password_confirmation" type="password" class="form-control" placeholder="{{ __('sigin.SET-confirm_password') }}" />
-                <span asp-validation-for="CofirmPassword" class="text-danger"></span>
+                @error('password_confirmation')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
           </fieldset>

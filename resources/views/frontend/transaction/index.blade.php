@@ -15,6 +15,11 @@
   <h1>{{ __('alerts.data_save_success') }}</h1>
 </div>
 @endif
+@if(session()->has('autherror'))
+<div class="alert alert-danger">
+  <h1>{{ __('alerts.autherror') }}</h1>
+</div>
+@endif
 @if(isset($user->clientData['name']) || isset($user->companyData['name']))
 <div class="card border-0">
   <div class="card-body">

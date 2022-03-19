@@ -125,6 +125,14 @@ return [
     'url' => ':attribute musi być poprawnym adresem URL.',
     'uuid' => ':attribute musi być poprawnym adresem UUID.',
 
+    'PESEL'           => 'Numer PESEL jest niepoprawny!',
+    'REGON'           => 'Numer REGON jest niepoprawny',
+    'NIP'             => 'Numer NIP jest niepoprawny!',
+    'id_card_number'  => 'Numer dowodu osobistego jest niepoprawny!',
+    'post_code'       => 'Kod pocztowy niepoprawny!',
+    'PWZ'             => 'Numer PWZ niepoprawny!',
+    'passport_number' => 'Numer paszportu jest niepoprawny!',
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -142,13 +150,6 @@ return [
         ],
     ],
 
-    'PESEL'           => 'Numer PESEL jest niepoprawny!',
-    'REGON'           => 'Numer REGON jest niepoprawny',
-    'NIP'             => 'Numer NIP jest niepoprawny!',
-    'id_card_number'  => 'Numer dowodu osobistego jest niepoprawny!',
-    'post_code'       => 'Kod pocztowy niepoprawny!',
-    'PWZ'             => 'Numer PWZ niepoprawny!',
-    'passport_number' => 'Numer paszportu jest niepoprawny!',
 
     /*
     |--------------------------------------------------------------------------

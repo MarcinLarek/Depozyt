@@ -20,7 +20,9 @@
               <div class="form-group col-md-6">
                 <label for="email" class="control-label">{{ __('sigin.FOR-email') }}</label>
                 <input name="email" id="email" class="form-control" placeholder="{{ __('sigin.FOR-email') }}" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                @error('email')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
               </div>
             </div>
           </fieldset>

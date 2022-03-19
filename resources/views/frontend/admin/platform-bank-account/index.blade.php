@@ -8,25 +8,22 @@
   <h1>Zmiany zostały zapisane</h1>
 </div>
 @endif
-@if ($errors->any())
-<div class="alert alert-danger">
-  <ul>
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
-  </ul>
-</div>
-@endif
 <div class="col-md-6 mx-auto">
   <form method="post" action="{{ route('admin.platform-bank-account.store') }}">
     @csrf
     <div class="form-group col-md-8 mx-auto">
-      <label for="account-number">Numer konta</label>
+      <label for="account_number">Numer konta</label>
       <input type="text" name="account_number" id="account-number" class="form-control" placeholder="Numer konta">
+      @error('account_number')
+      <span class="text-danger">{{ $message }}</span>
+      @enderror
     </div>
     <div class="form-group col-md-8 mx-auto">
       <label for="bank_name">Nazwa banku</label>
       <input type="text" name="bank_name" id="bank_name" class="form-control" placeholder="Nazwa banku">
+      @error('bank_name')
+      <span class="text-danger">{{ $message }}</span>
+      @enderror
     </div>
     <div class="form-group col-md-8 mx-auto">
       <label for="currency-id" class="control-label">Waluta</label>
@@ -35,6 +32,9 @@
         <option value="{{ $currency->id }}">{{ $currency->symbol }} - {{ $currency->name }}</option>
         @endforeach
       </select>
+      @error('currency_id')
+      <span class="text-danger">{{ $message }}</span>
+      @enderror
     </div>
     <div class="form-group col-md-8 mx-auto">
       <label for="active" class="control-label">Czy aktywne</label>
@@ -43,6 +43,9 @@
         <option value="0">Nie</option>
       </select>
     </div>
+    @error('active')
+    <span class="text-danger">{{ $message }}</span>
+    @enderror
     <div class="row py-3">
       <input type="submit" class="btn btn-primary mx-auto" value="Dodaj konto bankowe" />
     </div>

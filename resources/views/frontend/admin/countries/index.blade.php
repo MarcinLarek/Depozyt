@@ -7,14 +7,6 @@
 <div class="alert alert-success">
   <h1>Zmiany zostały zapisane</h1>
 </div>
-@elseif ($errors->any())
-<div class="alert alert-danger">
-  <ul>
-    @foreach ($errors->all() as $error)
-    <li>{{ $error }}</li>
-    @endforeach
-  </ul>
-</div>
 @endif
 <div class="col-md-12 mt-md-2">
   <div id="invalidAlert" class="alert alert-danger d-none">
@@ -33,10 +25,16 @@
       <div class="form-group col-md-8">
         <label for="country_name">Nazwa</label>
         <input type="text" name="country_name" id="country_name" class="form-control" placeholder="Nazwa" value="{{ old('country_name') }}">
+        @error('country_name')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
       </div>
       <div class="form-group col-md-4">
         <label for="country_code">Kod kraju</label>
         <input type="text" name="country_code" id="country_code" class="form-control" placeholder="Kod kraju" value="{{ old('country_code') }}">
+        @error('country_code')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
       </div>
     </div>
     <div class="row py-3">
