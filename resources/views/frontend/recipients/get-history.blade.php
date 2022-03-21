@@ -44,7 +44,7 @@
         {{ $payment['payment_title']}}
       </td>
       <td class="text-center">
-        {{ $payment['payment_title']}}
+        {{ $payment['amount']}}
       </td>
 
     </tr>

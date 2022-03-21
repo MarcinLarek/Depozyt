@@ -214,19 +214,20 @@ class PaymentController extends Controller
 
     public function downloadDocument($walletHistoryId, Request $request)
     {
+      $user = Auth::user();
+      $walletHistory = Auth::user()->walletHistory->find($walletHistoryId);
+      if ($user['id'] == $walletHistory['user_id']) {
+        $fileName = $walletHistory->getDocumentPath();
+        if (empty($fileName)) {
+            $fileName = $this->generatePdf($walletHistory);
+        }
+        return response()->download(Storage::disk('payments')->path($fileName));
+      }
+      else {
+        return redirect()->route('payment')->with('autherror', 'autherror');
+      }
         try {
-            $user = Auth::user();
-            $walletHistory = Auth::user()->walletHistory->find($walletHistoryId);
-            if ($user['id'] == $walletHistory['user_id']) {
-              $fileName = $walletHistory->getDocumentPath();
-              if (empty($fileName)) {
-                  $fileName = $this->generatePdf($walletHistory);
-              }
-              return response()->download(Storage::disk('payments')->path($fileName));
-            }
-            else {
-              return redirect()->route('payment')->with('autherror', 'autherror');
-            }
+
 
         } catch (\Exception $exception) {
             saveException(sqlDateTime(), "PaymentController", "downloadDocument()", $exception->getMessage(), $request->ip(), Auth::id());
@@ -252,7 +253,7 @@ class PaymentController extends Controller
       ->with('platformData', $platformData);
       $mPdf->WriteHTML($contentHtml);
       $clientName = Auth::user()->clientData->getFullName();
-      $fileName = 'wplata ' . $clientName . ' ' . date('Y-m-d') . '.pdf';
+      $fileName = 'wplata ' . $clientName . ' ' . date('Y-m-d-H-i-s') . '.pdf';
       $mPdf->Output($fileName, 'F');
       $file = file_get_contents($fileName);
       Storage::disk('payments')->put($fileName, $file);
@@ -265,10 +266,10 @@ class PaymentController extends Controller
       $walletHistory->update([
       'generated_document_id' => $documentId
   ]);
-
-      return $fileName;
         try {
 
+
+            return $fileName;
         } catch (\Exception $ex) {
             saveException(sqlDateTime(), "Payment", "generatePdf", $ex->getMessage(), $request->ip(), Auth::id());
             return redirect()->route('siteerror');
