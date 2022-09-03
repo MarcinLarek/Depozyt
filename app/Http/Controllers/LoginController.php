@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Smsapi\Client\Curl\SmsapiHttpClient;
+use Smsapi\Client\Service\SmsapiComService;
+use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 
 class LoginController extends Controller
 {
@@ -87,7 +90,6 @@ class LoginController extends Controller
     {
         try {
             $input = $request->all();
-
             $this->validate($request, [
               'username' => 'required',
               'password' => 'required',
@@ -109,8 +111,21 @@ class LoginController extends Controller
                 ->with('failstatus', $failstatus);
             } else {
                 $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-                if (auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']))) {
-                    return redirect()->route('home');
+                if ($user !=null && Hash::check($request['password'], $user['password'])) {
+                  $client = new SmsapiHttpClient();
+                  $apiToken = 'hpMKJPXbByYVsJQgDtKIEp5riN1NsEeZfM1auyay';
+                  $service = $client->smsapiPlService($apiToken);
+                  $smsBag = SendSmsBag::withMessage($user->phone, __('mail.RES-title').$user->phone_code);
+                  $service->smsFeature()->sendSms($smsBag);
+                  $user->update(['phone_code' => rand(1000,9999)]);
+                  $user->update(['token' => Str::random(60)]);
+                  $failstatus = 0;
+                  $errortype = 0;
+                  return view("/frontend/sign-in/index")
+                    ->with('errortype', $errortype)
+                    ->with('failstatus', $failstatus)
+                    ->with('codesucces', 'codesucces')
+                    ->with('usertoken',$user->token);
                 } else {
                     $failstatus = 1;
                     $errortype = 0;
@@ -124,4 +139,21 @@ class LoginController extends Controller
             return redirect()->route('siteerror');
         }
     }
+
+    public function phonecode(Request $request)
+    {
+      $user = User::where('token', $request->token)->first();
+      if ($user == null) {
+          return redirect()->back();
+      }
+      if ($user->phone_code == $request->phone_code ) {
+        $user->update(['token' => Str::random(60)]);
+        Auth::guard('client')->login($user->first());
+        return redirect()->route('home');
+      }
+      else {
+        return redirect()->back();
+      }
+    }
+
 }

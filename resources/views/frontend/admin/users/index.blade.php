@@ -46,11 +46,7 @@
         @endif
 
         <td>{{ $user->email }}</td>
-        @if(isset($user->clientData['name']))
-        <td>{{ $user->clientData['phone'] }}</td>
-        @else
-        <td>Nie wypełniono danych</td>
-        @endif
+        <td>{{ $user->phone }}</td>
 
         <td>{{ $user->registrationDate() }}</td>
 

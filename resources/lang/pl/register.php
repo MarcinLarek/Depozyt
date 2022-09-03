@@ -13,6 +13,7 @@ return [
   'IND-accept_statute1' => 'Rejestrując konto, akceptujesz w pełni ',
   'IND-accept_statute2' => 'regulamin.',
   'IND-register' => 'Zarejestruj się',
+  'IND-phone' => 'Numer telefonu wraz z nr kierunkowym (bez +)',
   '' => '',
 
 ];

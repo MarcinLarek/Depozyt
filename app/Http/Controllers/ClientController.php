@@ -62,4 +62,13 @@ class ClientController extends Controller
             return redirect()->route('siteerror');
         }
     }
+
+    public function updatephone(User $user, Request $request)
+    {
+      $user->phone = $request->phone;
+      $data = array('phone' => $request->phone);
+      auth()->user()->update($data);
+      Auth::logout();
+      return redirect('/sign-in');
+    }
 }

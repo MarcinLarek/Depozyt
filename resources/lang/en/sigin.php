@@ -12,6 +12,8 @@ return [
   'IND-error3' => ' If you haven\'t changed your login details, please try to enter the correct details. If you have made changes, you must accept them by clicking on the activation link provided in the message received.',
   'IND-errortype1' => 'The user with the given username / e-mail was not found',
   'IND-errortype2' => 'You have not confirmed your account activation. Click on the activation link on your e-mail to sign in',
+  'IND-authcode' => 'Authentication code',
+  'IND-success' => 'Data entered correctly. To log in, enter the code sent to your phone number',
   //
   //ForgotPassword
   //

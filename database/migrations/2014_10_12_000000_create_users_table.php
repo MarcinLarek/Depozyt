@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('token')->nullable();
             $table->string('personal_code');
+            $table->string('phone');
+            $table->string('phone_code');
             $table->unsignedBigInteger('client_type_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->boolean('blocked')->default(true);

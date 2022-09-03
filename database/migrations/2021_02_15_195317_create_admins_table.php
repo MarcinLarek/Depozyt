@@ -20,6 +20,8 @@ class CreateAdminsTable extends Migration
             $table->string('surname');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone')->unique();
+            $table->string('phone_code');
             $table->string('token');
             $table->boolean('error_notification')->default(1);
             $table->timestamps();

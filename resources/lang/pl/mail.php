@@ -18,6 +18,6 @@ return [
   'RES-toptitle' => 'Depozyt.com',
   //Reply
   'REP-title' => 'Depozyt odpowiedź',
-  '' => '',
+  'Phone-Code' => 'Twój kod uwierzytelniający to: ',
 
 ];

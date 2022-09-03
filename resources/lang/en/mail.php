@@ -18,6 +18,7 @@ return [
   'RES-toptitle' => 'Depozyt.com',
   //Reply
   'REP-title' => 'Depozyt response',
+  'Phone-Code' => 'Your authentication code: ',
   '' => '',
 
 ];

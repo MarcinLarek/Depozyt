@@ -25,6 +25,15 @@
               </div>
             </div>
             <div class="row">
+              <div class="form-group col-md-12">
+                <label for="phone" class="control-label">{{ __('register.IND-phone') }}</label>
+                <input name="phone" id="phone" type="number" class="form-control" placeholder="{{ __('register.IND-phone') }}" value="{{ old('phone') }}" />
+                @error('phone')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+            </div>
+            <div class="row">
               <div class="form-group col-md-6">
                 <label for="password" class="control-label">{{ __('register.IND-password') }}</label>
                 <a class="alert-link" data-toggle="modal" href="#myModal">

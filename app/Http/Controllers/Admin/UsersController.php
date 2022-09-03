@@ -40,6 +40,7 @@ class UsersController extends Controller
         $request->validate([
           'username' => ['required','max:100'],
           'password' => ['max:100'],
+          'phone' => ['required'],
           'email' => ['required','max:100'],
           'client_type_id' => ['required'],
           'country_id' => ['required','max:100']
@@ -49,6 +50,7 @@ class UsersController extends Controller
                 $data = array(
             'username' => $request['username'],
             'email' => $request['email'],
+            'phone' => $request['phone'],
             'client_type_id' => $request['client_type_id'],
             'country_id' => $request['country_id']
           );
@@ -57,6 +59,7 @@ class UsersController extends Controller
             'username' => $request['username'],
             'password' => Hash::make($request['password']),
             'email' => $request['email'],
+            'phone' => $request['phone'],
             'client_type_id' => $request['client_type_id'],
             'country_id' => $request['country_id']
           );

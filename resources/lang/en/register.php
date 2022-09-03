@@ -13,6 +13,7 @@ return [
   'IND-accept_statute1' => 'By registering an account, you accept the ',
   'IND-accept_statute2' => 'terms and conditions.',
   'IND-register' => 'Register',
+  'IND-phone' => 'Phone nuber with country code (without +)',
   '' => '',
 
 

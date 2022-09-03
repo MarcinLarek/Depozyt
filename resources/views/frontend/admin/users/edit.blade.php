@@ -51,6 +51,15 @@
             </div>
             <div class="row">
               <div class="form-group col-md-12">
+                <label for="phone" class="control-label">Nr telefonu do logowania</label>
+                <input name="phone" id="phone" class="form-control" value="{{ old('phone', $admin->phone) }}" placeholder="Nr Telefonu" />
+                @error('name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
                 <label for="client_type" class="control-label">Typ Konta</label>
                 <select name="client_type_id" id="client_type" class="custom-select">
                   @foreach(\App\Models\ClientType::all() as $clientType)

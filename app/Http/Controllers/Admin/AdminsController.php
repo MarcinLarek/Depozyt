@@ -40,6 +40,7 @@ class AdminsController extends Controller
           'login' => ['required','max:100'],
           'name' => ['required','max:100'],
           'surname' => ['required','max:100'],
+          'phone' => ['required'],
           'password' => ['max:100'],
           'error_notification' => ['required'],
           'email' => ['required','max:100']
@@ -49,6 +50,7 @@ class AdminsController extends Controller
                 $data = array(
             'login' => $request['login'],
             'name' => $request['name'],
+            'phone' => $request['phone'],
             'surname' => $request['surname'],
             'error_notification' => $request['error_notification'],
             'email' => $request['email']
@@ -57,6 +59,7 @@ class AdminsController extends Controller
                 $data = array(
             'login' => $request['login'],
             'name' => $request['name'],
+            'phone' => $request['phone'],
             'surname' => $request['surname'],
             'error_notification' => $request['error_notification'],
             'password' => Hash::make($request['password']),

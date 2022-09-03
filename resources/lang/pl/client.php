@@ -11,6 +11,7 @@ return [
   'IND-succes' => 'UDAŁO SIĘ! Twoje dane zostały zapisane. Sprawdź skrzynkę pocztową z wiadomością potwierdzającą zawarcie usługi depozytowej.',
   'IND-failure' => 'UPS... Coś poszło nie tak! Twoje dane nie zostały zapisane.',
   'IND-save' => 'Zapisz',
+  'IND-phone' => 'Numer telefonu służący do logowania',
   //
   //ResetPassword
   //

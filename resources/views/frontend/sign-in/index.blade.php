@@ -13,10 +13,49 @@
   <h2>{{ __('sigin.IND-errortype2') }}</h2>
 </div>
 @endif
-
+@if(isset($codesucces))
+<div class="alert alert-success">
+<h2>{{ __('sigin.IND-success') }}</h2>
+</div>
+@endif
 <div clasms="row">
   <div class="col-md-8 offset-md-2">
     <div class="card border-0">
+      @if(isset($codesucces))
+      <div class="card-body">
+        <h4 class="card-title">{{ __('sigin.IND-subtitle') }}</h4>
+        <form action="{{ route('client.phonecode') }}" method="post">
+          @csrf
+          <fieldset>
+            <div class="row align-items-center justify-content-center">
+              <div class="form-group col-md-6">
+                <label for="phone_code" class="control-label">{{ __('sigin.IND-authcode') }}</label>
+                <input name="phone_code" id="phone_code" class="form-control" placeholder="{{ __('sigin.authcode') }}" value="{{ old('phone_code') }}" />
+                @error('phone_code')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+            </div>
+            <input name="token" id="token" type="hidden" class="form-control" value="{{ $usertoken }}" />
+          </fieldset>
+          <div class="row">
+            <div class="form-group col-md-12 text-center mt-md-4">
+              <input type="submit" value="{{ __('sigin.IND-sigin') }}" class="btn btn-primary" />
+            </div>
+          </div>
+
+            @if ($failstatus == 1)
+            <div>
+              <div>
+                <strong>{{ __('sigin.IND-error1') }}</strong>{{ __('sigin.IND-error2') }}<br /> {{ __('sigin.IND-error3') }}
+              </div>
+              @endif
+
+            </div>
+      </div>
+      </form>
+      </div>
+      @else
       <div class="card-body">
         <h4 class="card-title">{{ __('sigin.IND-subtitle') }}</h4>
         <form action="{{ route('client.sign-in') }}" method="post">
@@ -68,7 +107,8 @@
             </div>
         </form>
       </div>
-    </div>
+      </div>
+      @endif
   </div>
 </div>
 @endsection

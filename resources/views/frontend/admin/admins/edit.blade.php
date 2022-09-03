@@ -31,6 +31,15 @@
             </div>
             <div class="row">
               <div class="form-group col-md-12">
+                <label for="phone" class="control-label">Nr Telefonu</label>
+                <input name="phone" id="phone" class="form-control" value="{{ old('phone', $admin->phone) }}" placeholder="Nr Telefonu" />
+                @error('name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
                 <label for="surname" class="control-label">Nazwisko</label>
                 <input name="surname" id="surname" class="form-control" value="{{ old('surname', $admin->surname) }}" placeholder="Nazwisko" />
                 @error('surname')

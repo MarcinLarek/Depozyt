@@ -12,6 +12,8 @@ return [
   'IND-error3' => ' Jeśli nie zmianiałeś swoich danych do logowania, spróbuj podać poprawne dane. Jeśli dokonywałeś zmian, musisz je zaakceptować, klikając w podany link aktywacyjny w otrzymanej wiadomości.',
   'IND-errortype1' => 'Nie znaleziono użytkownika o podanej nazwie/mailu',
   'IND-errortype2' => 'Nie potwierdziłeś aktywacji konta. Kliknij w link aktywacyjny na twoim mailu aby móc się zalogować',
+  'IND-authcode' => 'Kod uwierzytelniający',
+  'IND-success' => 'Dane wprowadzono poprawnie. waby się zalogować podaj kod przysłany na twój nr telefonu',
   //
   //ForgotPassword
   //

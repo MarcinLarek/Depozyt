@@ -68,6 +68,27 @@
           </div>
         </form>
       </div>
+
+      <div class="card-body">
+        <form id="edituserdata" action="{{ route('client.updatephone') }}" enctype="multipart/form-data" method="post">
+          @csrf
+          @method('PATCH')
+          <fieldset>
+            <div class="row align-items-center justify-content-center">
+              <div class="form-group col-md-6">
+                <label for="phone" class="control-label">{{ __('client.IND-phone') }}</label>
+                <input name="phone" id="phone" class="form-control" placeholder="{{ __('client.IND-phone') }}" value="{{ auth()->user()->phone }}" />
+              </div>
+            </div>
+          </fieldset>
+          <div class="row">
+            <div class="form-group col-md-12 text-center mt-md-4">
+              <input type="submit" value="{{ __('client.IND-save') }}" class="btn btn-primary" />
+            </div>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </div>

@@ -9,12 +9,42 @@
 </div>
 @elseif($notification==2)
 <div class="alert alert-success">
-  Dane wprowadzone pomyślnie. W celu zalogowania proszę wejść w link wysłany na maila.
+  Dane wprowadzone pomyślnie. W celu zalogowania podaj kod uwierzytelniający wysłany na nr telefonu przypisany do konta.
 </div>
 @endif
 <div clasms="row">
   <div class="col-md-8 offset-md-2">
     <div class="card border-0">
+      @if($notification==2)
+
+      <div class="card-body">
+        <h4 class="card-title">Zaloguj się</h4>
+        <form action="{{ route('admin.smscode') }}" method="post">
+          @csrf
+          <fieldset>
+            <div class="row align-items-center justify-content-center">
+              <div class="form-group col-md-6">
+                <label for="phone_code" class="control-label">Kod uwierzytelniający</label>
+                <input name="phone_code" id="phone_code" class="form-control" placeholder="Kod uwierzytelniający" value="{{ old('phone_code') }}" />
+                @error('phone_code')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+            </div>
+
+            <input name="token" id="token" type="hidden" class="form-control" value="{{ $usertoken }}" />
+
+          </fieldset>
+          <div class="row">
+            <div class="form-group col-md-12 text-center mt-md-4">
+              <input type="submit" value="Zaloguj" class="btn btn-primary" />
+            </div>
+          </div>
+        </form>
+      </div>
+
+      @else
+
       <div class="card-body">
         <h4 class="card-title">Zaloguj się</h4>
         <form action="{{ route('admin.login') }}" method="post">
@@ -46,6 +76,8 @@
           </div>
         </form>
       </div>
+
+@endif
     </div>
   </div>
 </div>

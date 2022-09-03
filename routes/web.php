@@ -11,6 +11,7 @@ Route::domain('localhost')->group(function () {
 
         Route::get('/sign-in', [\App\Http\Controllers\LoginController::class, 'index'])->name('sign-in');
         Route::post('/sign-in', [\App\Http\Controllers\LoginController::class, 'signIn'])->name('client.sign-in');
+        Route::post('/client/phonecode', [\App\Http\Controllers\LoginController::class, 'phonecode'])->name('client.phonecode');
         Route::get('/ForgotPassword', [\App\Http\Controllers\LoginController::class, 'forgotPassword'])->name('ForgotPassword');
         Route::post('/ForgotPassword', [\App\Http\Controllers\LoginController::class, 'forgotPasswordReset'])->name('client.ForgotPasswordReset');
         Route::get('/SetNewPassword', [\App\Http\Controllers\LoginController::class, 'setNewPassword'])->name('SetNewPassword');
@@ -55,6 +56,7 @@ Route::domain('localhost')->group(function () {
             Route::get('/', [\App\Http\Controllers\ClientController::class, 'index'])->name('client');
             Route::post('/edit', [\App\Http\Controllers\ClientController::class, 'edit'])->name('client.edit');
             Route::patch('/update', [\App\Http\Controllers\ClientController::class, 'update'])->name('client.update');
+            Route::patch('/phone', [\App\Http\Controllers\ClientController::class, 'updatephone'])->name('client.updatephone');
         });
 
         Route::prefix('/bank-accounts')->group(function () {
@@ -203,6 +205,7 @@ Route::domain('admin.localhost')->group(function () {
         Route::prefix('/sign-in')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\SignInController::class, 'index'])->name('admin.sign-in');
             Route::post('/login', [\App\Http\Controllers\Admin\SignInController::class, 'login'])->name('admin.login');
+            Route::post('/smscode', [\App\Http\Controllers\Admin\SignInController::class, 'smscode'])->name('admin.smscode');
             Route::get('/LoginAdmin', [\App\Http\Controllers\Admin\SignInController::class, 'LoginAdmin'])->name('admin.LoginAdmin');
             Route::get('/AdminLogin/{token}', [\App\Http\Controllers\Admin\SignInController::class, 'AdminLogin'])->name('admin.AdminLogin');
             Route::get('/adminlogout', [\App\Http\Controllers\Admin\SignInController::class, 'adminlogout'])->name('admin.adminlogout');
