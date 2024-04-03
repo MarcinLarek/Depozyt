@@ -1,7 +1,6 @@
-"# Depozyt" 
 # Depozyt
 
-Aplikacja Bankowa stworzona przy pomocy frameworku Laravel
+Aplikacja Bankowa stworzona przy pomocy frameworku Laravel. Strona dostępna obecnie pod adresem https://serwisdepozytowy.pl
 Jej funkcje to m.in:
 - Tworzenie i edycja użytkowników oraz administratorów
 - Podział kont użytkownika na kategorie i szegółowa edycja danych
